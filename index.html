@@ -175,7 +175,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Welcome"><a href="#Welcome" class="headerlink" title="Welcome"></a>Welcome</h1><h2 id="Hexo-GitHub搭建个人博客"><a href="#Hexo-GitHub搭建个人博客" class="headerlink" title="Hexo+GitHub搭建个人博客"></a>Hexo+GitHub搭建个人博客</h2>
+        <h1 id="Hexo-GitHub搭建个人博客"><a href="#Hexo-GitHub搭建个人博客" class="headerlink" title="Hexo+GitHub搭建个人博客"></a>Hexo+GitHub搭建个人博客</h1><h2 id="1-Hexo搭建GitHub-Pages"><a href="#1-Hexo搭建GitHub-Pages" class="headerlink" title="1.Hexo搭建GitHub Pages"></a>1.Hexo搭建GitHub Pages</h2><p>由于大部分过程官方文档中都有详细说明，本文不在讲述。我主要讲述一下如何搭建GitHub Pages:<br>首先在Hexo目录下找到配置文件_config.yml,然后修改deploy中的内容:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https://github.com/your_github_name/your_github_name.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
+<p>其中repo是你的github仓库网址<br>最后使用命令hexo s 生成静态文件，hexo d 发布博客</p>
+<h2 id="2-更换博客主题"><a href="#2-更换博客主题" class="headerlink" title="2.更换博客主题"></a>2.更换博客主题</h2><p>   <a href="https://hexo.io/themes/" target="_blank" rel="noopener">themes</a>这个是官网提供的主题，而本人使用的主题是华科大佬写的<br><a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="noopener">hexo-theme-yilia</a>,比较美观，使用也比较方便。<br>    首先<code>git clone</code>到<code>themes</code>文件夹中，然后在主目录的<code>_config.yml</code><br>中找到theme,改成你说下载的theme名字即可，如图：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: hexo-theme-yilia</span><br></pre></td></tr></table></figure></p>
+<p>最后<code>git pull</code>就好了</p>
+<h2 id="3-在博客中加载图片"><a href="#3-在博客中加载图片" class="headerlink" title="3.在博客中加载图片"></a>3.在博客中加载图片</h2><p> 在<code>_config.yml</code>中找到<code>Writing</code>部分，将<code>post_asset_folder</code>改为<code>true</code>,<br> 这样每次<code>hexo new &quot;blog name&quot;</code>时都会自动新建一个同名的资源文件夹，将需<br> 要加载的图片放到该文件夹中,在博客中引用该图片就行了<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% img [class names] /path/to/image [width] [height] [title text [alt text]] %&#125;</span><br></pre></td></tr></table></figure></p>
+<p> <del>初次搭建网站写博客，难免出现疏漏，还望大家海涵</del></p>
+<p>本文主要参考了<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">hexo 文档</a></p>
+
       
 
       
