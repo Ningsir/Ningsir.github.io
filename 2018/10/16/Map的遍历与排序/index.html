@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Xinger的博客">
 <meta property="og:description" content="引言：集合是java比较重要的一个知识点，而集合的遍历尤为重要。  相对来说，Map又是集合中比较难懂的一部分，故今天来讲一下Map的  遍历与排序。  Map的遍历 较为简单的遍历方法可以通过keySet()方法获取Map中的所有的key,然后使用get(key)获取key对应的value,代码如下： 123456 Map&amp;lt;String, String&amp;gt; map = new Has">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-16T14:55:28.701Z">
+<meta property="og:updated_time" content="2018-10-16T15:20:02.778Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Map的遍历与排序">
 <meta name="twitter:description" content="引言：集合是java比较重要的一个知识点，而集合的遍历尤为重要。  相对来说，Map又是集合中比较难懂的一部分，故今天来讲一下Map的  遍历与排序。  Map的遍历 较为简单的遍历方法可以通过keySet()方法获取Map中的所有的key,然后使用get(key)获取key对应的value,代码如下： 123456 Map&amp;lt;String, String&amp;gt; map = new Has">
@@ -189,7 +189,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(Map.Entry&lt;String, String&gt; entry : map.entrySet())&#123;  <span class="comment">//参数类型请灵活处理</span></span><br><span class="line">	System.out.println(<span class="string">"key:"</span>+entry.getKey()+<span class="string">","</span>+<span class="string">"value:"</span>+entry.getValue());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>通过迭代器遍历Map:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Iterator(Map.Entry&lt;String, String&gt;) ite = map.entrySet().iterator();</span><br><span class="line"><span class="keyword">while</span>(ite.hasNext())&#123;</span><br><span class="line">	Map.Entry&lt;String, String&gt; entry = ite.next();</span><br><span class="line">	System.out.println(<span class="string">"key:"</span>+entry.getKey()+<span class="string">","</span>+<span class="string">"value:"</span>+entry.getValue());z</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h2 id="Map的排序"><a href="#Map的排序" class="headerlink" title="Map的排序"></a>Map的排序</h2><ul>
@@ -449,6 +449,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Collection</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -458,14 +466,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Collection</a>
               </li>
             
             <div class="clearfix"></div>
