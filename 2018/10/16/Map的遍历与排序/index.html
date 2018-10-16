@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: SQL | Xinger的博客</title>
+  <title>Map的遍历与排序 | Xinger的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="华中科技大学17级本科生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Xinger的博客">
-<meta property="og:url" content="http://yoursite.com/tags/SQL/index.html">
+  <meta name="description" content="引言：集合是java比较重要的一个知识点，而集合的遍历尤为重要。  相对来说，Map又是集合中比较难懂的一部分，故今天来讲一下Map的  遍历与排序。  Map的遍历 较为简单的遍历方法可以通过keySet()方法获取Map中的所有的key,然后使用get(key)获取key对应的value,代码如下： 123456 Map&amp;lt;String, String&amp;gt; map = new Has">
+<meta name="keywords" content="java,Collection">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Map的遍历与排序">
+<meta property="og:url" content="http://yoursite.com/2018/10/16/Map的遍历与排序/index.html">
 <meta property="og:site_name" content="Xinger的博客">
-<meta property="og:description" content="华中科技大学17级本科生">
+<meta property="og:description" content="引言：集合是java比较重要的一个知识点，而集合的遍历尤为重要。  相对来说，Map又是集合中比较难懂的一部分，故今天来讲一下Map的  遍历与排序。  Map的遍历 较为简单的遍历方法可以通过keySet()方法获取Map中的所有的key,然后使用get(key)获取key对应的value,代码如下： 123456 Map&amp;lt;String, String&amp;gt; map = new Has">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-10-16T14:55:28.701Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xinger的博客">
-<meta name="twitter:description" content="华中科技大学17级本科生">
+<meta name="twitter:title" content="Map的遍历与排序">
+<meta name="twitter:description" content="引言：集合是java比较重要的一个知识点，而集合的遍历尤为重要。  相对来说，Map又是集合中比较难懂的一部分，故今天来讲一下Map的  遍历与排序。  Map的遍历 较为简单的遍历方法可以通过keySet()方法获取Map中的所有的key,然后使用get(key)获取key对应的value,代码如下： 123456 Map&amp;lt;String, String&amp;gt; map = new Has">
   
     <link rel="alternative" href="/atom.xml" title="Xinger的博客" type="application/atom+xml">
   
@@ -153,60 +155,216 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Map的遍历与排序" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/05/jdbc/" class="archive-article-date">
-  	<time datetime="2018-10-05T10:40:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/05/jdbc/">jdbc</a>
+    <h1 class="article-title" itemprop="name">
+      Map的遍历与排序
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/10/16/Map的遍历与排序/" class="archive-article-date">
+  	<time datetime="2018-10-16T14:10:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>引言：集合是java比较重要的一个知识点，而集合的遍历尤为重要。<br>  相对来说，Map又是集合中比较难懂的一部分，故今天来讲一下Map的<br>  遍历与排序。</p>
+</blockquote>
+<h2 id="Map的遍历"><a href="#Map的遍历" class="headerlink" title="Map的遍历"></a>Map的遍历</h2><ul>
+<li><p>较为简单的遍历方法可以通过<code>keySet()</code>方法获取Map中的所有的<code>key</code>,<br>然后使用<code>get(key)</code>获取<code>key</code>对应的<code>value</code>,代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> Map&lt;String, String&gt; map = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line"> map.put(<span class="string">"1"</span>,<span class="string">"xinger"</span>);</span><br><span class="line"> <span class="comment">//······省略部分代码</span></span><br><span class="line"><span class="keyword">for</span>(String s : map.keySet())&#123;</span><br><span class="line">	System.out.println(<span class="string">"key:"</span>+s+<span class="string">","</span>+<span class="string">"value:"</span>+map.get(s));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li><p>通过Map.entrySet()遍历map：Map.entrySet()方法返回该地图的集合视图(<code>Set(Map.Entry&lt;K,V&gt;)</code>)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(Map.Entry&lt;String, String&gt; entry : map.entrySet())&#123;  <span class="comment">//参数类型请灵活处理</span></span><br><span class="line">	System.out.println(<span class="string">"key:"</span>+entry.getKey()+<span class="string">","</span>+<span class="string">"value:"</span>+entry.getValue());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过迭代器遍历Map:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Map的排序"><a href="#Map的排序" class="headerlink" title="Map的排序"></a>Map的排序</h2><ul>
+<li><p>利用TreeMap类进行排序：</p>
+</li>
+<li><p>Map按key排序：</p>
+</li>
+<li><p>Map按value排序：</p>
+</li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weichat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">SQL</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Collection</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/10/16/Map的遍历与排序/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/10/05/jdbc/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">jdbc</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script>
+  var cloudTieConfig = {
+    url: "http://yoursite.com/2018/10/16/Map的遍历与排序/", 
+    sourceId: "Map的遍历与排序",
+    productKey: "true",
+    target: "cloud-tie-wrapper"
+  };
+</script>
+<script src="//img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -229,9 +387,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
