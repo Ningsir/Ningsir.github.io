@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Xinger的博客">
 <meta property="og:description" content="引言：集合是java比较重要的一个知识点，而集合的遍历尤为重要。  相对来说，Map又是集合中比较难懂的一部分，故今天来讲一下Map的  遍历与排序。  Map的遍历 较为简单的遍历方法可以通过keySet()方法获取Map中的所有的key,然后使用get(key)获取key对应的value,代码如下： 123456 Map&amp;lt;String, String&amp;gt; map = new Has">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-16T15:20:02.778Z">
+<meta property="og:updated_time" content="2018-10-16T15:52:40.090Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Map的遍历与排序">
 <meta name="twitter:description" content="引言：集合是java比较重要的一个知识点，而集合的遍历尤为重要。  相对来说，Map又是集合中比较难懂的一部分，故今天来讲一下Map的  遍历与排序。  Map的遍历 较为简单的遍历方法可以通过keySet()方法获取Map中的所有的key,然后使用get(key)获取key对应的value,代码如下： 123456 Map&amp;lt;String, String&amp;gt; map = new Has">
@@ -193,11 +193,11 @@
 </li>
 </ul>
 <h2 id="Map的排序"><a href="#Map的排序" class="headerlink" title="Map的排序"></a>Map的排序</h2><ul>
-<li><p>利用TreeMap类进行排序：</p>
+<li><p>利用TreeMap类进行排序：<code>TreeMap</code>是默认按<code>key</code>的升序排序，若要改变排序方式，需要使用<strong>比较器</strong>：<code>Comparator</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String,String&gt; map = <span class="keyword">new</span> TreeMap&lt;String, String&gt;(<span class="keyword">new</span> Comparator&lt;String&gt;()&#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(String o1, String o2)</span> </span>&#123;</span><br><span class="line">				<span class="keyword">return</span>  o2.compareTo(p1);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>Map按key排序：</p>
-</li>
-<li><p>Map按value排序：</p>
+<li><p>Map按value排序：实现Comparator接口，并重写<code>compare(Object o1, Object o2)</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Map.Entry&lt;String, Integer&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;Map.Entry&lt;String, Integer&gt;&gt;(map.entrySet());</span><br><span class="line">	   <span class="comment">//排序</span></span><br><span class="line">	   Collections.sort(list, <span class="keyword">new</span> Comparator&lt;Map.Entry&lt;String, Integer&gt;&gt;()&#123;<span class="comment">//内部类</span></span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Entry&lt;String, Integer&gt; o1, Entry&lt;String, Integer&gt; o2)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">return</span> o2.getValue() - o1.getValue();</span><br><span class="line">		&#125;		   </span><br><span class="line">	   &#125;);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 
@@ -457,15 +457,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">github</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
             
             <div class="clearfix"></div>
