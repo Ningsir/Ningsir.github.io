@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>jdbc | Xinger的博客</title>
+  <title>java复习笔记 | Xinger的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.JDBC连接MySql首先新建一个数据库，create database new_database,use new_database,create new_table(.....),注意mysql命令要有冒号作为一个语句的结束，然后需要下载驱动包，http://downloads.mysql.com/archives/c-j/, 解压导入到项目中即可 注意：下面的代码中的Class.forNa">
-<meta name="keywords" content="SQL">
+  <meta name="description" content="变量 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  面向对象 类是对象的抽象，对象是类的实例 继承：代码重用、可扩展性  封装：隐藏细节、模块化 定义：封装是指一种将抽象性函数接口的实现细节部分包装、隐藏起来的方法。封装可以防止一个类的代码和数据被外部类定义的代码随机访问。而要访问该类的代码和数据，必须通过严">
+<meta name="keywords" content="java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="jdbc">
-<meta property="og:url" content="http://yoursite.com/2018/10/05/jdbc/index.html">
+<meta property="og:title" content="java复习笔记">
+<meta property="og:url" content="http://yoursite.com/2018/10/28/java复习笔记/index.html">
 <meta property="og:site_name" content="Xinger的博客">
-<meta property="og:description" content="1.JDBC连接MySql首先新建一个数据库，create database new_database,use new_database,create new_table(.....),注意mysql命令要有冒号作为一个语句的结束，然后需要下载驱动包，http://downloads.mysql.com/archives/c-j/, 解压导入到项目中即可 注意：下面的代码中的Class.forNa">
+<meta property="og:description" content="变量 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  面向对象 类是对象的抽象，对象是类的实例 继承：代码重用、可扩展性  封装：隐藏细节、模块化 定义：封装是指一种将抽象性函数接口的实现细节部分包装、隐藏起来的方法。封装可以防止一个类的代码和数据被外部类定义的代码随机访问。而要访问该类的代码和数据，必须通过严">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-06T03:44:55.747Z">
+<meta property="og:updated_time" content="2018-10-28T07:46:17.913Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jdbc">
-<meta name="twitter:description" content="1.JDBC连接MySql首先新建一个数据库，create database new_database,use new_database,create new_table(.....),注意mysql命令要有冒号作为一个语句的结束，然后需要下载驱动包，http://downloads.mysql.com/archives/c-j/, 解压导入到项目中即可 注意：下面的代码中的Class.forNa">
+<meta name="twitter:title" content="java复习笔记">
+<meta name="twitter:description" content="变量 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  面向对象 类是对象的抽象，对象是类的实例 继承：代码重用、可扩展性  封装：隐藏细节、模块化 定义：封装是指一种将抽象性函数接口的实现细节部分包装、隐藏起来的方法。封装可以防止一个类的代码和数据被外部类定义的代码随机访问。而要访问该类的代码和数据，必须通过严">
   
     <link rel="alternative" href="/atom.xml" title="Xinger的博客" type="application/atom+xml">
   
@@ -155,32 +155,62 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-jdbc" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-java复习笔记" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      jdbc
+      java复习笔记
     </h1>
   
 
         
-        <a href="/2018/10/05/jdbc/" class="archive-article-date">
-  	<time datetime="2018-10-05T10:40:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
+        <a href="/2018/10/28/java复习笔记/" class="archive-article-date">
+  	<time datetime="2018-10-28T07:44:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-28</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="1-JDBC连接MySql"><a href="#1-JDBC连接MySql" class="headerlink" title="1.JDBC连接MySql"></a>1.JDBC连接MySql</h1><p>首先新建一个数据库，<code>create database new_database</code>,<code>use new_database</code>,<code>create new_table(.....)</code>,注意mysql命令<br>要有冒号作为一个语句的结束，然后需要下载驱动包，<a href="http://downloads.mysql.com/archives/c-j/" target="_blank" rel="noopener">http://downloads.mysql.com/archives/c-j/</a>, 解压导入到项目中即可</p>
-<p><font color="#DC1818">注意：下面的代码中的<code>Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;)</code>    注册驱动文件 ，与网上的教程<code>Class.forName(&quot;com.mysql.jdbc.Driver&quot;)</code>有所区别，是由于驱动包版本不同所致，请注意区分</font><br><a id="more"></a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MySql</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String url = <span class="string">"jdbc:mysql://localhost:3306/database_name?useSSL=false"</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String user = <span class="string">"root"</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String password = <span class="string">"xxxxxxx"</span>;<span class="comment">//the password of your mysql;</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;	</span><br><span class="line">		Connection con = <span class="keyword">null</span>; </span><br><span class="line">		Statement statement = <span class="keyword">null</span>;</span><br><span class="line">		 <span class="keyword">try</span> &#123;</span><br><span class="line">			 <span class="comment">//注册驱动文件</span></span><br><span class="line">			 Class.forName(<span class="string">"com.mysql.cj.jdbc.Driver"</span>);	 </span><br><span class="line">			 <span class="comment">//连接数据库</span></span><br><span class="line">			 con = DriverManager.getConnection(url, user, password);</span><br><span class="line">			<span class="comment">//查询</span></span><br><span class="line">			 statement = con.createStatement();</span><br><span class="line">			 String sql = <span class="string">"update websites set name='xinger' where id=6;"</span>;</span><br><span class="line">			 <span class="comment">//update</span></span><br><span class="line">			 System.out.println(statement.executeUpdate(sql)); </span><br><span class="line">			 <span class="comment">//System.out.println(ret.toString());</span></span><br><span class="line">			 sql = <span class="string">"select * from websites"</span>;</span><br><span class="line">			 ResultSet rs = statement.executeQuery(sql);</span><br><span class="line">			 <span class="keyword">while</span>(rs.next())&#123;</span><br><span class="line">		         <span class="comment">//Retrieve by column name</span></span><br><span class="line">		         <span class="keyword">int</span> id  = rs.getInt(<span class="string">"id"</span>);</span><br><span class="line">		         String name = rs.getString(<span class="string">"name"</span>);</span><br><span class="line">		         String url = rs.getString(<span class="string">"url"</span>);</span><br><span class="line">		         String country = rs.getString(<span class="string">"country"</span>);</span><br><span class="line">		         <span class="comment">//Display values</span></span><br><span class="line">		         System.out.print(<span class="string">"id: "</span> + id);</span><br><span class="line">		         System.out.print(<span class="string">",name:"</span> + name);</span><br><span class="line">		         System.out.print(<span class="string">", url: "</span> + url);</span><br><span class="line">		         System.out.println(<span class="string">", country: "</span> + country);</span><br><span class="line">		      &#125;</span><br><span class="line">			 rs.close();</span><br><span class="line">			 statement.close();</span><br><span class="line">			 con.close();</span><br><span class="line">			 </span><br><span class="line">		 &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">			 System.out.println(e);</span><br><span class="line">		 &#125;</span><br><span class="line">		  <span class="keyword">catch</span> (SQLException e) &#123;	 </span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;	 </span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="2-Statement接口"><a href="#2-Statement接口" class="headerlink" title="2.Statement接口"></a>2.Statement接口</h1><p>   需要使用<code>Connection</code>对象的<code>createStatement()</code>方法创建一个<code>Statement</code>对象；<br>   <code>Statement</code>中的方法：</p>
-<p> <font color="#1EE4F1">boolean execute (String SQL)</font> 如果可以检索到ResultSet对象，则返回一个布尔值true; 否则返回false。使用此方法执行SQLDDL语句或需要使用真正的动态SQL，可使用于执行创建数据库，创建表的SQL语句等等。</p>
-<p><font color="#1EE4F1">int executeUpdate (String SQL)</font>:返回受SQL语句执行影响的行数。使用此方法执行预期会影响多行的SQL语句，例如:INSERT，<br>UPDATE或DELETE语句。</p>
-<p><font color="#1EE4F1">ResultSet executeQuery(String SQL)</font>：返回一个ResultSet对象。 当您希望获得结果集时，请使用此方法，就像使用SELECT语<br>句一样。</p>
+        <h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><ul>
+<li>整数的默认类型是 int </li>
+<li>定义 float 类型时必须在数字后面跟上 F 或者 f </li>
+<li>使用 long 类型时必须在数字后面跟上 L</li>
+</ul>
+<h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><ul>
+<li>类是对象的抽象，对象是类的实例</li>
+<li>继承：代码重用、可扩展性</li>
+</ul>
+<h3 id="封装：隐藏细节、模块化"><a href="#封装：隐藏细节、模块化" class="headerlink" title="封装：隐藏细节、模块化"></a>封装：隐藏细节、模块化</h3><ul>
+<li>定义：封装是指一种将抽象性函数接口的实现细节部分包装、隐藏起来的方法。<br>封装可以防止一个类的代码和数据被外部类定义的代码随机访问。<br>而要访问该类的代码和数据，必须通过严格的接口控制。</li>
+</ul>
+<blockquote>
+<p>从设计上讲，为了<code>实现模块化</code></p>
+<ol>
+<li>以类为最小单元，减少修改带来的连锁效应； </li>
+<li>可以对成员变量进行更精确的控制（getter, setter）；</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>从使用上讲，<code>减少了复杂度</code></p>
+<ol>
+<li>代码使用者无需考虑实现细节就能直接使用一个类； <ol start="2">
+<li>更有效的协作；</li>
+</ol>
+</li>
+</ol>
+</blockquote>
+<p>良好的封装能够减少代码的耦合，抵御变化</p>
+<h3 id="继承：是一种“is-a-kind-of”的关系"><a href="#继承：是一种“is-a-kind-of”的关系" class="headerlink" title="继承：是一种“is a kind of”的关系"></a>继承：是一种“is a kind of”的关系</h3><blockquote>
+<ul>
+<li>在设计时，它允许创建分等级层次的类，思路更清晰，减少了冗余代码，<code>易于修改</code>；</li>
+<li>定义新类时，可以以原来的类为基础，借助代码的<code>重用</code>，使系统变得<code>容易扩展</code>，提 高了开发效率。</li>
+<li>继承帮助我们统一了函数的调用接口，在增加新类后减少对已有系统的修改。</li>
+</ul>
+</blockquote>
 
       
 
@@ -225,7 +255,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">SQL</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		
 		</ul>
@@ -281,7 +311,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/10/05/jdbc/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/10/28/java复习笔记/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -295,18 +325,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/10/16/Map的遍历与排序/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Map的遍历与排序
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/10/05/First-blog/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">First blog</div>
+    <a href="/2018/10/16/Map的遍历与排序/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Map的遍历与排序</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -337,8 +358,8 @@
   <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
 <script>
   var cloudTieConfig = {
-    url: "http://yoursite.com/2018/10/05/jdbc/", 
-    sourceId: "jdbc",
+    url: "http://yoursite.com/2018/10/28/java复习笔记/", 
+    sourceId: "java复习笔记",
     productKey: "true",
     target: "cloud-tie-wrapper"
   };
