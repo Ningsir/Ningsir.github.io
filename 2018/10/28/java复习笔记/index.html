@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>java复习笔记 | Xinger的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、变量 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  静态变量与方法 静态变量与静态方法属于类所有，因此也叫作类变量、类方法 静态变量与实例变量的区别：静态变量在编译时内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了实例对象时，才会分配空间  二、面向对象 类是对象的抽象，对象是类的实例 继承：">
+  <meta name="description" content="一、变量 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  静态变量与方法 静态变量与静态方法属于类所有，因此也叫作类变量、类方法（因此也能理解static方法中不能使用this和super关键字） 静态变量与实例变量的区别：静态变量在编译时内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了实例对象时，">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java复习笔记">
 <meta property="og:url" content="http://yoursite.com/2018/10/28/java复习笔记/index.html">
 <meta property="og:site_name" content="Xinger的博客">
-<meta property="og:description" content="一、变量 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  静态变量与方法 静态变量与静态方法属于类所有，因此也叫作类变量、类方法 静态变量与实例变量的区别：静态变量在编译时内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了实例对象时，才会分配空间  二、面向对象 类是对象的抽象，对象是类的实例 继承：">
+<meta property="og:description" content="一、变量 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  静态变量与方法 静态变量与静态方法属于类所有，因此也叫作类变量、类方法（因此也能理解static方法中不能使用this和super关键字） 静态变量与实例变量的区别：静态变量在编译时内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了实例对象时，">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-28T09:18:01.807Z">
+<meta property="og:updated_time" content="2018-10-30T13:22:52.368Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java复习笔记">
-<meta name="twitter:description" content="一、变量 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  静态变量与方法 静态变量与静态方法属于类所有，因此也叫作类变量、类方法 静态变量与实例变量的区别：静态变量在编译时内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了实例对象时，才会分配空间  二、面向对象 类是对象的抽象，对象是类的实例 继承：">
+<meta name="twitter:description" content="一、变量 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  静态变量与方法 静态变量与静态方法属于类所有，因此也叫作类变量、类方法（因此也能理解static方法中不能使用this和super关键字） 静态变量与实例变量的区别：静态变量在编译时内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了实例对象时，">
   
     <link rel="alternative" href="/atom.xml" title="Xinger的博客" type="application/atom+xml">
   
@@ -181,29 +181,31 @@
 <li>使用 long 类型时必须在数字后面跟上 L</li>
 </ul>
 <h3 id="静态变量与方法"><a href="#静态变量与方法" class="headerlink" title="静态变量与方法"></a>静态变量与方法</h3><ul>
-<li>静态变量与静态方法属于类所有，因此也叫作<code>类变量</code>、<code>类方法</code></li>
+<li>静态变量与静态方法属于类所有，因此也叫作<code>类变量</code>、<code>类方法</code>（因此也能理解static方法中不能使用<code>this</code>和<code>super</code>关键字）</li>
 <li>静态变量与实例变量的区别：静态变量在<code>编译时</code>内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了<code>实例对象</code>时，才会分配空间</li>
 </ul>
 <h2 id="二、面向对象"><a href="#二、面向对象" class="headerlink" title="二、面向对象"></a>二、面向对象</h2><ul>
 <li>类是对象的抽象，对象是类的实例</li>
-<li>继承：代码重用、可扩展性</li>
-</ul>
-<a id="more"></a>
-<h3 id="一、封装：隐藏细节、模块化"><a href="#一、封装：隐藏细节、模块化" class="headerlink" title="一、封装：隐藏细节、模块化"></a>一、封装：隐藏细节、模块化</h3><ul>
+<li>继承：代码重用、可扩展性<a id="more"></a>
+<h3 id="一、封装：隐藏细节、模块化"><a href="#一、封装：隐藏细节、模块化" class="headerlink" title="一、封装：隐藏细节、模块化"></a>一、封装：隐藏细节、模块化</h3></li>
 <li>定义：<code>封装</code>是指一种将抽象性函数接口的<code>实现细节部分包装</code>、<code>隐藏</code>起来的方法。<br>封装可以防止一个类的代码和数据被外部类定义的代码随机访问。<br>而要访问该类的代码和数据，必须通过严格的<code>接口</code>控制。</li>
 </ul>
 <blockquote>
 <p>从设计上讲，为了<code>实现模块化</code></p>
 <ol>
-<li>以类为最小单元，减少修改带来的连锁效应； </li>
+<li>以类为最小单元，减少修改带来的连锁效应； <ol start="2">
 <li>可以对成员变量进行更精确的控制（getter, setter）；</li>
+</ol>
+</li>
 </ol>
 </blockquote>
 <blockquote>
 <p>从使用上讲，<code>减少了复杂度</code></p>
 <ol>
-<li>代码使用者无需考虑实现细节就能直接使用一个类； </li>
+<li>代码使用者无需考虑实现细节就能直接使用一个类； <ol start="2">
 <li>更有效的协作；</li>
+</ol>
+</li>
 </ol>
 </blockquote>
 <ul>
@@ -220,7 +222,7 @@
 <ul>
 <li>创建子类对象实例时，Java<code>默认</code>地首先调用父类的<code>无参数</code>的构造方法， 生成父类的对象。接下来完成调用子 类的构造方法，生成子类的对象。</li>
 <li><code>注意</code>：如果父类没有<code>无参数</code>构造函数，则必须用<code>super()</code>显示调用父类构造函数，并且必须放在第一行(<code>super</code>关键字可以调用父类方法)</li>
-<li>向上转型：父类对象是子类对象的上转型对象，不能操作子类新增的方法与属性</li>
+<li>向上转型：父类对象是子类对象的上转型对象，不能操作子类新增的方法与属性，但能操作子类重写的方法（这也是与直接使用父类的区别）</li>
 </ul>
 </blockquote>
 <h3 id="三、抽象类"><a href="#三、抽象类" class="headerlink" title="三、抽象类"></a>三、抽象类</h3><ul>
@@ -236,9 +238,98 @@
 <h4 id="接口的功能"><a href="#接口的功能" class="headerlink" title="接口的功能"></a>接口的功能</h4><blockquote>
 <ul>
 <li>1.接口提供了一组功能的命名集合，一个类通过实现接口的方式，从而获得接口所声明的抽象方法。</li>
-<li>2.接口定义了不同类交互的标准(一个类可以调用另一个类的接口方法)</li>
+<li>2.接口定义了不同类交互的标准(一个类可以调用另一个类(实现了某个接口)的接口方法)</li>
 </ul>
 </blockquote>
+<h4 id="接口与抽象类的区别"><a href="#接口与抽象类的区别" class="headerlink" title="接口与抽象类的区别"></a>接口与抽象类的区别</h4><ul>
+<li>抽象层次不同<blockquote>
+<p>抽象类是对类抽象，而接口是对行为的抽象</p>
+</blockquote>
+</li>
+<li>设计层次不同<blockquote>
+<p>抽象类是自底向上抽象而来的，接口是自顶向下设计出来的。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="五、多态"><a href="#五、多态" class="headerlink" title="五、多态"></a>五、多态</h3><ul>
+<li>定义：<blockquote>
+<p>在代码中为同一名称的方法（接口）提供不同的实现，<br>为一组类提供了统一的交互接口，又保留了类间的差异。</p>
+</blockquote>
+</li>
+<li>类型</li>
+</ul>
+<blockquote>
+<ul>
+<li>编译时多态：方法的重载</li>
+<li>运行时多态 :<blockquote>
+<p>程序中定义的引用变量所指向的具体类型和通过该引用变量发出的方法调用在编程 时并不确定，而是在程序运行期间才确定，即一个引用变量倒底会指向哪个类的实 例对象，该引用变量发出的方法调用到底是哪个类中实现的方法，必须在由程序运 行期间才能决定。</p>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>如何使用多态<blockquote>
+<ul>
+<li>为一组类抽象出公共父类或者接口</li>
+<li>统一方法名</li>
+</ul>
+</blockquote>
+</li>
+<li>好处：统一接口，更易于扩展</li>
+</ul>
+<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><h3 id="1-SOLID原则"><a href="#1-SOLID原则" class="headerlink" title="1.SOLID原则"></a>1.SOLID原则</h3><blockquote>
+<ul>
+<li>单一职责原则 Single Responsibility Principle</li>
+<li>开放闭合原则 Open Closed Principle</li>
+<li>Liskov替换原则 Liskov Substitution Principle</li>
+<li>接口隔离原则 Interface Segregation Principle</li>
+<li>依赖倒置原则 Dependency Inversion Principle </li>
+</ul>
+</blockquote>
+<h3 id="2-OOD模式实例"><a href="#2-OOD模式实例" class="headerlink" title="2.OOD模式实例"></a>2.OOD模式实例</h3><h4 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h4><ul>
+<li>实例: JButton与ActionListener、气象站</li>
+<li>定义：观察者模式定义了对象之间的一对多依赖，当一个对象改变状态时， 它的所有依赖者都会收到通知并自动更新。</li>
+</ul>
+<h4 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h4><ul>
+<li>实例：咖啡店、java io</li>
+<li>定义：装饰者模式动态地将责任附加到对象上。 若要扩展功能，装饰者提供了比继承更 有弹性的替代方案。</li>
+<li>特点：<blockquote>
+<ul>
+<li>装饰者和被装饰对象拥有相同的超类型。</li>
+<li>可以用一个或者多个装饰者包装一个对象。</li>
+<li>装饰者可以在被装饰对象的行为前/后加上 自己的行为，以达到特定的目的。</li>
+<li>装饰过程可以在运行时动态地完成。</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h3 id="3-OOD架构"><a href="#3-OOD架构" class="headerlink" title="3.OOD架构"></a>3.OOD架构</h3><h4 id="模型-视图-控制器-Model-View-Controller-MVC"><a href="#模型-视图-控制器-Model-View-Controller-MVC" class="headerlink" title="模型-视图-控制器 Model-View-Controller (MVC)"></a>模型-视图-控制器 Model-View-Controller (MVC)</h4><h4 id="三层程序设计模型-Three-tier-design-model"><a href="#三层程序设计模型-Three-tier-design-model" class="headerlink" title="三层程序设计模型 Three-tier design model"></a>三层程序设计模型 Three-tier design model</h4><ul>
+<li>表示层 （用户界面）</li>
+</ul>
+<blockquote>
+<ul>
+<li>GUI class </li>
+<li>显示数据，接收操作</li>
+</ul>
+</blockquote>
+<ul>
+<li>业务逻辑层 （问题域层）</li>
+</ul>
+<blockquote>
+<ul>
+<li>PD class </li>
+<li>从用户界面接收请求，根据业务逻辑处理请求，从DA类获得数据/向DA类发 送数据，将处理结果送回表示层</li>
+</ul>
+</blockquote>
+<ul>
+<li>数据访问层<blockquote>
+<ul>
+<li>DA class </li>
+<li>建立与数据库的连接，完成增删改查，关闭连接。</li>
+</ul>
+</blockquote>
+</li>
+</ul>
 
       
 
@@ -484,19 +575,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">github</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Collection</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">github</a>
               </li>
              
               <li class="article-tag-list-item">
