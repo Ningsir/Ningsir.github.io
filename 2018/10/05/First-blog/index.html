@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Xinger的博客">
 <meta property="og:description" content="Hexo+GitHub搭建个人博客1.Hexo搭建GitHub Pages由于大部分过程官方文档中都有详细说明，本文不在讲述。我主要讲述一下如何搭建GitHub Pages:首先在Hexo目录下找到配置文件_config.yml,然后修改deploy中的内容:1234deploy:  type: git  repo: https://github.com/your_github_name/your">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-06T03:44:12.923Z">
+<meta property="og:updated_time" content="2018-10-31T15:19:10.269Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="First blog">
 <meta name="twitter:description" content="Hexo+GitHub搭建个人博客1.Hexo搭建GitHub Pages由于大部分过程官方文档中都有详细说明，本文不在讲述。我主要讲述一下如何搭建GitHub Pages:首先在Hexo目录下找到配置文件_config.yml,然后修改deploy中的内容:1234deploy:  type: git  repo: https://github.com/your_github_name/your">
@@ -180,8 +180,8 @@
 <a id="more"></a>
 <h2 id="2-更换博客主题"><a href="#2-更换博客主题" class="headerlink" title="2.更换博客主题"></a>2.更换博客主题</h2><p>   <a href="https://hexo.io/themes/" target="_blank" rel="noopener">themes</a>这个是官网提供的主题，而本人使用的主题是华科大佬写的<br><a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="noopener">hexo-theme-yilia</a>,比较美观，使用也比较方便。<br>    首先<code>git clone</code>到<code>themes</code>文件夹中，然后在主目录的<code>_config.yml</code><br>中找到theme,改成你说下载的theme名字即可，如图：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: hexo-theme-yilia</span><br></pre></td></tr></table></figure></p>
 <p>最后<code>git pull</code>就好了</p>
-<h2 id="3-在博客中加载图片"><a href="#3-在博客中加载图片" class="headerlink" title="3.在博客中加载图片"></a>3.在博客中加载图片</h2><p> 在<code>_config.yml</code>中找到<code>Writing</code>部分，将<code>post_asset_folder</code>改为<code>true</code>,<br> 这样每次<code>hexo new &quot;blog name&quot;</code>时都会自动新建一个同名的资源文件夹，将需<br> 要加载的图片放到该文件夹中,在博客中引用该图片就行了<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% img [class names] /path/to/image [width] [height] [title text [alt text]] %&#125;</span><br></pre></td></tr></table></figure></p>
-<p> <del>初次搭建网站写博客，难免出现疏漏，还望大家海涵</del></p>
+<h2 id="3-在博客中加载图片"><a href="#3-在博客中加载图片" class="headerlink" title="3.在博客中加载图片"></a>3.在博客中加载图片</h2><p> 在<code>_config.yml</code>中找到<code>Writing</code>部分，将<code>post_asset_folder</code>改为<code>true</code>,<br> 这样每次<code>hexo new &quot;blog name&quot;</code>时都会自动新建一个同名的资源文件夹，将需<br> 要加载的图片放到该文件夹中,在博客中引用该图片就行了<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% img [class names] image.jpg [width] [height] [title text [alt text]] %&#125;</span><br></pre></td></tr></table></figure></p>
+<p> 也可以这样引用<code>![](image.jpg)</code>(直接输入图片文件名即可)，但这个无法在首页中显示<br> <del>初次搭建网站写博客，难免出现疏漏，还望大家海涵</del></p>
 <p>本文主要参考了<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">hexo 文档</a><code>&amp;</code><a href="https://github.com/litten/BlogBackup" target="_blank" rel="noopener">BlogBackup</a></p>
 
       
@@ -436,14 +436,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -452,7 +444,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Collection</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
             
             <div class="clearfix"></div>
