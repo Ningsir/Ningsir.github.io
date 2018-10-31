@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Xinger的博客">
 <meta property="og:description" content="一、变量 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  静态变量与方法 静态变量与静态方法属于类所有，因此也叫作类变量、类方法（因此也能理解static方法中不能使用this和super关键字） 静态变量与实例变量的区别：静态变量在编译时内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了实例对象时，">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-31T14:05:33.401Z">
+<meta property="og:updated_time" content="2018-10-31T14:14:47.862Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java复习笔记">
 <meta name="twitter:description" content="一、变量 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  静态变量与方法 静态变量与静态方法属于类所有，因此也叫作类变量、类方法（因此也能理解static方法中不能使用this和super关键字） 静态变量与实例变量的区别：静态变量在编译时内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了实例对象时，">
@@ -286,29 +286,27 @@
 </ul>
 </blockquote>
 </blockquote>
-<h3 id="常见图模型"><a href="#常见图模型" class="headerlink" title="常见图模型"></a>常见图模型</h3><blockquote>
-<ul>
-<li>静态模型：<blockquote>
-<ul>
+<h4 id="静态模型："><a href="#静态模型：" class="headerlink" title="静态模型："></a>静态模型：</h4><ul>
 <li>用例图（Use Case Diagram）：从用户角度描述系统功能。<blockquote>
-<p>用例图的描述：<br>▪ 简要说明 ▪ 主事件流和其他事件流 ▪ 前提条件 ▪ 事后条件</p>
+<p>用例图的描述：</p>
+<blockquote>
+<ul>
+<li>简要说明</li>
+<li>主事件流和其他事件流 </li>
+<li>前提条件 </li>
+<li>事后条件</li>
+</ul>
+</blockquote>
 </blockquote>
 </li>
 <li>类图（ClassDiagram）：描述对象模型中类与类之间的关系。 </li>
 <li>组件图（ComponentDiagram）：描述系统中各个组件之间的依赖关系，还可以描 述组件的源代码组织结构。 </li>
 <li>部署图（DeploymentDiagram）：定义系统中软硬件的物理体系结构。</li>
 </ul>
-</blockquote>
-</li>
-<li>动态态模型：<blockquote>
-<ul>
+<h4 id="动态态模型："><a href="#动态态模型：" class="headerlink" title="动态态模型："></a>动态态模型：</h4><ul>
 <li>时序图（Sequence Diagram）：显示对象之间的动态协作关系，强调对象之间消息 发送的时间顺序。 <blockquote>
 <p>时序图的构成：</p>
-</blockquote>
-</li>
-</ul>
-</blockquote>
-</li>
+<ul>
 <li>对象生命线（垂直的虚线）； </li>
 <li>对象激活框（细长矩形）；</li>
 <li>消息（带箭头的水平线 + 消息名）； </li>
@@ -317,19 +315,21 @@
 <li>顶部方框表示类的对象或类，有3种写法            </li>
 </ul>
 </blockquote>
+</li>
+</ul>
+<blockquote>
+<blockquote>
 <ol>
 <li>对象名和类名间用冒号隔开，如 c：Car;</li>
 <li>省略对象名称，：Car ;</li>
-<li>只保留对象名，c。<blockquote>
-<blockquote>
-<ul>
+<li>只保留对象名，c。<ul>
 <li>活动图（Activity Diagram）：显示活动的顺序控制流。</li>
 <li>状态转换图（StateTransitionDiagram）：描述对象所有可能的状态，以及导致状 态转换的条件。</li>
 </ul>
-</blockquote>
-</blockquote>
 </li>
 </ol>
+</blockquote>
+</blockquote>
 <h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><h3 id="1-SOLID原则"><a href="#1-SOLID原则" class="headerlink" title="1.SOLID原则"></a>1.SOLID原则</h3><blockquote>
 <ul>
 <li>单一职责原则 Single Responsibility Principle</li>
