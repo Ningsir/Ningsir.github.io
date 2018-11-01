@@ -206,7 +206,7 @@
 </blockquote>
 </li>
 </ul>
-<h2 id="String理解"><a href="#String理解" class="headerlink" title="String理解"></a>String理解</h2><p><strong><code>10.14补充内容：</code></strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 下面代码中使用了StringBuilder类和 String.valueOf()方法</span></span><br><span class="line"><span class="comment">* </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">String s = <span class="string">"xinger"</span>;</span><br><span class="line">s = s + <span class="number">9</span>;<span class="comment">//s = "xinger9"</span></span><br><span class="line">s = s + <span class="keyword">new</span> Integer(<span class="number">9</span>);<span class="comment">//自动使用了String.valueOf()方法</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="三、String理解"><a href="#三、String理解" class="headerlink" title="三、String理解"></a>三、String理解</h2><p><strong><code>10.14补充内容：</code></strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 下面代码中使用了StringBuilder类和 String.valueOf()方法</span></span><br><span class="line"><span class="comment">* </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">String s = <span class="string">"xinger"</span>;</span><br><span class="line">s = s + <span class="number">9</span>;<span class="comment">//s = "xinger9"</span></span><br><span class="line">s = s + <span class="keyword">new</span> Integer(<span class="number">9</span>);<span class="comment">//自动使用了String.valueOf()方法</span></span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>String是final类，不能被继承，字符串本身不可变<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">String s =<span class="string">"xinger"</span>;<span class="comment">//将常量池中“xinger"的地址赋给引用s</span></span><br><span class="line">s = <span class="string">"xingxin"</span>;<span class="comment">//创建了新的对象</span></span><br><span class="line">String s1 = <span class="string">"xin"</span>;</span><br><span class="line">String s2 = s1 + <span class="string">"ger"</span>;<span class="comment">//调用了StringBuilder类，创建了新</span></span><br><span class="line"><span class="comment">//的对象，s == s2为false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 </blockquote>
@@ -232,7 +232,7 @@
 <h4 id="5-StringBuilder"><a href="#5-StringBuilder" class="headerlink" title="5.StringBuilder"></a>5.StringBuilder</h4><blockquote>
 <p><code>StringBuilder</code>是可变字符串，能够多次修改并且不产生新的对象，一个String不能直接给其赋初值，比如：<code>StringBuilder s = &quot;xinger&quot;</code>这是错误的</p>
 </blockquote>
-<h2 id="二、面向对象"><a href="#二、面向对象" class="headerlink" title="二、面向对象"></a>二、面向对象</h2><ul>
+<h2 id="四、面向对象"><a href="#四、面向对象" class="headerlink" title="四、面向对象"></a>四、面向对象</h2><ul>
 <li>类是对象的抽象，对象是类的实例</li>
 <li>继承：代码重用、可扩展性</li></ul>
         
@@ -620,10 +620,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -632,11 +628,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Collection</a>
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Collection</a>
               </li>
             
             <div class="clearfix"></div>
