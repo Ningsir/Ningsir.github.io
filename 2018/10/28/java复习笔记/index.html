@@ -8,23 +8,23 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>java复习笔记 | Xinger的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、变量 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  静态变量与方法 静态变量与静态方法属于类所有，因此也叫作类变量、类方法（因此也能理解static方法中不能使用this和super关键字） 静态变量与实例变量的区别：静态变量在编译时内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了实例对象时，">
+  <meta name="description" content="一、没有“对象”的java基本类型 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  运算符优先级 静态变量与方法 静态变量与静态方法属于类所有，因此也叫作类变量、类方法（因此也能理解static方法中不能使用this和super关键字） 静态变量与实例变量的区别：静态变量在编译时内存就为其分配空间，直到程序停止">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java复习笔记">
 <meta property="og:url" content="http://yoursite.com/2018/10/28/java复习笔记/index.html">
 <meta property="og:site_name" content="Xinger的博客">
-<meta property="og:description" content="一、变量 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  静态变量与方法 静态变量与静态方法属于类所有，因此也叫作类变量、类方法（因此也能理解static方法中不能使用this和super关键字） 静态变量与实例变量的区别：静态变量在编译时内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了实例对象时，">
+<meta property="og:description" content="一、没有“对象”的java基本类型 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  运算符优先级 静态变量与方法 静态变量与静态方法属于类所有，因此也叫作类变量、类方法（因此也能理解static方法中不能使用this和super关键字） 静态变量与实例变量的区别：静态变量在编译时内存就为其分配空间，直到程序停止">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2018/10/28/java复习笔记/优先级.PNG">
 <meta property="og:image" content="http://yoursite.com/2018/10/28/java复习笔记/io.PNG">
 <meta property="og:image" content="http://yoursite.com/2018/10/28/java复习笔记/exception.PNG">
 <meta property="og:image" content="http://yoursite.com/2018/10/28/java复习笔记/thread.PNG">
 <meta property="og:image" content="http://yoursite.com/2018/10/28/java复习笔记/sequence.PNG">
-<meta property="og:updated_time" content="2018-11-03T03:36:51.056Z">
+<meta property="og:updated_time" content="2018-11-03T06:41:53.716Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java复习笔记">
-<meta name="twitter:description" content="一、变量 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  静态变量与方法 静态变量与静态方法属于类所有，因此也叫作类变量、类方法（因此也能理解static方法中不能使用this和super关键字） 静态变量与实例变量的区别：静态变量在编译时内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了实例对象时，">
+<meta name="twitter:description" content="一、没有“对象”的java基本类型 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  运算符优先级 静态变量与方法 静态变量与静态方法属于类所有，因此也叫作类变量、类方法（因此也能理解static方法中不能使用this和super关键字） 静态变量与实例变量的区别：静态变量在编译时内存就为其分配空间，直到程序停止">
 <meta name="twitter:image" content="http://yoursite.com/2018/10/28/java复习笔记/优先级.PNG">
   
     <link rel="alternative" href="/atom.xml" title="Xinger的博客" type="application/atom+xml">
@@ -181,11 +181,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="一、变量"><a href="#一、变量" class="headerlink" title="一、变量"></a>一、变量</h2><ul>
+        <h2 id="一、没有“对象”的java"><a href="#一、没有“对象”的java" class="headerlink" title="一、没有“对象”的java"></a>一、没有“对象”的java</h2><h3 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h3><ul>
 <li>整数的默认类型是 int </li>
 <li>定义 float 类型时必须在数字后面跟上 F 或者 f </li>
-<li>使用 long 类型时必须在数字后面跟上 L<br><img src="/2018/10/28/java复习笔记/优先级.PNG" alt="算术符优先级"></li>
+<li>使用 long 类型时必须在数字后面跟上 L</li>
 </ul>
+<h3 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h3><p><img src="/2018/10/28/java复习笔记/优先级.PNG" alt="算术符优先级"></p>
 <h3 id="静态变量与方法"><a href="#静态变量与方法" class="headerlink" title="静态变量与方法"></a>静态变量与方法</h3><ul>
 <li>静态变量与静态方法属于类所有，因此也叫作<code>类变量</code>、<code>类方法</code>（因此也能理解static方法中不能使用<code>this</code>和<code>super</code>关键字）</li>
 <li>静态变量与实例变量的区别：静态变量在<code>编译时</code>内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了<code>实例对象</code>时，才会分配空间</li>
