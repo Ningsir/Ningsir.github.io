@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/10/28/java复习笔记/thread.PNG">
 <meta property="og:image" content="http://yoursite.com/2018/10/28/java复习笔记/启动线程.png">
 <meta property="og:image" content="http://yoursite.com/2018/10/28/java复习笔记/sequence.PNG">
-<meta property="og:updated_time" content="2018-11-03T12:40:32.077Z">
+<meta property="og:updated_time" content="2018-11-03T14:36:37.003Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java复习笔记">
 <meta name="twitter:description" content="一、没有“对象”的java基本类型 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  运算符优先级">
@@ -191,7 +191,7 @@
 <h3 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h3><a id="more"></a>
 <p><img src="/2018/10/28/java复习笔记/优先级.PNG" alt="算术符优先级"></p>
 <h3 id="静态变量与方法"><a href="#静态变量与方法" class="headerlink" title="静态变量与方法"></a>静态变量与方法</h3><ul>
-<li>静态变量与静态方法属于类所有，因此也叫作<code>类变量</code>、<code>类方法</code>（因此也能理解static方法中不能使用<code>this</code>和<code>super</code>关键字）</li>
+<li>静态变量与静态方法属于类所有，因此也叫作<code>类变量</code>、<code>类方法</code>（因此也能理解static方法中不能使用<code>this</code>和<code>super</code>关键字）， <strong>静态变量只能在类主体中定义，不能在方法中定义</strong></li>
 <li>静态变量与实例变量的区别：静态变量在<code>编译时</code>内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了<code>实例对象</code>时，才会分配空间</li>
 </ul>
 <h2 id="二、包"><a href="#二、包" class="headerlink" title="二、包"></a>二、包</h2><h3 id="基础包：java-lang"><a href="#基础包：java-lang" class="headerlink" title="基础包：java.lang"></a>基础包：<code>java.lang</code></h3><ul>
@@ -246,6 +246,7 @@
 <p>修饰符的访问权限是java更是面向对象最最基础的知识点 </p>
 <ul>
 <li>注意：无修饰符就是默认权限，也叫包访问权限，只能被同一包内类访问，与<code>protected</code>有细微区别</li>
+<li>外部类的定义<code>only public, abstract &amp; final</code></li>
 </ul>
 </blockquote>
 <p><img src="/2018/10/28/java复习笔记/修饰符.jpg" alt="修饰符访问权限"></p>
