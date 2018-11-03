@@ -17,8 +17,10 @@
 <meta property="og:description" content="一、变量 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  静态变量与方法 静态变量与静态方法属于类所有，因此也叫作类变量、类方法（因此也能理解static方法中不能使用this和super关键字） 静态变量与实例变量的区别：静态变量在编译时内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了实例对象时，">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2018/10/28/java复习笔记/io.PNG">
+<meta property="og:image" content="http://yoursite.com/2018/10/28/java复习笔记/exception.PNG">
+<meta property="og:image" content="http://yoursite.com/2018/10/28/java复习笔记/thread.PNG">
 <meta property="og:image" content="http://yoursite.com/2018/10/28/java复习笔记/sequence.PNG">
-<meta property="og:updated_time" content="2018-11-01T04:06:01.783Z">
+<meta property="og:updated_time" content="2018-11-03T02:49:11.119Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java复习笔记">
 <meta name="twitter:description" content="一、变量 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  静态变量与方法 静态变量与静态方法属于类所有，因此也叫作类变量、类方法（因此也能理解static方法中不能使用this和super关键字） 静态变量与实例变量的区别：静态变量在编译时内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了实例对象时，">
@@ -331,6 +333,38 @@
 <li>好处：统一接口，更易于扩展</li>
 </ul>
 <h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><p><img src="/2018/10/28/java复习笔记/io.PNG" alt="文件IO"></p>
+<h2 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h2><ul>
+<li>减少了cast带来的运行时异常，<br>使算法和框架更为通用，减少了冗余代码</li>
+<li>泛型方法<blockquote>
+<ul>
+<li>所有泛型方法声明都有一个类型<code>参数声明</code>部分（由尖括号分隔），该类型参数声明部分在方 法返回类型之前。</li>
+<li>泛型方法体的声明和其他方法一样。注意类型参数<code>只能代表引用型类型</code>(只能是类)，不能是<code>基本类型</code>(比如int 、double)。</li>
+</ul>
+</blockquote>
+</li>
+<li><p>通配符</p>
+<blockquote>
+<ul>
+<li>&lt;? extends T&gt; 上界为T</li>
+<li>&lt;? super T&gt;   下界为T</li>
+</ul>
+</blockquote>
+</li>
+<li><p>使用泛型进行排序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">//使用Comparable接口确保E能够进行比较</span></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">static</span> &lt;E extends Comparable&lt;E&gt;&gt; <span class="function"><span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(E[] a)</span> </span>&#123; </span><br><span class="line"><span class="keyword">int</span> n = a.length;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n-<span class="number">1</span>; i++)&#123; </span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;n-<span class="number">1</span>; j++)&#123; </span><br><span class="line">	<span class="comment">//使用compareTo()方法进行比较</span></span><br><span class="line">		<span class="keyword">if</span>(a[j].compareTo(a[j+<span class="number">1</span>]) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">			E temp = a[j]; </span><br><span class="line">			a[j] = a[j+<span class="number">1</span>];</span><br><span class="line">			a[j+<span class="number">1</span>] = temp;</span><br><span class="line">			&#125; </span><br><span class="line">		&#125; </span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><p>Throwable 类中定义的方法：</p>
+<ul>
+<li>getMessage()：获得详细的异常信息 </li>
+<li>toString()：获得异常的简短描述 </li>
+<li>printStackTrace()：打印异常发生处栈跟踪信息，包括类名、方法名和所在行数<blockquote>
+<p>用 throws 关键字指出可能出现的异常类型，自己不进行处理，由该函数的调用者处理</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/2018/10/28/java复习笔记/exception.PNG" alt="exception"></p>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><p><img src="/2018/10/28/java复习笔记/thread.PNG" alt="thread"></p>
 <h2 id="UML"><a href="#UML" class="headerlink" title="UML"></a>UML</h2><h3 id="类的关系"><a href="#类的关系" class="headerlink" title="类的关系"></a>类的关系</h3><blockquote>
 <p><code>1+3+1</code>: 继承(泛化)、关联、聚合、组合、依赖</p>
 <blockquote>
@@ -681,6 +715,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -689,15 +727,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Collection</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
             
             <div class="clearfix"></div>
