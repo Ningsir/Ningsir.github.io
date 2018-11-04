@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/10/28/java复习笔记/thread.PNG">
 <meta property="og:image" content="http://yoursite.com/2018/10/28/java复习笔记/启动线程.png">
 <meta property="og:image" content="http://yoursite.com/2018/10/28/java复习笔记/sequence.PNG">
-<meta property="og:updated_time" content="2018-11-04T01:57:50.049Z">
+<meta property="og:updated_time" content="2018-11-04T09:08:15.335Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java复习笔记">
 <meta name="twitter:description" content="一、没有“对象”的java基本类型 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  运算符优先级">
@@ -346,6 +346,7 @@
 <li>好处：统一接口，更易于扩展</li>
 <li>重写原则：<blockquote>
 <ul>
+<li>参数列表完全一致</li>
 <li>子类返回类型小于等于父类方法返回类型，</li>
 <li>子类抛出异常小于等于父类方法抛出异常，</li>
 <li>子类访问权限大于等于父类方法访问权限。</li>
@@ -363,16 +364,15 @@
 </ul>
 </blockquote>
 </li>
-<li><p>通配符</p>
-<blockquote>
+<li>通配符<blockquote>
 <ul>
 <li>&lt;? extends T&gt; 上界为T</li>
 <li>&lt;? super T&gt;   下界为T</li>
+<li>&lt;E extends Comparable<e>&gt; : <strong>类型 E 必须实现 Comparable 接口</strong>，并且这个接口的类型是 E</e></li>
 </ul>
 </blockquote>
 </li>
-<li><p>使用泛型进行排序</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">//使用Comparable接口确保E能够进行比较</span></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">static</span> &lt;E extends Comparable&lt;E&gt;&gt; <span class="function"><span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(E[] a)</span> </span>&#123; </span><br><span class="line"><span class="keyword">int</span> n = a.length;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n-<span class="number">1</span>; i++)&#123; </span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;n-<span class="number">1</span>; j++)&#123; </span><br><span class="line">	<span class="comment">//使用compareTo()方法进行比较</span></span><br><span class="line">		<span class="keyword">if</span>(a[j].compareTo(a[j+<span class="number">1</span>]) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">			E temp = a[j]; </span><br><span class="line">			a[j] = a[j+<span class="number">1</span>];</span><br><span class="line">			a[j+<span class="number">1</span>] = temp;</span><br><span class="line">			&#125; </span><br><span class="line">		&#125; </span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li>使用泛型进行排序<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">//使用Comparable接口确保E能够进行比较</span></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">static</span> &lt;E extends Comparable&lt;E&gt;&gt; <span class="function"><span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(E[] a)</span> </span>&#123; </span><br><span class="line"><span class="keyword">int</span> n = a.length;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n-<span class="number">1</span>; i++)&#123; </span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;n-<span class="number">1</span>; j++)&#123; </span><br><span class="line">	<span class="comment">//使用compareTo()方法进行比较</span></span><br><span class="line">		<span class="keyword">if</span>(a[j].compareTo(a[j+<span class="number">1</span>]) &gt; <span class="number">0</span>)&#123;<span class="comment">//为什么可以使用接口的compareTo()方法，因为大部分类都已经实现了Comparable接口，否则自己直接在E中实现Comparable接口即可</span></span><br><span class="line">			E temp = a[j]; </span><br><span class="line">			a[j] = a[j+<span class="number">1</span>];</span><br><span class="line">			a[j+<span class="number">1</span>] = temp;</span><br><span class="line">			&#125; </span><br><span class="line">		&#125; </span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><p>Throwable 类中定义的方法：</p>
@@ -737,6 +737,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -746,10 +750,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
