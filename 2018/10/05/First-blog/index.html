@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Xinger的博客">
 <meta property="og:description" content="Hexo+GitHub搭建个人博客1.Hexo搭建GitHub Pages由于大部分过程官方文档中都有详细说明，本文不在讲述。我主要讲述一下如何搭建GitHub Pages:首先在Hexo目录下找到配置文件_config.yml,然后修改deploy中的内容:1234deploy:  type: git  repo: https://github.com/your_github_name/your">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-31T15:37:51.765Z">
+<meta property="og:updated_time" content="2018-12-06T03:06:56.324Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="First blog">
 <meta name="twitter:description" content="Hexo+GitHub搭建个人博客1.Hexo搭建GitHub Pages由于大部分过程官方文档中都有详细说明，本文不在讲述。我主要讲述一下如何搭建GitHub Pages:首先在Hexo目录下找到配置文件_config.yml,然后修改deploy中的内容:1234deploy:  type: git  repo: https://github.com/your_github_name/your">
@@ -175,7 +175,9 @@
 <h2 id="2-更换博客主题"><a href="#2-更换博客主题" class="headerlink" title="2.更换博客主题"></a>2.更换博客主题</h2><p>   <a href="https://hexo.io/themes/" target="_blank" rel="noopener">themes</a>这个是官网提供的主题，而本人使用的主题是华科大佬写的<br><a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="noopener">hexo-theme-yilia</a>,比较美观，使用也比较方便。<br>    首先<code>git clone</code>到<code>themes</code>文件夹中，然后在主目录的<code>_config.yml</code><br>中找到theme,改成你说下载的theme名字即可，如图：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: hexo-theme-yilia</span><br></pre></td></tr></table></figure></p>
 <p>最后<code>git pull</code>就好了</p>
 <h2 id="3-在博客中加载图片"><a href="#3-在博客中加载图片" class="headerlink" title="3.在博客中加载图片"></a>3.在博客中加载图片</h2><p> 在<code>_config.yml</code>中找到<code>Writing</code>部分，将<code>post_asset_folder</code>改为<code>true</code>,<br> 这样每次<code>hexo new &quot;blog name&quot;</code>时都会自动新建一个同名的资源文件夹，将需<br> 要加载的图片放到该文件夹中,在博客中引用该图片就行了<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% img [class names] image.jpg [width] [height] [title text [alt text]] %&#125;</span><br></pre></td></tr></table></figure></p>
-<p> 也可以这样引用<code>![](image.jpg)</code>(直接输入图片文件名即可)，但这个无法在首页中显示<br> <del>初次搭建网站写博客，难免出现疏漏，还望大家海涵</del></p>
+<p>也可以这样引用<code>![](image.jpg)</code>(直接输入图片文件名即可)，但这个无法在首页中显示</p>
+<h3 id="4-更换博客域名"><a href="#4-更换博客域名" class="headerlink" title="4.更换博客域名"></a>4.更换博客域名</h3><p> 作为一个学生党，直接买域名对我来说还是有点小贵，但GitHub给学生提供了一个开发大礼包，学生可以用学校的邮箱进行认证，<br><a href="https://education.github.com/" target="_blank" rel="noopener">申请网址</a>。这个开发大礼包中，对我来说主要有两个比较有用的东西，第一个就是学生可以<br>无限创建私有仓库，另外，可以使用<code>namaCheap</code>申请一个一年的免费域名(<code>.me</code>的顶级域名)，<a href="https://nc.me/" target="_blank" rel="noopener">申请网址</a>，<br>申请到域名后，就可以自定义设置<code>github pages</code>的域名了(代替<code>github.io</code>的域名)，具体操作参考<a href="https://help.github.com/articles/using-a-custom-domain-with-github-pages/" target="_blank" rel="noopener">git pages 官方文档</a> </p>
+<p> <del>初次搭建网站写博客，难免出现疏漏，还望大家海涵</del></p>
 <p>本文主要参考了<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">hexo 文档</a><code>&amp;</code><a href="https://github.com/litten/BlogBackup" target="_blank" rel="noopener">BlogBackup</a></p>
 
       
