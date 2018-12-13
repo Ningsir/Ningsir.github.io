@@ -17,7 +17,7 @@
 <meta property="og:description" content="Hexo+GitHub搭建个人博客1.Hexo搭建GitHub Pages由于大部分过程官方文档中都有详细说明，本文不在讲述。我主要讲述一下如何搭建GitHub Pages:首先在Hexo目录下找到配置文件_config.yml,然后修改deploy中的内容:1234deploy:  type: git  repo: https://github.com/your_github_name/your">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2018/10/05/First-blog/CNAME.PNG">
-<meta property="og:updated_time" content="2018-12-13T12:35:56.123Z">
+<meta property="og:updated_time" content="2018-12-13T12:42:10.986Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="First blog">
 <meta name="twitter:description" content="Hexo+GitHub搭建个人博客1.Hexo搭建GitHub Pages由于大部分过程官方文档中都有详细说明，本文不在讲述。我主要讲述一下如何搭建GitHub Pages:首先在Hexo目录下找到配置文件_config.yml,然后修改deploy中的内容:1234deploy:  type: git  repo: https://github.com/your_github_name/your">
@@ -178,10 +178,11 @@
 <p>最后<code>git pull</code>就好了</p>
 <h2 id="3-在博客中加载图片"><a href="#3-在博客中加载图片" class="headerlink" title="3.在博客中加载图片"></a>3.在博客中加载图片</h2><p> 在<code>_config.yml</code>中找到<code>Writing</code>部分，将<code>post_asset_folder</code>改为<code>true</code>,<br> 这样每次<code>hexo new &quot;blog name&quot;</code>时都会自动新建一个同名的资源文件夹，将需<br> 要加载的图片放到该文件夹中,在博客中引用该图片就行了<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% img [class names] image.jpg [width] [height] [title text [alt text]] %&#125;</span><br></pre></td></tr></table></figure></p>
 <p>也可以这样引用<code>![](image.jpg)</code>(直接输入图片文件名即可)，但这个无法在首页中显示</p>
-<h3 id="4-更换博客域名"><a href="#4-更换博客域名" class="headerlink" title="4.更换博客域名"></a>4.更换博客域名</h3><p> 作为一个学生党，直接买域名对我来说还是有点小贵，但GitHub给学生提供了一个开发大礼包，学生可以用学校的邮箱进行认证，<br><a href="https://education.github.com/" target="_blank" rel="noopener">申请网址</a>。这个开发大礼包中，对我来说主要有两个比较有用的东西，第一个就是学生可以<br>无限创建私有仓库，另外，可以使用<code>namaCheap</code>申请一个一年的免费域名(<code>.me</code>的顶级域名)，<a href="https://nc.me/" target="_blank" rel="noopener">申请网址</a>，<br>申请到域名后，就可以自定义设置<code>github pages</code>的域名了(代替<code>github.io</code>的域名)，具体操作参考<a href="https://help.github.com/articles/using-a-custom-domain-with-github-pages/" target="_blank" rel="noopener">git pages 官方文档</a> </p>
-<h4 id="更换域名的一些坑"><a href="#更换域名的一些坑" class="headerlink" title="更换域名的一些坑"></a>更换域名的一些坑</h4><p>   CNAME:规范名字，允许将多个名字映射到同一台计算机上，即你可以使用多个域名指向同一服务器IP，在这里就是你既可以通过<br>‘github.io’这个域名，又可以通过<code>.me</code>域名访问你的博客。为了保证可以用两个域名访问同一个博客，应该新建一个<code>CNAME</code>文件<br>我新建文件的位置：<br><img src="/2018/10/05/First-blog/CNAME.PNG" alt="CNAME"></p>
+<h2 id="4-更换博客域名"><a href="#4-更换博客域名" class="headerlink" title="4.更换博客域名"></a>4.更换博客域名</h2><p> 作为一个学生党，直接买域名对我来说还是有点小贵，但GitHub给学生提供了一个开发大礼包，学生可以用学校的邮箱进行认证，<br><a href="https://education.github.com/" target="_blank" rel="noopener">申请网址</a>。这个开发大礼包中，对我来说主要有两个比较有用的东西，第一个就是学生可以<br>无限创建私有仓库，另外，可以使用<code>namaCheap</code>申请一个一年的免费域名(<code>.me</code>的顶级域名)，<a href="https://nc.me/" target="_blank" rel="noopener">申请网址</a>，<br>申请到域名后，就可以自定义设置<code>github pages</code>的域名了(代替<code>github.io</code>的域名)，具体操作参考<a href="https://help.github.com/articles/using-a-custom-domain-with-github-pages/" target="_blank" rel="noopener">git pages 官方文档</a> </p>
+<h3 id="更换域名的一些坑"><a href="#更换域名的一些坑" class="headerlink" title="更换域名的一些坑"></a>更换域名的一些坑</h3><p>   CNAME:规范名字，允许将多个名字映射到同一台计算机上，即你可以使用多个域名指向同一服务器IP，在这里就是你既可以通过<br>‘github.io’这个域名，又可以通过<code>.me</code>域名访问你的博客。为了保证可以用两个域名访问同一个博客，应该新建一个<code>CNAME</code>文件<br>我新建文件的位置：<br><img src="/2018/10/05/First-blog/CNAME.PNG" alt="CNAME"></p>
 <p>并写入你的域名，然后提交到github上去，如果直接在github中新建，之后提交博客可能<code>覆盖</code>该文件，导致博客无法访问</p>
-<h3 id="5-插入视频"><a href="#5-插入视频" class="headerlink" title="5.插入视频"></a>5.插入视频</h3><iframe width="560" height="315" src="https://www.youtube.com/embed/Ilg3gGewQ5U" frameborder="0" allowfullscreen></iframe>
+<h2 id="5-插入视频"><a href="#5-插入视频" class="headerlink" title="5.插入视频"></a>5.插入视频</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">width</span>=<span class="string">"560"</span> <span class="attr">height</span>=<span class="string">"315"</span> <span class="attr">src</span>=<span class="string">"https://www.youtube.com/embed/Ilg3gGewQ5U"</span> <span class="attr">frameborder</span>=<span class="string">"0"</span> <span class="attr">allowfullscreen</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Ilg3gGewQ5U" frameborder="0" allowfullscreen></iframe>
 
 
 <p> <del>初次搭建网站写博客，难免出现疏漏，还望大家海涵</del></p>
@@ -324,6 +325,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hexo-GitHub搭建个人博客"><span class="toc-number">1.</span> <span class="toc-text">Hexo+GitHub搭建个人博客</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Hexo搭建GitHub-Pages"><span class="toc-number">1.1.</span> <span class="toc-text">1.Hexo搭建GitHub Pages</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-更换博客主题"><span class="toc-number">1.2.</span> <span class="toc-text">2.更换博客主题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-在博客中加载图片"><span class="toc-number">1.3.</span> <span class="toc-text">3.在博客中加载图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-更换博客域名"><span class="toc-number">1.4.</span> <span class="toc-text">4.更换博客域名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#更换域名的一些坑"><span class="toc-number">1.4.1.</span> <span class="toc-text">更换域名的一些坑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-插入视频"><span class="toc-number">1.5.</span> <span class="toc-text">5.插入视频</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
