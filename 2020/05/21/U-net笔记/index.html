@@ -9,6 +9,7 @@
   <title>U-net笔记 | Xinger的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="U-net介绍U-net是对FCN的改进，主要应用于医学图像分割。 U-net的网络结构如下所示：">
+<meta name="keywords" content="深度学习,论文阅读">
 <meta property="og:type" content="article">
 <meta property="og:title" content="U-net笔记">
 <meta property="og:url" content="http://yoursite.com/2020/05/21/U-net笔记/index.html">
@@ -17,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://pic1.zhimg.com/v2-96f5e828c1e83c930aa4a2bb91e64c10_r.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/05/21/U-net笔记/C:/Users/ningxin/AppData/Roaming/Typora/typora-user-images/image-20200520160912870.png">
-<meta property="og:updated_time" content="2020-05-21T08:47:32.881Z">
+<meta property="og:updated_time" content="2020-05-21T10:23:08.271Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="U-net笔记">
 <meta name="twitter:description" content="U-net介绍U-net是对FCN的改进，主要应用于医学图像分割。 U-net的网络结构如下所示：">
@@ -64,6 +65,10 @@
 			
 				<li><a href="/">主页</a></li>
 	        
+				<li><a href="/archives/">归档</a></li>
+	        
+				<li><a href="/tags/">标签</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -82,11 +87,9 @@
 				
 					<a class="github" target="_blank" href="https://github.com/Ningsir" title="github"><i class="icon-github"></i></a>
 		        
-					<a class="weibo" target="_blank" href="https://weibo.com/u/6380047430" title="weibo"><i class="icon-weibo"></i></a>
-		        
-					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
-		        
 					<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/bei-jiu-ren-sheng-63" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
+					<a class="mail" target="_blank" href="/ningxinzuishuai@gmail.com" title="mail"><i class="icon-mail"></i></a>
 		        
 			</div>
 		</nav>
@@ -116,6 +119,10 @@
 			
 				
 			
+				
+			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -123,20 +130,22 @@
 					
 						<a class="github" target="_blank" href="https://github.com/Ningsir" title="github"><i class="icon-github"></i></a>
 			        
-						<a class="weibo" target="_blank" href="https://weibo.com/u/6380047430" title="weibo"><i class="icon-weibo"></i></a>
-			        
-						<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
-			        
 						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/bei-jiu-ren-sheng-63" title="zhihu"><i class="icon-zhihu"></i></a>
+			        
+						<a class="mail" target="_blank" href="/ningxinzuishuai@gmail.com" title="mail"><i class="icon-mail"></i></a>
 			        
 				</div>
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 50%">
+				<ul style="width: 70%">
 				
 				
-					<li style="width: 100%"><a href="/">主页</a></li>
+					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/archives/">归档</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/tags/">标签</a></li>
 		        
 				</ul>
 			</nav>
@@ -163,7 +172,13 @@
   
 
         
-        <a href="/2020/05/21/U-net笔记/" class="archive-article-date">
+        
+        <!-- 不蒜子统计 -->
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2020/05/21/U-net笔记/" class="archive-article-date">
   	<time datetime="2020-05-21T08:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-21</time>
 </a>
         
@@ -230,6 +245,21 @@ E = \sum_{x\in\Omega}{\omega(x)\log(p_{l(x)}(x))}</script><p>其中 $w(x)$ 指�
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">论文阅读</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -386,6 +416,17 @@ gitment.render('gitment-ctn')
       	</div>
     </div>
   </div>
+  
+        <!-- 不蒜子统计 -->
+        <span id="busuanzi_container_site_pv">
+                本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv" style='display:none'>
+                本站访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
 </footer>
     </div>
     <script>
@@ -496,6 +537,22 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">深度学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文阅读</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Collection</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -505,14 +562,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">博客搭建</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Collection</a>
               </li>
              
               <li class="article-tag-list-item">
