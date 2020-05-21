@@ -6,18 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018 | Xinger的博客</title>
+  <title>U-net笔记 | Xinger的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="华中科技大学17级本科生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Xinger的博客">
-<meta property="og:url" content="http://yoursite.com/archives/2018/index.html">
+  <meta name="description" content="U-net介绍U-net是对FCN的改进，主要应用于医学图像分割。 U-net的网络结构如下所示：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="U-net笔记">
+<meta property="og:url" content="http://yoursite.com/2020/05/21/U-net笔记/index.html">
 <meta property="og:site_name" content="Xinger的博客">
-<meta property="og:description" content="华中科技大学17级本科生">
+<meta property="og:description" content="U-net介绍U-net是对FCN的改进，主要应用于医学图像分割。 U-net的网络结构如下所示：">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-96f5e828c1e83c930aa4a2bb91e64c10_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/21/U-net笔记/C:/Users/ningxin/AppData/Roaming/Typora/typora-user-images/image-20200520160912870.png">
+<meta property="og:updated_time" content="2020-05-21T08:47:32.881Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xinger的博客">
-<meta name="twitter:description" content="华中科技大学17级本科生">
+<meta name="twitter:title" content="U-net笔记">
+<meta name="twitter:description" content="U-net介绍U-net是对FCN的改进，主要应用于医学图像分割。 U-net的网络结构如下所示：">
+<meta name="twitter:image" content="https://pic1.zhimg.com/v2-96f5e828c1e83c930aa4a2bb91e64c10_r.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Xinger的博客" type="application/atom+xml">
   
@@ -147,186 +151,225 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-U-net笔记" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      U-net笔记
+    </h1>
+  
+
+        
+        <a href="/2020/05/21/U-net笔记/" class="archive-article-date">
+  	<time datetime="2020-05-21T08:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-21</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="U-net"><a href="#U-net" class="headerlink" title="U-net"></a>U-net</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>U-net是对FCN的改进，主要应用于医学图像分割。</p>
+<p>U-net的网络结构如下所示：</p>
+<p><img src="https://pic1.zhimg.com/v2-96f5e828c1e83c930aa4a2bb91e64c10_r.jpg" alt="preview"></p>
+<a id="more"></a>
+<p>U-net包括<code>Contracting Path</code> 和 <code>Expanding Path</code> 两个部分，所有卷积层的<code>padding = 0</code>. U-net的计算过程如下：</p>
+<ul>
+<li><p><code>Contracting Path</code>部分进行下采样操作：2个<code>3 x 3</code>的卷积层 + 1个 <code>2 x 2 的 max pool</code>，重复四次以上操作；</p>
+</li>
+<li><p><code>Expanding Path</code>部分：2个<code>3 x 3</code>卷积层 + 1个<code>2 x 2</code>反卷积操作，然后与前面对应的层使用 <strong>拼接操作</strong> 进行特征融合，重复四次以上操作；</p>
+</li>
+<li><p>最后经过2个<code>3 x 3</code>卷积， 1个<code>1 x 1</code>卷积(类似于残差网络，用来降维)，然后使用softmax进行输出。</p>
+</li>
+</ul>
+<h3 id="特征融合"><a href="#特征融合" class="headerlink" title="特征融合"></a>特征融合</h3><p>使用concat操作进行特征融合，而不是使用相加操作进行特征融合</p>
+<p><img src="/2020/05/21/U-net笔记/C:/Users\ningxin\AppData\Roaming\Typora\typora-user-images\image-20200520160912870.png" alt="image-20200520160912870"></p>
+<h2 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h2><h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p>U-net使用的是带权损失函数：</p>
+<script type="math/tex; mode=display">
+E = \sum_{x\in\Omega}{\omega(x)\log(p_{l(x)}(x))}</script><p>其中 $w(x)$ 指的是权重，其实就是相当于交叉熵乘了一个权重，有点不解的是我看的代码中都是直接使用<code>CrossEntropyLoss</code>进行计算loss，如下代码所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">unet = Unet(in_channel=<span class="number">1</span>,out_channel=<span class="number">2</span>)</span><br><span class="line"><span class="comment">#out_channel represents number of segments desired</span></span><br><span class="line">criterion = torch.nn.CrossEntropyLoss()</span><br><span class="line">optimizer = torch.optim.SGD(unet.parameters(), lr = <span class="number">0.01</span>, momentum=<span class="number">0.99</span>)</span><br><span class="line">optimizer.zero_grad()       </span><br><span class="line">outputs = unet(inputs)</span><br><span class="line"><span class="comment"># permute such that number of desired segments would be on 4th dimension</span></span><br><span class="line">outputs = outputs.permute(<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">m = outputs.shape[<span class="number">0</span>]</span><br><span class="line"><span class="comment"># Resizing the outputs and label to caculate pixel wise softmax loss</span></span><br><span class="line">outputs = outputs.resize(m*width_out*height_out, <span class="number">2</span>)</span><br><span class="line">labels = labels.resize(m*width_out*height_out)</span><br><span class="line">loss = criterion(outputs, labels)</span><br><span class="line">loss.backward()</span><br><span class="line">optimizer.step()</span><br></pre></td></tr></table></figure>
+<p>U-net的输入是<code>572 x 572</code>, 而输出是<code>388 x 388</code>，两者不一致，不能直接求损失函数，有两种方法：</p>
+<ul>
+<li>对预期输出从中心crop，使其与输出大小一致;</li>
+<li>对输出结果进行padding操作，使其与输入大小一致。</li>
+</ul>
+<h3 id="优化器"><a href="#优化器" class="headerlink" title="优化器"></a>优化器</h3><p>使用梯度下降法（SGD）进行优化。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/28/java复习笔记/" class="archive-article-date">
-  	<time datetime="2018-10-28T07:44:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/28/java复习笔记/">java复习笔记</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
+      
 
-          
-
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/21/U-net笔记/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/16/Map的遍历与排序/" class="archive-article-date">
-  	<time datetime="2018-10-16T14:10:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-16</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/07/18/阿里云服务器发送邮件/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">阿里云服务器发送邮件</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/16/Map的遍历与排序/">Map的遍历与排序</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Collection</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#U-net"><span class="toc-number">1.</span> <span class="toc-text">U-net</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍"><span class="toc-number">1.1.</span> <span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#特征融合"><span class="toc-number">1.1.1.</span> <span class="toc-text">特征融合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#训练"><span class="toc-number">1.2.</span> <span class="toc-text">训练</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#损失函数"><span class="toc-number">1.2.1.</span> <span class="toc-text">损失函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优化器"><span class="toc-number">1.2.2.</span> <span class="toc-text">优化器</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/05/jdbc/" class="archive-article-date">
-  	<time datetime="2018-10-05T10:40:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/05/jdbc/">jdbc</a>
-    </h1>
+  
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script>
+  var cloudTieConfig = {
+    url: "http://yoursite.com/2020/05/21/U-net笔记/", 
+    sourceId: "U-net笔记",
+    productKey: "true",
+    target: "cloud-tie-wrapper"
+  };
+</script>
+<script src="//img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">SQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/05/First-blog/" class="archive-article-date">
-  	<time datetime="2018-10-05T01:49:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/05/First-blog/">First blog</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">github</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">博客搭建</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+  <div id="gitment-ctn"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css">
+<script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.js"></script> 
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2020/05/21/U-net笔记/",
+  owner: 'Ningsir',
+  repo: 'Ningsir.github.io',
+  oauth: {
+    client_id: 'a96b66a633906885dd0d',
+    client_secret: '2455b6c50c8f1942b4f57da96eeeb7177f81fb88',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -349,8 +392,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
