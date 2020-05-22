@@ -16,17 +16,18 @@
 <meta property="og:site_name" content="Xinger的博客">
 <meta property="og:description" content="一、没有“对象”的java基本类型 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  运算符优先级">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://gitee.com/huster_ning/image/raw/master/image/%E4%BC%98%E5%85%88%E7%BA%A7.PNG">
 <meta property="og:image" content="https://gitee.com/huster_ning/image/raw/master/image/%E4%BF%AE%E9%A5%B0%E7%AC%A6.jpg">
 <meta property="og:image" content="https://gitee.com/huster_ning/image/raw/master/image/io.PNG">
 <meta property="og:image" content="https://gitee.com/huster_ning/image/raw/master/image/exception.PNG">
 <meta property="og:image" content="https://gitee.com/huster_ning/image/raw/master/image/thread.PNG">
 <meta property="og:image" content="https://gitee.com/huster_ning/image/raw/master/image/%E5%90%AF%E5%8A%A8%E7%BA%BF%E7%A8%8B.png">
 <meta property="og:image" content="http://yoursite.com/2018/10/28/java复习笔记/D:%5Chexo%5Csource%5C_posts%5Cjava%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%5Csequence.PNG">
-<meta property="og:updated_time" content="2020-05-22T03:07:52.563Z">
+<meta property="og:updated_time" content="2020-05-22T06:53:05.046Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java复习笔记">
 <meta name="twitter:description" content="一、没有“对象”的java基本类型 整数的默认类型是 int  定义 float 类型时必须在数字后面跟上 F 或者 f  使用 long 类型时必须在数字后面跟上 L  运算符优先级">
-<meta name="twitter:image" content="https://gitee.com/huster_ning/image/raw/master/image/%E4%BF%AE%E9%A5%B0%E7%AC%A6.jpg">
+<meta name="twitter:image" content="https://gitee.com/huster_ning/image/raw/master/image/%E4%BC%98%E5%85%88%E7%BA%A7.PNG">
   
     <link rel="alternative" href="/atom.xml" title="Xinger的博客" type="application/atom+xml">
   
@@ -189,37 +190,45 @@
 <li>定义 float 类型时必须在数字后面跟上 F 或者 f </li>
 <li>使用 long 类型时必须在数字后面跟上 L</li>
 </ul>
-<h3 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h3><a id="more"></a>![优先级](https://gitee.com/huster_ning/image/raw/master/image/%E4%BC%98%E5%85%88%E7%BA%A7.PNG)
-
-* 静态变量与静态方法属于类所有，因此也叫作`类变量`、`类方法`（因此也能理解static方法中不能使用`this`和`super`关键字）， **静态变量只能在类主体中定义，不能在方法中定义**
-* 静态变量与实例变量的区别：静态变量在`编译时`内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了`实例对象`时，才会分配空间
-
-## 二、包
-**父包中的类不能直接引用子包中定义的类，import引用父包中所有的类不会引用子包中所有的类**
-### 基础包：`java.lang`
-
-* java.lang.Object
-> * 所有类的祖先
-> * 仅有一个默认构造方法
-> * 主要成员方法：
->> * equals(Object obj) : 判断是否为同一对象
->> * toString() : 返回对象的字符串表示，“类名@对象的十六进制哈希码”
-
-* 包装类
-> 1) 包装类覆盖了Object类的toString()方法，打印时返回对应字符串值
-> 2) 数值类都有`valueOf(Strings)`静态方法，用于创建包装类对象
-> 3) 数值类都有`parseXXX(Strings)`静态方法，用于将字符串转为对应的基本数据类型，`parseInteger(String, int radix)`按指定进制解析为十进制数
-
-## 三、String理解
-
-**`10.14补充内容：`**
+<h3 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h3><a id="more"></a>
+<p><img src="https://gitee.com/huster_ning/image/raw/master/image/%E4%BC%98%E5%85%88%E7%BA%A7.PNG" alt="优先级"></p>
+<ul>
+<li><p>静态变量与静态方法属于类所有，因此也叫作<code>类变量</code>、<code>类方法</code>（因此也能理解static方法中不能使用<code>this</code>和<code>super</code>关键字）， <strong>静态变量只能在类主体中定义，不能在方法中定义</strong></p>
+</li>
+<li><p>静态变量与实例变量的区别：静态变量在<code>编译时</code>内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了<code>实例对象</code>时，才会分配空间</p>
+</li>
+</ul>
+<h2 id="二、包"><a href="#二、包" class="headerlink" title="二、包"></a>二、包</h2><p><strong>父包中的类不能直接引用子包中定义的类，import引用父包中所有的类不会引用子包中所有的类</strong></p>
+<h3 id="基础包：java-lang"><a href="#基础包：java-lang" class="headerlink" title="基础包：java.lang"></a>基础包：<code>java.lang</code></h3><ul>
+<li><p>java.lang.Object</p>
+<blockquote>
+<ul>
+<li>所有类的祖先</li>
+<li>仅有一个默认构造方法</li>
+<li>主要成员方法：<blockquote>
+<ul>
+<li>equals(Object obj) : 判断是否为同一对象</li>
+<li>toString() : 返回对象的字符串表示，“类名@对象的十六进制哈希码”</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p>包装类</p>
+<blockquote>
+<p>1) 包装类覆盖了Object类的toString()方法，打印时返回对应字符串值<br>2) 数值类都有<code>valueOf(Strings)</code>静态方法，用于创建包装类对象<br>3) 数值类都有<code>parseXXX(Strings)</code>静态方法，用于将字符串转为对应的基本数据类型，<code>parseInteger(String, int radix)</code>按指定进制解析为十进制数</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="三、String理解"><a href="#三、String理解" class="headerlink" title="三、String理解"></a>三、String理解</h2><p><strong><code>10.14补充内容：</code></strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 下面代码中使用了StringBuilder类和 String.valueOf()方法</span></span><br><span class="line"><span class="comment">* </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">String s = <span class="string">"xinger"</span>;</span><br><span class="line">s = s + <span class="number">9</span>;<span class="comment">//s = "xinger9"</span></span><br><span class="line">s = s + <span class="keyword">new</span> Integer(<span class="number">9</span>);<span class="comment">//自动使用了String.valueOf()方法</span></span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>String是final类，不能被继承，字符串本身不可变<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">String s =<span class="string">"xinger"</span>;<span class="comment">//将常量池中“xinger"的地址赋给引用s</span></span><br><span class="line">s = <span class="string">"xingxin"</span>;<span class="comment">//创建了新的对象</span></span><br><span class="line">String s1 = <span class="string">"xin"</span>;</span><br><span class="line">String s2 = s1 + <span class="string">"ger"</span>;<span class="comment">//调用了StringBuilder类，创建了新</span></span><br><span class="line"><span class="comment">//的对象，s == s2为false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>String是final类，不能被继承，字符串本身不可变</p>
 </blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">String s =<span class="string">"xinger"</span>;<span class="comment">//将常量池中“xinger"的地址赋给引用s</span></span><br><span class="line">s = <span class="string">"xingxin"</span>;<span class="comment">//创建了新的对象</span></span><br><span class="line">String s1 = <span class="string">"xin"</span>;</span><br><span class="line">String s2 = s1 + <span class="string">"ger"</span>;<span class="comment">//调用了StringBuilder类，创建了新</span></span><br><span class="line"><span class="comment">//的对象，s == s2为false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>第二个s生成了新的对象</p>
-<p><strong><code>字符串常量的“+” 与字符串引用的“+”的区别:</code></strong></p>
-<p>前者在编译器完成，所得常量放在常量池中，后者在运行期间完成，在堆中创建了新的对象</p>
+<p><strong>字符串常量的“+” 与字符串引用的“+”的区别:</strong><br>前者在编译器完成，所得常量放在常量池中，后者在运行期间完成，在堆中创建了新的对象</p>
 <h3 id="2-字符串比较"><a href="#2-字符串比较" class="headerlink" title="2.字符串比较"></a>2.字符串比较</h3><ul>
 <li>== 比较引用而不是值</li>
 <li>equals(Object o) 比较值</li>
@@ -231,21 +240,21 @@
 <li>对象引用 变量 : stack</li>
 </ul>
 <h3 id="4-常用方法"><a href="#4-常用方法" class="headerlink" title="4.常用方法"></a>4.常用方法</h3><ul>
-<li><code>String[] split(String regex,int limit)</code><blockquote>
+<li><code>String[] split(String regex,int limit)</code></li>
+</ul>
+<blockquote>
 <p>用来分割字符串，limit用来限制匹配次数，并且获得的数组长度不能大于limit</p>
 </blockquote>
-</li>
-</ul>
 <h4 id="5-StringBuilder"><a href="#5-StringBuilder" class="headerlink" title="5.StringBuilder"></a>5.StringBuilder</h4><blockquote>
 <p><code>StringBuilder</code>是可变字符串，能够多次修改并且不产生新的对象，一个String不能直接给其赋初值，比如：<code>StringBuilder s = &quot;xinger&quot;</code>这是错误的</p>
 </blockquote>
 <h2 id="四、面向对象"><a href="#四、面向对象" class="headerlink" title="四、面向对象"></a>四、面向对象</h2><h3 id="修饰符访问权限"><a href="#修饰符访问权限" class="headerlink" title="修饰符访问权限"></a>修饰符访问权限</h3><blockquote>
-<p>修饰符的访问权限是java更是面向对象最最基础的知识点 </p>
+<p>修饰符的访问权限是java更是面向对象最最基础的知识点</p>
+</blockquote>
 <ul>
 <li>注意：无修饰符就是默认权限，也叫包访问权限，只能被同一包内类访问，与<code>protected</code>有细微区别</li>
 <li>外部类的定义<code>only public, abstract &amp; final</code></li>
 </ul>
-</blockquote>
 <p><img src="https://gitee.com/huster_ning/image/raw/master/image/%E4%BF%AE%E9%A5%B0%E7%AC%A6.jpg" alt="修饰符"></p>
 <ul>
 <li>类是对象的抽象，对象是类的实例</li>
@@ -633,7 +642,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、没有“对象”的java"><span class="toc-number">1.</span> <span class="toc-text">一、没有“对象”的java</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本类型"><span class="toc-number">1.1.</span> <span class="toc-text">基本类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运算符优先级"><span class="toc-number">1.2.</span> <span class="toc-text">运算符优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-字符串比较"><span class="toc-number">1.3.</span> <span class="toc-text">2.字符串比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-字符串常量池、堆、栈"><span class="toc-number">1.4.</span> <span class="toc-text">3.字符串常量池、堆、栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-常用方法"><span class="toc-number">1.5.</span> <span class="toc-text">4.常用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-StringBuilder"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.StringBuilder</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、面向对象"><span class="toc-number">2.</span> <span class="toc-text">四、面向对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#修饰符访问权限"><span class="toc-number">2.1.</span> <span class="toc-text">修饰符访问权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一、封装：隐藏细节、模块化"><span class="toc-number">2.2.</span> <span class="toc-text">一、封装：隐藏细节、模块化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、继承：是一种“is-a-kind-of”的关系"><span class="toc-number">2.3.</span> <span class="toc-text">二、继承：是一种“is a kind of”的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-继承的特点"><span class="toc-number">2.3.1.</span> <span class="toc-text">1.继承的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-继承的实现"><span class="toc-number">2.3.2.</span> <span class="toc-text">2.继承的实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、抽象类"><span class="toc-number">2.4.</span> <span class="toc-text">三、抽象类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、接口"><span class="toc-number">2.5.</span> <span class="toc-text">四、接口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#接口的功能"><span class="toc-number">2.5.1.</span> <span class="toc-text">接口的功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#接口与抽象类的区别"><span class="toc-number">2.5.2.</span> <span class="toc-text">接口与抽象类的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、多态"><span class="toc-number">2.6.</span> <span class="toc-text">五、多态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IO"><span class="toc-number">3.</span> <span class="toc-text">IO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#泛型"><span class="toc-number">4.</span> <span class="toc-text">泛型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常"><span class="toc-number">5.</span> <span class="toc-text">异常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程"><span class="toc-number">6.</span> <span class="toc-text">线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建线程"><span class="toc-number">6.1.</span> <span class="toc-text">创建线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动线程"><span class="toc-number">6.2.</span> <span class="toc-text">启动线程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UML"><span class="toc-number">7.</span> <span class="toc-text">UML</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#类的关系"><span class="toc-number">7.1.</span> <span class="toc-text">类的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见图模型"><span class="toc-number">7.2.</span> <span class="toc-text">常见图模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#静态模型："><span class="toc-number">7.2.1.</span> <span class="toc-text">静态模型：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动态态模型："><span class="toc-number">7.2.2.</span> <span class="toc-text">动态态模型：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设计模式"><span class="toc-number">8.</span> <span class="toc-text">设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-SOLID原则"><span class="toc-number">8.1.</span> <span class="toc-text">1.SOLID原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-OOD模式实例"><span class="toc-number">8.2.</span> <span class="toc-text">2.OOD模式实例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#观察者模式"><span class="toc-number">8.2.1.</span> <span class="toc-text">观察者模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#装饰者模式"><span class="toc-number">8.2.2.</span> <span class="toc-text">装饰者模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-OOD架构"><span class="toc-number">8.3.</span> <span class="toc-text">3.OOD架构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#模型-视图-控制器-Model-View-Controller-MVC"><span class="toc-number">8.3.1.</span> <span class="toc-text">模型-视图-控制器 Model-View-Controller (MVC)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三层程序设计模型-Three-tier-design-model"><span class="toc-number">8.3.2.</span> <span class="toc-text">三层程序设计模型 Three-tier design model</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、没有“对象”的java"><span class="toc-number">1.</span> <span class="toc-text">一、没有“对象”的java</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本类型"><span class="toc-number">1.1.</span> <span class="toc-text">基本类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运算符优先级"><span class="toc-number">1.2.</span> <span class="toc-text">运算符优先级</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、包"><span class="toc-number">2.</span> <span class="toc-text">二、包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础包：java-lang"><span class="toc-number">2.1.</span> <span class="toc-text">基础包：java.lang</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、String理解"><span class="toc-number">3.</span> <span class="toc-text">三、String理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-字符串比较"><span class="toc-number">3.1.</span> <span class="toc-text">2.字符串比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-字符串常量池、堆、栈"><span class="toc-number">3.2.</span> <span class="toc-text">3.字符串常量池、堆、栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-常用方法"><span class="toc-number">3.3.</span> <span class="toc-text">4.常用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-StringBuilder"><span class="toc-number">3.3.1.</span> <span class="toc-text">5.StringBuilder</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、面向对象"><span class="toc-number">4.</span> <span class="toc-text">四、面向对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#修饰符访问权限"><span class="toc-number">4.1.</span> <span class="toc-text">修饰符访问权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一、封装：隐藏细节、模块化"><span class="toc-number">4.2.</span> <span class="toc-text">一、封装：隐藏细节、模块化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、继承：是一种“is-a-kind-of”的关系"><span class="toc-number">4.3.</span> <span class="toc-text">二、继承：是一种“is a kind of”的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-继承的特点"><span class="toc-number">4.3.1.</span> <span class="toc-text">1.继承的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-继承的实现"><span class="toc-number">4.3.2.</span> <span class="toc-text">2.继承的实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、抽象类"><span class="toc-number">4.4.</span> <span class="toc-text">三、抽象类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、接口"><span class="toc-number">4.5.</span> <span class="toc-text">四、接口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#接口的功能"><span class="toc-number">4.5.1.</span> <span class="toc-text">接口的功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#接口与抽象类的区别"><span class="toc-number">4.5.2.</span> <span class="toc-text">接口与抽象类的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、多态"><span class="toc-number">4.6.</span> <span class="toc-text">五、多态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IO"><span class="toc-number">5.</span> <span class="toc-text">IO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#泛型"><span class="toc-number">6.</span> <span class="toc-text">泛型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常"><span class="toc-number">7.</span> <span class="toc-text">异常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程"><span class="toc-number">8.</span> <span class="toc-text">线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建线程"><span class="toc-number">8.1.</span> <span class="toc-text">创建线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动线程"><span class="toc-number">8.2.</span> <span class="toc-text">启动线程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UML"><span class="toc-number">9.</span> <span class="toc-text">UML</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#类的关系"><span class="toc-number">9.1.</span> <span class="toc-text">类的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见图模型"><span class="toc-number">9.2.</span> <span class="toc-text">常见图模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#静态模型："><span class="toc-number">9.2.1.</span> <span class="toc-text">静态模型：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动态态模型："><span class="toc-number">9.2.2.</span> <span class="toc-text">动态态模型：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设计模式"><span class="toc-number">10.</span> <span class="toc-text">设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-SOLID原则"><span class="toc-number">10.1.</span> <span class="toc-text">1.SOLID原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-OOD模式实例"><span class="toc-number">10.2.</span> <span class="toc-text">2.OOD模式实例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#观察者模式"><span class="toc-number">10.2.1.</span> <span class="toc-text">观察者模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#装饰者模式"><span class="toc-number">10.2.2.</span> <span class="toc-text">装饰者模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-OOD架构"><span class="toc-number">10.3.</span> <span class="toc-text">3.OOD架构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#模型-视图-控制器-Model-View-Controller-MVC"><span class="toc-number">10.3.1.</span> <span class="toc-text">模型-视图-控制器 Model-View-Controller (MVC)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三层程序设计模型-Three-tier-design-model"><span class="toc-number">10.3.2.</span> <span class="toc-text">三层程序设计模型 Three-tier design model</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -817,15 +826,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color5">深度学习</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">github</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">博客搭建</a>
+                <a href="javascript:void(0)" class="js-tag color5">论文阅读</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -837,11 +842,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">深度学习</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文阅读</a>
+                <a href="javascript:void(0)" class="js-tag color2">github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">博客搭建</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -978,22 +987,5 @@ MathJax.Hub.Queue(function() {
 
 </div>
   </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
 </body>
 </html>
