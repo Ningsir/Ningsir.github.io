@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="Xinger的博客">
 <meta property="og:description" content="本文主要讲述如何使用gitment给yilia主题添加评论功能 1. Register a new OAuth application注册OAuth">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2019/07/17/博客添加评论功能/注册.png">
-<meta property="og:image" content="http://yoursite.com/2019/07/17/博客添加评论功能/配置文件.png">
-<meta property="og:updated_time" content="2019-07-17T14:33:47.916Z">
+<meta property="og:image" content="https://gitee.com/huster_ning/image/raw/master/image/%E6%B3%A8%E5%86%8C.png">
+<meta property="og:image" content="https://gitee.com/huster_ning/image/raw/master/image/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.png">
+<meta property="og:updated_time" content="2020-05-22T03:02:54.613Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="博客添加评论功能">
 <meta name="twitter:description" content="本文主要讲述如何使用gitment给yilia主题添加评论功能 1. Register a new OAuth application注册OAuth">
-<meta name="twitter:image" content="http://yoursite.com/2019/07/17/博客添加评论功能/注册.png">
+<meta name="twitter:image" content="https://gitee.com/huster_ning/image/raw/master/image/%E6%B3%A8%E5%86%8C.png">
   
     <link rel="alternative" href="/atom.xml" title="Xinger的博客" type="application/atom+xml">
   
@@ -181,8 +181,10 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>本文主要讲述如何使用gitment给yilia主题添加评论功能</p>
-<h3 id="1-Register-a-new-OAuth-application"><a href="#1-Register-a-new-OAuth-application" class="headerlink" title="1. Register a new OAuth application"></a>1. Register a new OAuth application</h3><p><a href="https://github.com/settings/applications/new" target="_blank" rel="noopener">注册OAuth</a><br><a id="more"></a><br><img src="/2019/07/17/博客添加评论功能/注册.png" alt="注册"><br>注册完成后能够得到<code>Client ID</code>和<code>Client Serect</code></p>
-<h3 id="2-修改配置文件"><a href="#2-修改配置文件" class="headerlink" title="2. 修改配置文件"></a>2. 修改配置文件</h3><p>修改<code>themes/hexo-theme-yilia/_config.yml</code>下的配置文件（注意不是修改根目录下的_config.yml文件）<br>如下图所示<br><img src="/2019/07/17/博客添加评论功能/配置文件.png" alt="配置文件"><br>最后如果不出问题的话<code>hexo g``hexo d</code>应该就行了</p>
+<h3 id="1-Register-a-new-OAuth-application"><a href="#1-Register-a-new-OAuth-application" class="headerlink" title="1. Register a new OAuth application"></a>1. Register a new OAuth application</h3><p><a href="https://github.com/settings/applications/new" target="_blank" rel="noopener">注册OAuth</a><br><a id="more"></a></p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master/image/%E6%B3%A8%E5%86%8C.png" alt="注册"></p>
+<p>注册完成后能够得到<code>Client ID</code>和<code>Client Serect</code></p>
+<h3 id="2-修改配置文件"><a href="#2-修改配置文件" class="headerlink" title="2. 修改配置文件"></a>2. 修改配置文件</h3><p>修改<code>themes/hexo-theme-yilia/_config.yml</code>下的配置文件（注意不是修改根目录下的_config.yml文件）<br>如下图所示<br><img src="https://gitee.com/huster_ning/image/raw/master/image/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.png" alt="配置文件"><br>最后如果不出问题的话<code>hexo g</code> 、<code>hexo d</code>应该就行了</p>
 <h3 id="3-解决一些遇到的bug"><a href="#3-解决一些遇到的bug" class="headerlink" title="3. 解决一些遇到的bug"></a>3. 解决一些遇到的bug</h3><h4 id="bug：github-api-error-redirect-uri-mismatch"><a href="#bug：github-api-error-redirect-uri-mismatch" class="headerlink" title="bug：github-api-error-redirect-uri-mismatch"></a>bug：github-api-error-redirect-uri-mismatch</h4><p><a href="https://stackoverflow.com/questions/34730153/github-api-error-redirect-uri-mismatch" target="_blank" rel="noopener">参考Stack Overflow</a></p>
 <h4 id="bug：object-ProgressEvent"><a href="#bug：object-ProgressEvent" class="headerlink" title="bug：object ProgressEvent"></a>bug：object ProgressEvent</h4><p>由于服务器认证域名过期，修改服务器即可，<br>修改<code>themes/hexo-theme-yilia/layout/_partial/post/gitment.ejs</code>文件<br>将如下代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;//imsun.github.io/gitment/style/default.css&quot;&gt;</span><br><span class="line">&lt;script src=&quot;//imsun.github.io/gitment/dist/gitment.browser.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
 <p>修改成如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css&quot;&gt;</span><br><span class="line">&lt;script src=&quot;https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
