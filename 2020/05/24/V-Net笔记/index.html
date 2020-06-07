@@ -9,7 +9,7 @@
   <title>V-Net笔记 | Xinger的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="1. 介绍V-Net用于3D图像分割（基于3D卷积），引入了新的目标函数（Dice coefficient）,采用random non-linear transformation和histogram matching的数据扩充方法。 2. 网络结构">
-<meta name="keywords" content="深度学习,神经网络">
+<meta name="keywords" content="论文阅读,深度学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="V-Net笔记">
 <meta property="og:url" content="http://yoursite.com/2020/05/24/V-Net笔记/index.html">
@@ -17,8 +17,7 @@
 <meta property="og:description" content="1. 介绍V-Net用于3D图像分割（基于3D卷积），引入了新的目标函数（Dice coefficient）,采用random non-linear transformation和histogram matching的数据扩充方法。 2. 网络结构">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://gitee.com/huster_ning/image/raw/master/image/Snipaste_2020-05-27_21-15-06.jpg">
-<meta property="og:image" content="https://gitee.com/huster_ning/image/raw/master/image/Snipaste_2020-05-27_15-22-11.jpg">
-<meta property="og:updated_time" content="2020-05-27T13:17:49.132Z">
+<meta property="og:updated_time" content="2020-06-06T06:35:45.135Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="V-Net笔记">
 <meta name="twitter:description" content="1. 介绍V-Net用于3D图像分割（基于3D卷积），引入了新的目标函数（Dice coefficient）,采用random non-linear transformation和histogram matching的数据扩充方法。 2. 网络结构">
@@ -189,7 +188,7 @@
 <li>卷积代替池化：能够有更小的内存占用，网络性能更好</li>
 <li>element-wise sum操作：如下图所示，首先16个x执行cat操作得到x16, 得到的x16的维度与out一致，<code>element-wise sum</code>操作就是将x16和out的对应像素点执行相加操作。</li>
 </ul>
-<p><img src="https://gitee.com/huster_ning/image/raw/master/image/Snipaste_2020-05-27_15-22-11.jpg" alt="Snipaste_2020-05-27_15-22-11"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">    <span class="comment"># do we want a PRELU here as well?</span></span><br><span class="line">    out = self.bn1(self.conv1(x))</span><br><span class="line">    <span class="comment"># split input in to 16 channels</span></span><br><span class="line">    <span class="comment"># 增加通道数与out一致</span></span><br><span class="line">    x16 = torch.cat((x, x, x, x, x, x, x, x,</span><br><span class="line">                     x, x, x, x, x, x, x, x), <span class="number">0</span>)</span><br><span class="line">    <span class="comment"># 执行element-wise sum操作之后在执行relu1</span></span><br><span class="line">    out = self.relu1(torch.add(out, x16))</span><br><span class="line">    <span class="keyword">return</span> out</span><br></pre></td></tr></table></figure>
 <h2 id="2-2-解压缩路径"><a href="#2-2-解压缩路径" class="headerlink" title="2.2 解压缩路径"></a>2.2 解压缩路径</h2><p>在解压缩路径中，与<code>U-Net</code>类似，将网络左侧部分的早期阶段提取的特征转发到右侧部分，即网络结构图中的<code>Fine-grained features forwarding</code>操作。通过这种方式，可以收集在压缩路径中丢失的细粒度细节，并且可以提高最终轮廓预测的质量。每个阶段采用反卷积操作，将分辨率提高到原来的两倍，并且通道数变为原来的一半。最后使用一个<code>1 x 1 x 1</code>的卷积得到与输入大小相同的结果，并使用softmax函数得到概率分割图。</p>
 <ul>
 <li><code>Fine-grained features fowarding</code>: 左侧特征图与右侧对应特征图执行拼接操作。 </li>
@@ -213,7 +212,12 @@ s=\frac{2|X \bigcap Y|}{|X|+|Y|}</script><p> $|X \bigcap Y|$ 表示X 和 Y 之�
 <script type="math/tex; mode=display">
 D=\frac{2 \sum_{i}^{N} p_{i} g_{i}}{\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}}</script><p>其中pi为预测结果，gi为实际结果。Dice系数的梯度为：</p>
 <script type="math/tex; mode=display">
-\frac{\partial D}{\partial p_{j}}=2\left[\frac{g_{j}\left(\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}\right)-2 p_{j}\left(\sum_{i}^{N} p_{i} g_{i}\right)}{\left(\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}\right)^{2}}\right]</script><h2 id="3-3-Dice系数的Pytorch实现"><a href="#3-3-Dice系数的Pytorch实现" class="headerlink" title="3.3 Dice系数的Pytorch实现"></a>3.3 Dice系数的Pytorch实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dice_loss</span><span class="params">(pred, target)</span>:</span></span><br><span class="line">    <span class="string">"""This definition generalize to real valued pred and target vector.</span></span><br><span class="line"><span class="string">This should be differentiable.</span></span><br><span class="line"><span class="string">    pred: tensor with first dimension as batch</span></span><br><span class="line"><span class="string">    target: tensor with first dimension as batch</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">smooth = <span class="number">1.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># have to use contiguous since they may from a torch.view op</span></span><br><span class="line">iflat = pred.contiguous().view(<span class="number">-1</span>)</span><br><span class="line">tflat = target.contiguous().view(<span class="number">-1</span>)</span><br><span class="line">intersection = (iflat * tflat).sum()</span><br><span class="line"></span><br><span class="line">A_sum = torch.sum(iflat * iflat)</span><br><span class="line">B_sum = torch.sum(tflat * tflat)</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span> - ((<span class="number">2.</span> * intersection + smooth) / (A_sum + B_sum + smooth) )</span><br></pre></td></tr></table></figure>
+\frac{\partial D}{\partial p_{j}}=2\left[\frac{g_{j}\left(\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}\right)-2 p_{j}\left(\sum_{i}^{N} p_{i} g_{i}\right)}{\left(\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}\right)^{2}}\right]</script><h2 id="3-3-Dice系数的Pytorch实现"><a href="#3-3-Dice系数的Pytorch实现" class="headerlink" title="3.3 Dice系数的Pytorch实现"></a>3.3 Dice系数的Pytorch实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dice_loss</span><span class="params">(pred, target)</span>:</span></span><br><span class="line">    <span class="string">"""This definition generalize to real valued pred and target vector.</span></span><br><span class="line"><span class="string">This should be differentiable.</span></span><br><span class="line"><span class="string">    pred: tensor with first dimension as batch</span></span><br><span class="line"><span class="string">    target: tensor with first dimension as batch</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">smooth = <span class="number">1.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># have to use contiguous since they may from a torch.view op</span></span><br><span class="line">iflat = pred.contiguous().view(<span class="number">-1</span>)</span><br><span class="line">tflat = target.contiguous().view(<span class="number">-1</span>)</span><br><span class="line">intersection = (iflat * tflat).sum()</span><br><span class="line"></span><br><span class="line">A_sum = torch.sum(iflat * iflat)</span><br><span class="line">B_sum = torch.sum(tflat * tflat)</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> (<span class="number">2.</span> * intersection + smooth) / (A_sum + B_sum + smooth)</span><br></pre></td></tr></table></figure>
+<h1 id="4-训练"><a href="#4-训练" class="headerlink" title="4. 训练"></a>4. 训练</h1><p>训练时主要采用下面的数据增强方法：</p>
+<ul>
+<li>使用<code>2 x 2 x 2</code>的网格控制点和<code>B-spline interpolation</code>(B样条插值)来获得稠密的形变场对图像进行非线性形变；</li>
+<li>使用直方图匹配来获得不同的灰度分布的图像。 </li>
+</ul>
 
       
 
@@ -253,11 +257,11 @@ D=\frac{2 \sum_{i}^{N} p_{i} g_{i}}{\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">论文阅读</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">神经网络</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
         		</li>
       		
 		</ul>
@@ -327,6 +331,15 @@ D=\frac{2 \sum_{i}^{N} p_{i} g_{i}}{\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2
   
 <nav id="article-nav">
   
+    <a href="/2020/06/03/3D-UNet笔记/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          3D-UNet笔记
+        
+      </div>
+    </a>
+  
   
     <a href="/2020/05/21/U-net笔记/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">U-net笔记</div>
@@ -356,7 +369,7 @@ D=\frac{2 \sum_{i}^{N} p_{i} g_{i}}{\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-介绍"><span class="toc-number">1.</span> <span class="toc-text">1. 介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-网络结构"><span class="toc-number">2.</span> <span class="toc-text">2. 网络结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-压缩路径"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 压缩路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-解压缩路径"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 解压缩路径</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-Dice-loss-layer"><span class="toc-number">3.</span> <span class="toc-text">3. Dice loss layer</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-Dice系数"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 Dice系数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-Dice系数在医学图像分割中的应用"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 Dice系数在医学图像分割中的应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-Dice系数的Pytorch实现"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 Dice系数的Pytorch实现</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-介绍"><span class="toc-number">1.</span> <span class="toc-text">1. 介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-网络结构"><span class="toc-number">2.</span> <span class="toc-text">2. 网络结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-压缩路径"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 压缩路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-解压缩路径"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 解压缩路径</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-Dice-loss-layer"><span class="toc-number">3.</span> <span class="toc-text">3. Dice loss layer</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-Dice系数"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 Dice系数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-Dice系数在医学图像分割中的应用"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 Dice系数在医学图像分割中的应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-Dice系数的Pytorch实现"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 Dice系数的Pytorch实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-训练"><span class="toc-number">4.</span> <span class="toc-text">4. 训练</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -556,6 +569,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文阅读</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">深度学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
@@ -564,11 +585,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">深度学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">神经网络</a>
+                <a href="javascript:void(0)" class="js-tag color1">yilia</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -576,11 +593,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">yilia</a>
+                <a href="javascript:void(0)" class="js-tag color2">阿里云服务器</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">阿里云服务器</a>
+                <a href="javascript:void(0)" class="js-tag color2">卷积神经网络</a>
               </li>
             
             <div class="clearfix"></div>
