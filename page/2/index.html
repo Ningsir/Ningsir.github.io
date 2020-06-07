@@ -6,22 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>V-Net笔记 | Xinger的博客</title>
+  <title>Xinger的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. 介绍V-Net用于3D图像分割（基于3D卷积），引入了新的目标函数（Dice coefficient）,采用random non-linear transformation和histogram matching的数据扩充方法。 2. 网络结构">
-<meta name="keywords" content="深度学习,论文阅读">
-<meta property="og:type" content="article">
-<meta property="og:title" content="V-Net笔记">
-<meta property="og:url" content="http://yoursite.com/2020/05/24/V-Net笔记/index.html">
+  <meta name="description" content="华中科技大学17级本科生">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Xinger的博客">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
 <meta property="og:site_name" content="Xinger的博客">
-<meta property="og:description" content="1. 介绍V-Net用于3D图像分割（基于3D卷积），引入了新的目标函数（Dice coefficient）,采用random non-linear transformation和histogram matching的数据扩充方法。 2. 网络结构">
+<meta property="og:description" content="华中科技大学17级本科生">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://gitee.com/huster_ning/image/raw/master/image/Snipaste_2020-05-27_21-15-06.jpg">
-<meta property="og:updated_time" content="2020-06-06T06:35:45.135Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="V-Net笔记">
-<meta name="twitter:description" content="1. 介绍V-Net用于3D图像分割（基于3D卷积），引入了新的目标函数（Dice coefficient）,采用random non-linear transformation和histogram matching的数据扩充方法。 2. 网络结构">
-<meta name="twitter:image" content="https://gitee.com/huster_ning/image/raw/master/image/Snipaste_2020-05-27_21-15-06.jpg">
+<meta name="twitter:title" content="Xinger的博客">
+<meta name="twitter:description" content="华中科技大学17级本科生">
   
     <link rel="alternative" href="/atom.xml" title="Xinger的博客" type="application/atom+xml">
   
@@ -153,100 +149,36 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-V-Net笔记" class="article article-type-post " itemscope itemprop="blogPost">
+            
+  
+    <article id="post-jdbc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
-      V-Net笔记
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/05/jdbc/">jdbc</a>
     </h1>
   
 
         
         
-        <!-- 不蒜子统计 -->
-        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
-              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
-        </span>
-
-<a href="/2020/05/24/V-Net笔记/" class="archive-article-date">
-  	<time datetime="2020-05-24T09:22:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-24</time>
+<a href="/2018/10/05/jdbc/" class="archive-article-date">
+  	<time datetime="2018-10-05T10:40:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h1><p>V-Net用于3D图像分割（基于3D卷积），引入了新的目标函数（<code>Dice coefficient</code>）,采用<code>random non-linear transformation</code>和<code>histogram matching</code>的数据扩充方法。</p>
-<h1 id="2-网络结构"><a href="#2-网络结构" class="headerlink" title="2. 网络结构"></a>2. 网络结构</h1><p><img src="https://gitee.com/huster_ning/image/raw/master/image/Snipaste_2020-05-27_21-15-06.jpg" alt="Snipaste_2020-05-27_21-15-06"></p>
-<a id="more"></a>
-<p>网络的左侧部分由压缩路径组成，而右侧部分解压缩直到达到其原始大小。</p>
-<h2 id="2-1-压缩路径"><a href="#2-1-压缩路径" class="headerlink" title="2.1 压缩路径"></a>2.1 压缩路径</h2><p>压缩路径中每个阶段中执行几次<code>5 x 5 x 5</code>大小的卷积操作，卷积之后使用<code>PReLU</code>函数进行非线性化操作，然后执行<code>element-wise sum</code>操作，再执行步幅为2的<code>2 x 2 x 2</code>的卷积（该步骤是使用卷积代替池化操作），将分辨率变为原来的一半。每个阶段执行完后，通道数变为原来的两倍。</p>
-<ul>
-<li>卷积代替池化：能够有更小的内存占用，网络性能更好</li>
-<li>element-wise sum操作：如下图所示，首先16个x执行cat操作得到x16, 得到的x16的维度与out一致，<code>element-wise sum</code>操作就是将x16和out的对应像素点执行相加操作。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">    <span class="comment"># do we want a PRELU here as well?</span></span><br><span class="line">    out = self.bn1(self.conv1(x))</span><br><span class="line">    <span class="comment"># split input in to 16 channels</span></span><br><span class="line">    <span class="comment"># 增加通道数与out一致</span></span><br><span class="line">    x16 = torch.cat((x, x, x, x, x, x, x, x,</span><br><span class="line">                     x, x, x, x, x, x, x, x), <span class="number">0</span>)</span><br><span class="line">    <span class="comment"># 执行element-wise sum操作之后在执行relu1</span></span><br><span class="line">    out = self.relu1(torch.add(out, x16))</span><br><span class="line">    <span class="keyword">return</span> out</span><br></pre></td></tr></table></figure>
-<h2 id="2-2-解压缩路径"><a href="#2-2-解压缩路径" class="headerlink" title="2.2 解压缩路径"></a>2.2 解压缩路径</h2><p>在解压缩路径中，与<code>U-Net</code>类似，将网络左侧部分的早期阶段提取的特征转发到右侧部分，即网络结构图中的<code>Fine-grained features forwarding</code>操作。通过这种方式，可以收集在压缩路径中丢失的细粒度细节，并且可以提高最终轮廓预测的质量。每个阶段采用反卷积操作，将分辨率提高到原来的两倍，并且通道数变为原来的一半。最后使用一个<code>1 x 1 x 1</code>的卷积得到与输入大小相同的结果，并使用softmax函数得到概率分割图。</p>
-<ul>
-<li><code>Fine-grained features fowarding</code>: 左侧特征图与右侧对应特征图执行拼接操作。 </li>
-</ul>
-<h1 id="3-Dice-loss-layer"><a href="#3-Dice-loss-layer" class="headerlink" title="3. Dice loss layer"></a>3. Dice loss layer</h1><h2 id="3-1-Dice系数"><a href="#3-1-Dice系数" class="headerlink" title="3.1 Dice系数"></a>3.1 Dice系数</h2><p>参考博客<a href="https://www.aiuai.cn/aifarm1159.html" target="_blank" rel="noopener">医学图像分割之 Dice Loss</a></p>
-<p>Dice系数，是一种集合相似度度量函数，通常用于计算两个样本的相似度（值范围为[0, 1]）:</p>
-<script type="math/tex; mode=display">
-s=\frac{2|X \bigcap Y|}{|X|+|Y|}</script><p> $|X \bigcap Y|$ 表示X 和 Y 之间的交集；|X| 和 |Y| 分别表示 X 和 Y 的元素个数. 其中，分子中的系数 2，是因为分母存在重复计算 X 和 Y 之间的共同元素的原因.</p>
-<p>在真正计算时可以将 |X⋂Y| 近似为预测图与 GT 分割图之间的点乘，并将点乘的元素结果相加求和：</p>
-<script type="math/tex; mode=display">|X \bigcap Y|=\left[\begin{array}{cccc}
-0.01 & 0.03 & 0.02 & 0.02 \\
-0.05 & 0.12 & 0.09 & 0.07 \\
-0.89 & 0.85 & 0.88 & 0.91 \\
-0.99 & 0.97 & 0.95 & 0.97
-\end{array}\right] *\left[\begin{array}{cccc}
-0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 \\
-1 & 1 & 1 & 1 \\
-1 & 1 & 1 & 1
-\end{array}\right]</script><h2 id="3-2-Dice系数在医学图像分割中的应用"><a href="#3-2-Dice系数在医学图像分割中的应用" class="headerlink" title="3.2 Dice系数在医学图像分割中的应用"></a>3.2 Dice系数在医学图像分割中的应用</h2><p>在以前的损失函数中，前景区域在学习期间比背景区域更重要。在V-Net中提出了一个基于Dice系数的新的目标函数，目标是求最大值。</p>
-<script type="math/tex; mode=display">
-D=\frac{2 \sum_{i}^{N} p_{i} g_{i}}{\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}}</script><p>其中pi为预测结果，gi为实际结果。Dice系数的梯度为：</p>
-<script type="math/tex; mode=display">
-\frac{\partial D}{\partial p_{j}}=2\left[\frac{g_{j}\left(\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}\right)-2 p_{j}\left(\sum_{i}^{N} p_{i} g_{i}\right)}{\left(\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}\right)^{2}}\right]</script><h2 id="3-3-Dice系数的Pytorch实现"><a href="#3-3-Dice系数的Pytorch实现" class="headerlink" title="3.3 Dice系数的Pytorch实现"></a>3.3 Dice系数的Pytorch实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dice_loss</span><span class="params">(pred, target)</span>:</span></span><br><span class="line">    <span class="string">"""This definition generalize to real valued pred and target vector.</span></span><br><span class="line"><span class="string">This should be differentiable.</span></span><br><span class="line"><span class="string">    pred: tensor with first dimension as batch</span></span><br><span class="line"><span class="string">    target: tensor with first dimension as batch</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">smooth = <span class="number">1.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># have to use contiguous since they may from a torch.view op</span></span><br><span class="line">iflat = pred.contiguous().view(<span class="number">-1</span>)</span><br><span class="line">tflat = target.contiguous().view(<span class="number">-1</span>)</span><br><span class="line">intersection = (iflat * tflat).sum()</span><br><span class="line"></span><br><span class="line">A_sum = torch.sum(iflat * iflat)</span><br><span class="line">B_sum = torch.sum(tflat * tflat)</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> (<span class="number">2.</span> * intersection + smooth) / (A_sum + B_sum + smooth)</span><br></pre></td></tr></table></figure>
-<h1 id="4-训练"><a href="#4-训练" class="headerlink" title="4. 训练"></a>4. 训练</h1><p>训练时主要采用下面的数据增强方法：</p>
-<ul>
-<li>使用<code>2 x 2 x 2</code>的网格控制点和<code>B-spline interpolation</code>(B样条插值)来获得稠密的形变场对图像进行非线性形变；</li>
-<li>使用直方图匹配来获得不同的灰度分布的图像。 </li>
-</ul>
-
+        <h1 id="1-JDBC连接MySql"><a href="#1-JDBC连接MySql" class="headerlink" title="1.JDBC连接MySql"></a>1.JDBC连接MySql</h1><p>首先新建一个数据库，<code>create database new_database</code>,<code>use new_database</code>,<code>create new_table(.....)</code>,注意mysql命令<br>要有冒号作为一个语句的结束，然后需要下载驱动包，<a href="http://downloads.mysql.com/archives/c-j/" target="_blank" rel="noopener">http://downloads.mysql.com/archives/c-j/</a>, 解压导入到项目中即可</p>
+<p><font color="#DC1818">注意：下面的代码中的<code>Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;)</code>    注册驱动文件 ，与网上的教程<code>Class.forName(&quot;com.mysql.jdbc.Driver&quot;)</code>有所区别，是由于驱动包版本不同所致，请注意区分</font><br></p>
+        
+          <a class="article-more-a" href="/2018/10/05/jdbc/#more">more >></a>
+        
       
 
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/alipay.jpg">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -257,11 +189,7 @@ D=\frac{2 \sum_{i}^{N} p_{i} g_{i}}{\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">论文阅读</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">SQL</a>
         		</li>
       		
 		</ul>
@@ -270,84 +198,16 @@ D=\frac{2 \sum_{i}^{N} p_{i} g_{i}}{\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2
       
 
       
-
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/05/jdbc/">展开全文 >></a>
+        </p>
       
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
-        </div>
-      </div>
-    </span>
-  </div>
-</div>
 
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/24/V-Net笔记/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2020/06/03/3D-UNet笔记/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          3D-UNet笔记
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2020/05/21/U-net笔记/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">U-net笔记</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -362,59 +222,103 @@ D=\frac{2 \sum_{i}^{N} p_{i} g_{i}}{\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2
         </div>
         
         
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-介绍"><span class="toc-number">1.</span> <span class="toc-text">1. 介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-网络结构"><span class="toc-number">2.</span> <span class="toc-text">2. 网络结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-压缩路径"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 压缩路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-解压缩路径"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 解压缩路径</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-Dice-loss-layer"><span class="toc-number">3.</span> <span class="toc-text">3. Dice loss layer</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-Dice系数"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 Dice系数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-Dice系数在医学图像分割中的应用"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 Dice系数在医学图像分割中的应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-Dice系数的Pytorch实现"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 Dice系数的Pytorch实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-训练"><span class="toc-number">4.</span> <span class="toc-text">4. 训练</span></a></li></ol>
-                    </div>
-                </span>
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-First-blog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/05/First-blog/">First blog</a>
+    </h1>
+  
+
+        
+        
+<a href="/2018/10/05/First-blog/" class="archive-article-date">
+  	<time datetime="2018-10-05T01:49:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Hexo-GitHub搭建个人博客"><a href="#Hexo-GitHub搭建个人博客" class="headerlink" title="Hexo+GitHub搭建个人博客"></a>Hexo+GitHub搭建个人博客</h1><h2 id="1-Hexo搭建GitHub-Pages"><a href="#1-Hexo搭建GitHub-Pages" class="headerlink" title="1.Hexo搭建GitHub Pages"></a>1.Hexo搭建GitHub Pages</h2><p>由于大部分过程官方文档中都有详细说明，本文不在讲述。我主要讲述一下如何搭建GitHub Pages:<br>首先在Hexo目录下找到配置文件_config.yml,然后修改deploy中的内容:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https://github.com/your_github_name/your_github_name.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
+<p>其中repo是你的github仓库网址<br>最后使用命令hexo s 生成静态文件，hexo d 发布博客</p>
+        
+          <a class="article-more-a" href="/2018/10/05/First-blog/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">github</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">博客搭建</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/05/First-blog/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
             </div>
         </div>
+        
         
     </div>
 </aside>
 
 
 
-  
-  
-  
-  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
-<script>
-  var cloudTieConfig = {
-    url: "http://yoursite.com/2020/05/24/V-Net笔记/", 
-    sourceId: "V-Net笔记",
-    productKey: "true",
-    target: "cloud-tie-wrapper"
-  };
-</script>
-<script src="//img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
-  
 
   
-
   
-
-  
-  <div id="gitment-ctn"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css">
-<script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.js"></script> 
-<script>
-var gitment = new Gitment({
-  id: "http://yoursite.com/2020/05/24/V-Net笔记/",
-  owner: 'Ningsir',
-  repo: 'Ningsir.github.io',
-  oauth: {
-    client_id: 'a96b66a633906885dd0d',
-    client_secret: '2455b6c50c8f1942b4f57da96eeeb7177f81fb88',
-  },
-})
-gitment.render('gitment-ctn')
-</script>
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </nav>
   
 
 
@@ -452,8 +356,8 @@ gitment.render('gitment-ctn')
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: false,
-		isPost: true,
+		isHome: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

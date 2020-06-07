@@ -176,84 +176,9 @@
 <ul>
 <li>设置启动顺序：如下图所示，将光驱启动调到最前面。</li>
 </ul>
-<p><img src="http://image.ningxin.site/20200603230721.png" alt=""></p>
-<ul>
-<li>如下选择镜像文件的存放位置：</li>
-</ul>
-<p><img src="http://image.ningxin.site/20200603230506.png" alt=""></p>
-<p>完成上述操作后，点击运行进行虚拟机的安装。重复操作，安装如下四台虚拟机，其中ubuntu作为master，slave1、slave2、slave3作为slave。</p>
-<p><img src="http://image.ningxin.site/20200603231706.png" alt=""></p>
-<h2 id="1-2-配置Hadoop环境"><a href="#1-2-配置Hadoop环境" class="headerlink" title="1.2 配置Hadoop环境"></a>1.2 配置Hadoop环境</h2><h3 id="1-2-3-前置条件"><a href="#1-2-3-前置条件" class="headerlink" title="1.2.3 前置条件"></a>1.2.3 前置条件</h3><h4 id="1-2-3-1-编辑hostname文件"><a href="#1-2-3-1-编辑hostname文件" class="headerlink" title="1.2.3.1 编辑hostname文件"></a>1.2.3.1 编辑hostname文件</h4><p>使用<code>hostnamectl set-hostname</code>命令设置hostname分别为master、slave1、slave2、slave3</p>
-<p><img src="http://image.ningxin.site/20200603232421.png" alt=""></p>
-<h4 id="1-2-3-2-编辑hosts文件"><a href="#1-2-3-2-编辑hosts文件" class="headerlink" title="1.2.3.2 编辑hosts文件"></a>1.2.3.2 编辑hosts文件</h4><p>hosts文件用来记录IP和hostname之间的对应关系。使用<code>ifconfig</code>命令来查看IP地址，最后发现4台虚拟机的IP地址是一样的，需要修改网线连接方式，如下选择<code>桥接网卡</code>即可：<br><img src="http://image.ningxin.site/20200603232752.png" alt=""></p>
-<p>然后修改<code>/etc/hosts</code>文件，如下所示：</p>
-<p><img src="http://image.ningxin.site/20200603232949.png" alt=""></p>
-<h4 id="1-2-3-3-配置ssh免密登录"><a href="#1-2-3-3-配置ssh免密登录" class="headerlink" title="1.2.3.3 配置ssh免密登录"></a>1.2.3.3 配置ssh免密登录</h4><p>在master上使用<code>ssh-keygen -t rsa</code>命令生成密钥（保存在<code>~/.ssh</code>目录下），然后将公钥上传到slave的<code>~/.ssh/authorized_keys</code>中即可。</p>
-<h2 id="1-2-安装并配置jdk"><a href="#1-2-安装并配置jdk" class="headerlink" title="1.2 安装并配置jdk"></a>1.2 安装并配置jdk</h2><p>首先在Windows上下载<code>jdk-8u251-linux-x64.tar.gz</code>，然后使用pscp工具上传到Linux虚拟机上。</p>
-<p><img src="http://image.ningxin.site/20200602154744.png" alt=""></p>
-<p>将jdk解压在<code>/usr/java/</code>目录下，然后配置java环境变量，在<code>/etc/profile</code>文件中添加如下内容，然后运行<code>source /etc/profile</code>命令使环境变量生效：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/java/jdk1.8.0_251</span><br><span class="line">export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/LIB:$JAVA_HOME/jre/lib</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin:$JAVA_HOME/jre/bin</span><br></pre></td></tr></table></figure>
-<h2 id="1-3-安装并配置Hadoop"><a href="#1-3-安装并配置Hadoop" class="headerlink" title="1.3 安装并配置Hadoop"></a>1.3 安装并配置Hadoop</h2><h3 id="1-3-1-配置环境变量"><a href="#1-3-1-配置环境变量" class="headerlink" title="1.3.1 配置环境变量"></a>1.3.1 配置环境变量</h3><p>先从Windows上下载Hadoop2.10.0并上传到Linux虚拟机上，解压到<code>/usr/hadoop/</code>目录下，然后添加如下环境变量：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_HOME=/usr/hadoop/hadoop-2.10.0</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</span><br></pre></td></tr></table></figure>
-<h3 id="1-3-2-配置相关配置文件"><a href="#1-3-2-配置相关配置文件" class="headerlink" title="1.3.2 配置相关配置文件"></a>1.3.2 配置相关配置文件</h3><p>以下提到的配置文件都位于<code>etc/hadoop/</code>目录下。</p>
-<p><img src="http://image.ningxin.site/20200604105619.png" alt=""></p>
-<p>注意：只需要修改master中的Hadoop配置文件，然后将配置好的Hadoop上传到slave中去即可，避免重复配置的麻烦。</p>
-<h4 id="1-3-2-1-hadoop-env-sh-和-yarn-env-sh"><a href="#1-3-2-1-hadoop-env-sh-和-yarn-env-sh" class="headerlink" title="1.3.2.1 hadoop-env.sh 和 yarn-env.sh"></a>1.3.2.1 hadoop-env.sh 和 yarn-env.sh</h4><p>两个文件都是修改<code>JAVA_HOME</code>的值，需要使用实际的路径，而不是环境变量。<br><img src="http://image.ningxin.site/20200602161801.png" alt=""></p>
-<h4 id="1-3-2-2-core-site-xml"><a href="#1-3-2-2-core-site-xml" class="headerlink" title="1.3.2.2 core-site.xml"></a>1.3.2.2 core-site.xml</h4><p>配置监听端口和缓存目录，缓存目录不存在则需要创建。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">	# HDFS Web UI 监听端口配置</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">		&lt;value&gt;hdfs://master:8020&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">	</span><br><span class="line">	# hadoop 缓存目录，更改为自己的目录（从根目录开始，不存在需创建）</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">		&lt;value&gt;file:/root/software/hadooptmp&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="1-3-2-3-hdfs-site-xml"><a href="#1-3-2-3-hdfs-site-xml" class="headerlink" title="1.3.2.3 hdfs-site.xml"></a>1.3.2.3 hdfs-site.xml</h4><p>需要创建HDFS存储目录，namenode用来存储namenode文件，data存储datanode数据，tmp存储临时文件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">usr/hadoop/hadoop-2.10.0/hdfs/namenode</span><br><span class="line">usr/hadoop/hadoop-2.10.0/hdfs/data</span><br><span class="line">usr/hadoop/hadoop-2.10.0/hdfs/tmp</span><br></pre></td></tr></table></figure>
-<p><img src="http://image.ningxin.site/20200602164047.png" alt=""></p>
-<h4 id="1-3-2-4-mapred-site-xml"><a href="#1-3-2-4-mapred-site-xml" class="headerlink" title="1.3.2.4 mapred-site.xml"></a>1.3.2.4 mapred-site.xml</h4><p><code>mapred-site.xml</code>文件需要从<code>mapred-site.xml.template</code>使用cp命令生成：<br><code>cp mapred-site.xml.template mapred-site.xml</code>。然后设置MapReduce运行于yarn上：</p>
-<p><img src="http://image.ningxin.site/20200602164356.png" alt=""></p>
-<h4 id="1-3-2-5-yarn-site-xml"><a href="#1-3-2-5-yarn-site-xml" class="headerlink" title="1.3.2.5 yarn-site.xml"></a>1.3.2.5 yarn-site.xml</h4><p><img src="http://image.ningxin.site/20200602164735.png" alt=""></p>
-<p>上面<code>yarn-site.xml</code>文件中将<code>hostname</code>错打成<code>hostnane</code>，最后导致Hadoop运行wordcount时，不能结束，修改后如下：</p>
-<p><img src="http://image.ningxin.site/20200603095221.png" alt=""></p>
-<h4 id="1-3-2-6-slaves"><a href="#1-3-2-6-slaves" class="headerlink" title="1.3.2.6 slaves"></a>1.3.2.6 slaves</h4><p>在slaves文件中添加如下内容来设置slave：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">slave1</span><br><span class="line">slave2</span><br><span class="line">slave3</span><br></pre></td></tr></table></figure>
-<h3 id="1-3-3-启动Hadoop"><a href="#1-3-3-启动Hadoop" class="headerlink" title="1.3.3 启动Hadoop"></a>1.3.3 启动Hadoop</h3><p>第一次启动需要使用<code>hdfs namenode -format</code>格式化文件系统，出现“Cannot create directory /usr/hadoop/hadoop-2.10.0/hdfs/namenode/current”错误，显示无法创建current文件。无法创建目录的原因是因为<code>hadoop-2.10.0</code>的文件拥有者是<code>root</code>，直接使用<code>sudo hdfs namenode -format</code>会出现找不到命令的错误，两种解决方法：1. 使用<code>sudo su</code>切换到管理员身份；2. 修改<code>hadoop-2.10.0</code>的文件拥有者为普通用户。</p>
-<ul>
-<li>启动: 使用<code>start-dfs.sh</code>启动分布式文件系统。</li>
-</ul>
-<p><img src="http://image.ningxin.site/20200602213020.png" alt=""></p>
-<ul>
-<li>jps: 使用jps命令验证HDFS是否启动成功</li>
-</ul>
-<p><img src="http://image.ningxin.site/20200602213149.png" alt=""></p>
-<ul>
-<li>启动yarn: 使用<code>start-yarn.sh</code>启动yarn</li>
-</ul>
-<p><img src="http://image.ningxin.site/20200602214232.png" alt=""></p>
-<ul>
-<li>浏览器: 在浏览器中输入<code>http:master:50070</code>查看UI界面</li>
-</ul>
-<p><img src="http://image.ningxin.site/20200602214338.png" alt=""></p>
-<h1 id="2-HDFS文件上传"><a href="#2-HDFS文件上传" class="headerlink" title="2. HDFS文件上传"></a>2. HDFS文件上传</h1><p>创建<code>input.txt</code>文件并输入以下内容：</p>
-<p><img src="http://image.ningxin.site/20200604001324.png" alt=""></p>
-<p>使用<code>hdfs dfs -put</code>命令将文件上传到hdfs中，然后使用<code>hdfs dfs -cat</code>命令查看文件中的具体内容。</p>
-<p><img src="http://image.ningxin.site/20200604001901.png" alt=""></p>
-<h1 id="3-运行wordcount程序"><a href="#3-运行wordcount程序" class="headerlink" title="3. 运行wordcount程序"></a>3. 运行wordcount程序</h1><p>wordcount程序在<code>share/hadoop/hadoop-mapreduce-examples-2.10.0.jar</code>包中, 运行该程序之前需要提前创建输入文件,输出文件不需要创建， 输入输出文件如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/wordcount/input/input.txt</span><br><span class="line">/wordcount/output（不要创建）</span><br></pre></td></tr></table></figure>
-<p>其中<code>input.txt</code>文件中的内容如下：</p>
-<p><img src="http://image.ningxin.site/20200603100517.png" alt=""></p>
-<p>然后使用命令<code>hadoop jar hadoop-mapreduce-examples-2.10.0.jar wordcount /wordcount/input/input.txt /wordcount/output</code>运行wordcount程序，结果如下：<br><img src="http://image.ningxin.site/20200603100155.png" alt=""></p>
-<p>使用命令<code>hdfs dfs -cat /wordcount/output/part-r-00000</code>查看输出结果：<br><img src="http://image.ningxin.site/20200603100430.png" alt=""></p>
-<h1 id="4-编写wordcount程序"><a href="#4-编写wordcount程序" class="headerlink" title="4. 编写wordcount程序"></a>4. 编写wordcount程序</h1><p>wordcount程序见附件<code>WordCount.java</code>。</p>
-<p>master中创建如下目录, 其中src存放java文件，classes存放class文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~/wordcount/src</span><br><span class="line">~/wordcount/classes</span><br></pre></td></tr></table></figure>
-<h2 id="4-1-编译"><a href="#4-1-编译" class="headerlink" title="4.1 编译"></a>4.1 编译</h2><p>编译时需要引入的包如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">share/hadoop/common/hadoop-common-2.10.0.jar</span><br><span class="line">share/hadoop/mapreduce/hadoop-mapreduce-client-core-2.10.0.jar</span><br><span class="line">share/hadoop/common/lib/commons-cli.1.2.jar</span><br></pre></td></tr></table></figure>
-<p>使用javac命令进行编译，并用<code>-classpath</code>指定引入的包，<code>-d</code>指定输出目录：</p>
-<p><img src="http://image.ningxin.site/20200603213806.png" alt=""></p>
-<h2 id="4-2-打包"><a href="#4-2-打包" class="headerlink" title="4.2 打包"></a>4.2 打包</h2><p>使用命令<code>jar -cvf wordcount.jar classes/</code>进行打包：</p>
-<p><img src="http://image.ningxin.site/20200603213924.png" alt=""></p>
-<h2 id="4-3-运行"><a href="#4-3-运行" class="headerlink" title="4.3 运行"></a>4.3 运行</h2><p>使用如下命令运行wordcount.jar</p>
-<p><code>hadoop jar wordcount.jar WordCount /wordcount/input/input.txt /output</code></p>
-<p>然后出现<code>Class WordCount$Reduce not found</code>的错误，最后使用如下打包命令，解决问题：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jar cf wordcount.jar WordCount*.class</span><br></pre></td></tr></table></figure>
-<p>运行界面如下：<br><img src="http://image.ningxin.site/20200603221301.png" alt=""></p>
-<p>运行后的输出结果如下：<br><img src="http://image.ningxin.site/20200603221509.png" alt=""></p>
-
+        
+          <a class="article-more-a" href="/2020/06/07/虚拟机搭建Hadoop过程记录/#more">more >></a>
+        
       
 
       
@@ -333,13 +258,9 @@
 <li>semi-automated setup:  可以对只进行了稀疏标注的数据集进行训练；</li>
 <li>fully-automated setup:  假设稀疏标注集存在，对该数据集进行训练。</li>
 </ul>
-<h1 id="2-网络结构"><a href="#2-网络结构" class="headerlink" title="2. 网络结构"></a>2. 网络结构</h1><p><img src="http://image.ningxin.site/20200603160416.png" alt="网络结构"><br>该模型分为<code>analysis path</code> 和 <code>synthesis path</code>两个部分，主要结构和<code>U-Net</code>一样。</p>
-<p><code>analysis path</code> 主要包括以下操作：该部分有4层，每一层都包含两个<code>3 x 3 x 3</code>的卷积，每次卷积之后进行<code>batch normalizetion</code>(BN) 操作和<code>ReLu</code>操作，然后进行strides为2的<code>2 x 2 x 2</code>的最大池化操作。</p>
-<p><code>synthesis path</code> 主要包括以下操作：该部分有3层，每一层首先使用一个strides为2、卷积核为<code>2 x 2 x 2</code>的反卷积操作，然后与<code>analysis path</code>中对应的<code>fature map</code>进行cat操作，再然后是两个<code>3 x 3 x 3</code>的卷积操作，每次卷积之后进行<code>batch normalizetion</code>(BN) 操作和<code>ReLu</code>操作，然后进行strides为2的<code>2 x 2 x 2</code>的最大池化操作。</p>
-<p>在最后一层输出时使用<code>1 x 1 x 1</code>的卷积来减少通道数。</p>
-<p>论文中提到的一个亮点就是，3D U-Net使用了<code>weighted softmax loss function</code>将未标记的像素点设置为0以至于可以让网络可以更多地仅仅学习标注到的像素点，从而达到普适性地特点。</p>
-<h1 id="3-训练"><a href="#3-训练" class="headerlink" title="3. 训练"></a>3. 训练</h1><p>3D U-Net采用了数据增强（data augmentation），主要是rotation、scaling和将图像设置为gray，于此同时在训练数据上和真实标注的数据上运用平滑的密集变形场(smooth dense deformation field)。</p>
-
+        
+          <a class="article-more-a" href="/2020/06/03/3D-UNet笔记/#more">more >></a>
+        
       
 
       
@@ -352,11 +273,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">论文阅读</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">论文阅读</a>
         		</li>
       		
 		</ul>
@@ -434,11 +355,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">论文阅读</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">论文阅读</a>
         		</li>
       		
 		</ul>
@@ -517,11 +438,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">论文阅读</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">论文阅读</a>
         		</li>
       		
 		</ul>
@@ -895,170 +816,10 @@
 
 
   
-    <article id="post-jdbc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/05/jdbc/">jdbc</a>
-    </h1>
-  
-
-        
-        
-<a href="/2018/10/05/jdbc/" class="archive-article-date">
-  	<time datetime="2018-10-05T10:40:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="1-JDBC连接MySql"><a href="#1-JDBC连接MySql" class="headerlink" title="1.JDBC连接MySql"></a>1.JDBC连接MySql</h1><p>首先新建一个数据库，<code>create database new_database</code>,<code>use new_database</code>,<code>create new_table(.....)</code>,注意mysql命令<br>要有冒号作为一个语句的结束，然后需要下载驱动包，<a href="http://downloads.mysql.com/archives/c-j/" target="_blank" rel="noopener">http://downloads.mysql.com/archives/c-j/</a>, 解压导入到项目中即可</p>
-<p><font color="#DC1818">注意：下面的代码中的<code>Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;)</code>    注册驱动文件 ，与网上的教程<code>Class.forName(&quot;com.mysql.jdbc.Driver&quot;)</code>有所区别，是由于驱动包版本不同所致，请注意区分</font><br></p>
-        
-          <a class="article-more-a" href="/2018/10/05/jdbc/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">SQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/05/jdbc/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-First-blog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/05/First-blog/">First blog</a>
-    </h1>
-  
-
-        
-        
-<a href="/2018/10/05/First-blog/" class="archive-article-date">
-  	<time datetime="2018-10-05T01:49:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Hexo-GitHub搭建个人博客"><a href="#Hexo-GitHub搭建个人博客" class="headerlink" title="Hexo+GitHub搭建个人博客"></a>Hexo+GitHub搭建个人博客</h1><h2 id="1-Hexo搭建GitHub-Pages"><a href="#1-Hexo搭建GitHub-Pages" class="headerlink" title="1.Hexo搭建GitHub Pages"></a>1.Hexo搭建GitHub Pages</h2><p>由于大部分过程官方文档中都有详细说明，本文不在讲述。我主要讲述一下如何搭建GitHub Pages:<br>首先在Hexo目录下找到配置文件_config.yml,然后修改deploy中的内容:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https://github.com/your_github_name/your_github_name.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
-<p>其中repo是你的github仓库网址<br>最后使用命令hexo s 生成静态文件，hexo d 发布博客</p>
-        
-          <a class="article-more-a" href="/2018/10/05/First-blog/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">github</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">博客搭建</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/05/First-blog/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
@@ -1201,11 +962,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文阅读</a>
+                <a href="javascript:void(0)" class="js-tag color5">深度学习</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">深度学习</a>
+                <a href="javascript:void(0)" class="js-tag color2">卷积神经网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文阅读</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1229,11 +994,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">yilia</a>
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
+                <a href="javascript:void(0)" class="js-tag color1">yilia</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1241,11 +1006,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">卷积神经网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
+                <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
               </li>
             
             <div class="clearfix"></div>

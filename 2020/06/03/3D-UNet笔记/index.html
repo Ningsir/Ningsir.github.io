@@ -9,7 +9,7 @@
   <title>3D-UNet笔记 | Xinger的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="论文地址 1. 介绍医学图像通常是由多个2D切片构成一整张图，对这样的数据进行标注比较困难,只能一张一张地标注2D图像，并将2D图像送进模型进行训练，但相邻的切片几乎一样，因此这样的做法效率很低。论文的作者提出了3D U-Net模型，该模型主要有两种应用：  semi-automated setup:  可以对只进行了稀疏标注的数据集进行训练； fully-automated setup:  假设">
-<meta name="keywords" content="论文阅读,深度学习">
+<meta name="keywords" content="深度学习,论文阅读">
 <meta property="og:type" content="article">
 <meta property="og:title" content="3D-UNet笔记">
 <meta property="og:url" content="http://yoursite.com/2020/06/03/3D-UNet笔记/index.html">
@@ -17,7 +17,7 @@
 <meta property="og:description" content="论文地址 1. 介绍医学图像通常是由多个2D切片构成一整张图，对这样的数据进行标注比较困难,只能一张一张地标注2D图像，并将2D图像送进模型进行训练，但相邻的切片几乎一样，因此这样的做法效率很低。论文的作者提出了3D U-Net模型，该模型主要有两种应用：  semi-automated setup:  可以对只进行了稀疏标注的数据集进行训练； fully-automated setup:  假设">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://image.ningxin.site/20200603160416.png">
-<meta property="og:updated_time" content="2020-06-06T06:35:08.356Z">
+<meta property="og:updated_time" content="2020-06-07T14:20:12.630Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="3D-UNet笔记">
 <meta name="twitter:description" content="论文地址 1. 介绍医学图像通常是由多个2D切片构成一整张图，对这样的数据进行标注比较困难,只能一张一张地标注2D图像，并将2D图像送进模型进行训练，但相邻的切片几乎一样，因此这样的做法效率很低。论文的作者提出了3D U-Net模型，该模型主要有两种应用：  semi-automated setup:  可以对只进行了稀疏标注的数据集进行训练； fully-automated setup:  假设">
@@ -185,6 +185,7 @@
 <li>semi-automated setup:  可以对只进行了稀疏标注的数据集进行训练；</li>
 <li>fully-automated setup:  假设稀疏标注集存在，对该数据集进行训练。</li>
 </ul>
+<a id="more"></a>
 <h1 id="2-网络结构"><a href="#2-网络结构" class="headerlink" title="2. 网络结构"></a>2. 网络结构</h1><p><img src="http://image.ningxin.site/20200603160416.png" alt="网络结构"><br>该模型分为<code>analysis path</code> 和 <code>synthesis path</code>两个部分，主要结构和<code>U-Net</code>一样。</p>
 <p><code>analysis path</code> 主要包括以下操作：该部分有4层，每一层都包含两个<code>3 x 3 x 3</code>的卷积，每次卷积之后进行<code>batch normalizetion</code>(BN) 操作和<code>ReLu</code>操作，然后进行strides为2的<code>2 x 2 x 2</code>的最大池化操作。</p>
 <p><code>synthesis path</code> 主要包括以下操作：该部分有3层，每一层首先使用一个strides为2、卷积核为<code>2 x 2 x 2</code>的反卷积操作，然后与<code>analysis path</code>中对应的<code>fature map</code>进行cat操作，再然后是两个<code>3 x 3 x 3</code>的卷积操作，每次卷积之后进行<code>batch normalizetion</code>(BN) 操作和<code>ReLu</code>操作，然后进行strides为2的<code>2 x 2 x 2</code>的最大池化操作。</p>
@@ -230,11 +231,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">论文阅读</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">论文阅读</a>
         		</li>
       		
 		</ul>
@@ -530,11 +531,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文阅读</a>
+                <a href="javascript:void(0)" class="js-tag color5">深度学习</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">深度学习</a>
+                <a href="javascript:void(0)" class="js-tag color2">卷积神经网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文阅读</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -558,11 +563,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">yilia</a>
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
+                <a href="javascript:void(0)" class="js-tag color1">yilia</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -570,11 +575,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">卷积神经网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
+                <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
               </li>
             
             <div class="clearfix"></div>
