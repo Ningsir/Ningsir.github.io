@@ -6,18 +6,47 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: yilia | Xinger的博客</title>
+  <title>虚拟机搭建Hadoop过程记录 | Xinger的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="华中科技大学17级本科生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Xinger的博客">
-<meta property="og:url" content="http://yoursite.com/tags/yilia/index.html">
+  <meta name="description" content="1. 搭建Hadoop分布式集群环境1.1 安装Linux虚拟机首先下载并安装VirtualBox 6.1.8，然后准备安装Linux虚拟机，需要提前下载好镜像文件，我下载的是ubuntu-16.04.6-server-amd64.iso。然后新建一个虚拟机，分配1G内存，10G虚拟空间。在新建虚拟机之后，需要注意以下设置：  设置启动顺序：如下图所示，将光驱启动调到最前面。    如下选择镜像文">
+<meta name="keywords" content="Hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="虚拟机搭建Hadoop过程记录">
+<meta property="og:url" content="http://yoursite.com/2020/06/07/虚拟机搭建Hadoop过程记录/index.html">
 <meta property="og:site_name" content="Xinger的博客">
-<meta property="og:description" content="华中科技大学17级本科生">
+<meta property="og:description" content="1. 搭建Hadoop分布式集群环境1.1 安装Linux虚拟机首先下载并安装VirtualBox 6.1.8，然后准备安装Linux虚拟机，需要提前下载好镜像文件，我下载的是ubuntu-16.04.6-server-amd64.iso。然后新建一个虚拟机，分配1G内存，10G虚拟空间。在新建虚拟机之后，需要注意以下设置：  设置启动顺序：如下图所示，将光驱启动调到最前面。    如下选择镜像文">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://image.ningxin.site/20200603230721.png">
+<meta property="og:image" content="http://image.ningxin.site/20200603230506.png">
+<meta property="og:image" content="http://image.ningxin.site/20200603231706.png">
+<meta property="og:image" content="http://image.ningxin.site/20200603232421.png">
+<meta property="og:image" content="http://image.ningxin.site/20200603232752.png">
+<meta property="og:image" content="http://image.ningxin.site/20200603232949.png">
+<meta property="og:image" content="http://image.ningxin.site/20200602154744.png">
+<meta property="og:image" content="http://image.ningxin.site/20200604105619.png">
+<meta property="og:image" content="http://image.ningxin.site/20200602161801.png">
+<meta property="og:image" content="http://image.ningxin.site/20200602164047.png">
+<meta property="og:image" content="http://image.ningxin.site/20200602164356.png">
+<meta property="og:image" content="http://image.ningxin.site/20200602164735.png">
+<meta property="og:image" content="http://image.ningxin.site/20200603095221.png">
+<meta property="og:image" content="http://image.ningxin.site/20200602213020.png">
+<meta property="og:image" content="http://image.ningxin.site/20200602213149.png">
+<meta property="og:image" content="http://image.ningxin.site/20200602214232.png">
+<meta property="og:image" content="http://image.ningxin.site/20200602214338.png">
+<meta property="og:image" content="http://image.ningxin.site/20200604001324.png">
+<meta property="og:image" content="http://image.ningxin.site/20200604001901.png">
+<meta property="og:image" content="http://image.ningxin.site/20200603100517.png">
+<meta property="og:image" content="http://image.ningxin.site/20200603100155.png">
+<meta property="og:image" content="http://image.ningxin.site/20200603100430.png">
+<meta property="og:image" content="http://image.ningxin.site/20200603213806.png">
+<meta property="og:image" content="http://image.ningxin.site/20200603213924.png">
+<meta property="og:image" content="http://image.ningxin.site/20200603221301.png">
+<meta property="og:image" content="http://image.ningxin.site/20200603221509.png">
+<meta property="og:updated_time" content="2020-06-07T14:17:08.138Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xinger的博客">
-<meta name="twitter:description" content="华中科技大学17级本科生">
+<meta name="twitter:title" content="虚拟机搭建Hadoop过程记录">
+<meta name="twitter:description" content="1. 搭建Hadoop分布式集群环境1.1 安装Linux虚拟机首先下载并安装VirtualBox 6.1.8，然后准备安装Linux虚拟机，需要提前下载好镜像文件，我下载的是ubuntu-16.04.6-server-amd64.iso。然后新建一个虚拟机，分配1G内存，10G虚拟空间。在新建虚拟机之后，需要注意以下设置：  设置启动顺序：如下图所示，将光驱启动调到最前面。    如下选择镜像文">
+<meta name="twitter:image" content="http://image.ningxin.site/20200603230721.png">
   
     <link rel="alternative" href="/atom.xml" title="Xinger的博客" type="application/atom+xml">
   
@@ -149,69 +178,298 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-虚拟机搭建Hadoop过程记录" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/07/17/博客添加评论功能/" class="archive-article-date">
-  	<time datetime="2019-07-17T13:52:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-17</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/17/博客添加评论功能/">博客添加评论功能</a>
+    <h1 class="article-title" itemprop="name">
+      虚拟机搭建Hadoop过程记录
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        
+        <!-- 不蒜子统计 -->
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2020/06/07/虚拟机搭建Hadoop过程记录/" class="archive-article-date">
+  	<time datetime="2020-06-07T14:08:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1-搭建Hadoop分布式集群环境"><a href="#1-搭建Hadoop分布式集群环境" class="headerlink" title="1. 搭建Hadoop分布式集群环境"></a>1. 搭建Hadoop分布式集群环境</h1><h2 id="1-1-安装Linux虚拟机"><a href="#1-1-安装Linux虚拟机" class="headerlink" title="1.1 安装Linux虚拟机"></a>1.1 安装Linux虚拟机</h2><p>首先下载并安装VirtualBox 6.1.8，然后准备安装Linux虚拟机，需要提前下载好镜像文件，我下载的是<code>ubuntu-16.04.6-server-amd64.iso</code>。然后新建一个虚拟机，分配1G内存，10G虚拟空间。在新建虚拟机之后，需要注意以下设置：</p>
+<ul>
+<li>设置启动顺序：如下图所示，将光驱启动调到最前面。</li>
+</ul>
+<p><img src="http://image.ningxin.site/20200603230721.png" alt=""></p>
+<ul>
+<li>如下选择镜像文件的存放位置：</li>
+</ul>
+<p><img src="http://image.ningxin.site/20200603230506.png" alt=""></p>
+<p>完成上述操作后，点击运行进行虚拟机的安装。重复操作，安装如下四台虚拟机，其中ubuntu作为master，slave1、slave2、slave3作为slave。</p>
+<p><img src="http://image.ningxin.site/20200603231706.png" alt=""></p>
+<h2 id="1-2-配置Hadoop环境"><a href="#1-2-配置Hadoop环境" class="headerlink" title="1.2 配置Hadoop环境"></a>1.2 配置Hadoop环境</h2><h3 id="1-2-3-前置条件"><a href="#1-2-3-前置条件" class="headerlink" title="1.2.3 前置条件"></a>1.2.3 前置条件</h3><h4 id="1-2-3-1-编辑hostname文件"><a href="#1-2-3-1-编辑hostname文件" class="headerlink" title="1.2.3.1 编辑hostname文件"></a>1.2.3.1 编辑hostname文件</h4><p>使用<code>hostnamectl set-hostname</code>命令设置hostname分别为master、slave1、slave2、slave3</p>
+<p><img src="http://image.ningxin.site/20200603232421.png" alt=""></p>
+<h4 id="1-2-3-2-编辑hosts文件"><a href="#1-2-3-2-编辑hosts文件" class="headerlink" title="1.2.3.2 编辑hosts文件"></a>1.2.3.2 编辑hosts文件</h4><p>hosts文件用来记录IP和hostname之间的对应关系。使用<code>ifconfig</code>命令来查看IP地址，最后发现4台虚拟机的IP地址是一样的，需要修改网线连接方式，如下选择<code>桥接网卡</code>即可：<br><img src="http://image.ningxin.site/20200603232752.png" alt=""></p>
+<p>然后修改<code>/etc/hosts</code>文件，如下所示：</p>
+<p><img src="http://image.ningxin.site/20200603232949.png" alt=""></p>
+<h4 id="1-2-3-3-配置ssh免密登录"><a href="#1-2-3-3-配置ssh免密登录" class="headerlink" title="1.2.3.3 配置ssh免密登录"></a>1.2.3.3 配置ssh免密登录</h4><p>在master上使用<code>ssh-keygen -t rsa</code>命令生成密钥（保存在<code>~/.ssh</code>目录下），然后将公钥上传到slave的<code>~/.ssh/authorized_keys</code>中即可。</p>
+<h2 id="1-2-安装并配置jdk"><a href="#1-2-安装并配置jdk" class="headerlink" title="1.2 安装并配置jdk"></a>1.2 安装并配置jdk</h2><p>首先在Windows上下载<code>jdk-8u251-linux-x64.tar.gz</code>，然后使用pscp工具上传到Linux虚拟机上。</p>
+<p><img src="http://image.ningxin.site/20200602154744.png" alt=""></p>
+<p>将jdk解压在<code>/usr/java/</code>目录下，然后配置java环境变量，在<code>/etc/profile</code>文件中添加如下内容，然后运行<code>source /etc/profile</code>命令使环境变量生效：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/java/jdk1.8.0_251</span><br><span class="line">export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/LIB:$JAVA_HOME/jre/lib</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin:$JAVA_HOME/jre/bin</span><br></pre></td></tr></table></figure>
+<h2 id="1-3-安装并配置Hadoop"><a href="#1-3-安装并配置Hadoop" class="headerlink" title="1.3 安装并配置Hadoop"></a>1.3 安装并配置Hadoop</h2><h3 id="1-3-1-配置环境变量"><a href="#1-3-1-配置环境变量" class="headerlink" title="1.3.1 配置环境变量"></a>1.3.1 配置环境变量</h3><p>先从Windows上下载Hadoop2.10.0并上传到Linux虚拟机上，解压到<code>/usr/hadoop/</code>目录下，然后添加如下环境变量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_HOME=/usr/hadoop/hadoop-2.10.0</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-2-配置相关配置文件"><a href="#1-3-2-配置相关配置文件" class="headerlink" title="1.3.2 配置相关配置文件"></a>1.3.2 配置相关配置文件</h3><p>以下提到的配置文件都位于<code>etc/hadoop/</code>目录下。</p>
+<p><img src="http://image.ningxin.site/20200604105619.png" alt=""></p>
+<p>注意：只需要修改master中的Hadoop配置文件，然后将配置好的Hadoop上传到slave中去即可，避免重复配置的麻烦。</p>
+<h4 id="1-3-2-1-hadoop-env-sh-和-yarn-env-sh"><a href="#1-3-2-1-hadoop-env-sh-和-yarn-env-sh" class="headerlink" title="1.3.2.1 hadoop-env.sh 和 yarn-env.sh"></a>1.3.2.1 hadoop-env.sh 和 yarn-env.sh</h4><p>两个文件都是修改<code>JAVA_HOME</code>的值，需要使用实际的路径，而不是环境变量。<br><img src="http://image.ningxin.site/20200602161801.png" alt=""></p>
+<h4 id="1-3-2-2-core-site-xml"><a href="#1-3-2-2-core-site-xml" class="headerlink" title="1.3.2.2 core-site.xml"></a>1.3.2.2 core-site.xml</h4><p>配置监听端口和缓存目录，缓存目录不存在则需要创建。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">	# HDFS Web UI 监听端口配置</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">		&lt;value&gt;hdfs://master:8020&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">	</span><br><span class="line">	# hadoop 缓存目录，更改为自己的目录（从根目录开始，不存在需创建）</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">		&lt;value&gt;file:/root/software/hadooptmp&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="1-3-2-3-hdfs-site-xml"><a href="#1-3-2-3-hdfs-site-xml" class="headerlink" title="1.3.2.3 hdfs-site.xml"></a>1.3.2.3 hdfs-site.xml</h4><p>需要创建HDFS存储目录，namenode用来存储namenode文件，data存储datanode数据，tmp存储临时文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">usr/hadoop/hadoop-2.10.0/hdfs/namenode</span><br><span class="line">usr/hadoop/hadoop-2.10.0/hdfs/data</span><br><span class="line">usr/hadoop/hadoop-2.10.0/hdfs/tmp</span><br></pre></td></tr></table></figure>
+<p><img src="http://image.ningxin.site/20200602164047.png" alt=""></p>
+<h4 id="1-3-2-4-mapred-site-xml"><a href="#1-3-2-4-mapred-site-xml" class="headerlink" title="1.3.2.4 mapred-site.xml"></a>1.3.2.4 mapred-site.xml</h4><p><code>mapred-site.xml</code>文件需要从<code>mapred-site.xml.template</code>使用cp命令生成：<br><code>cp mapred-site.xml.template mapred-site.xml</code>。然后设置MapReduce运行于yarn上：</p>
+<p><img src="http://image.ningxin.site/20200602164356.png" alt=""></p>
+<h4 id="1-3-2-5-yarn-site-xml"><a href="#1-3-2-5-yarn-site-xml" class="headerlink" title="1.3.2.5 yarn-site.xml"></a>1.3.2.5 yarn-site.xml</h4><p><img src="http://image.ningxin.site/20200602164735.png" alt=""></p>
+<p>上面<code>yarn-site.xml</code>文件中将<code>hostname</code>错打成<code>hostnane</code>，最后导致Hadoop运行wordcount时，不能结束，修改后如下：</p>
+<p><img src="http://image.ningxin.site/20200603095221.png" alt=""></p>
+<h4 id="1-3-2-6-slaves"><a href="#1-3-2-6-slaves" class="headerlink" title="1.3.2.6 slaves"></a>1.3.2.6 slaves</h4><p>在slaves文件中添加如下内容来设置slave：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">slave1</span><br><span class="line">slave2</span><br><span class="line">slave3</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-3-启动Hadoop"><a href="#1-3-3-启动Hadoop" class="headerlink" title="1.3.3 启动Hadoop"></a>1.3.3 启动Hadoop</h3><p>第一次启动需要使用<code>hdfs namenode -format</code>格式化文件系统，出现“Cannot create directory /usr/hadoop/hadoop-2.10.0/hdfs/namenode/current”错误，显示无法创建current文件。无法创建目录的原因是因为<code>hadoop-2.10.0</code>的文件拥有者是<code>root</code>，直接使用<code>sudo hdfs namenode -format</code>会出现找不到命令的错误，两种解决方法：1. 使用<code>sudo su</code>切换到管理员身份；2. 修改<code>hadoop-2.10.0</code>的文件拥有者为普通用户。</p>
+<ul>
+<li>启动: 使用<code>start-dfs.sh</code>启动分布式文件系统。</li>
+</ul>
+<p><img src="http://image.ningxin.site/20200602213020.png" alt=""></p>
+<ul>
+<li>jps: 使用jps命令验证HDFS是否启动成功</li>
+</ul>
+<p><img src="http://image.ningxin.site/20200602213149.png" alt=""></p>
+<ul>
+<li>启动yarn: 使用<code>start-yarn.sh</code>启动yarn</li>
+</ul>
+<p><img src="http://image.ningxin.site/20200602214232.png" alt=""></p>
+<ul>
+<li>浏览器: 在浏览器中输入<code>http:master:50070</code>查看UI界面</li>
+</ul>
+<p><img src="http://image.ningxin.site/20200602214338.png" alt=""></p>
+<h1 id="2-HDFS文件上传"><a href="#2-HDFS文件上传" class="headerlink" title="2. HDFS文件上传"></a>2. HDFS文件上传</h1><p>创建<code>input.txt</code>文件并输入以下内容：</p>
+<p><img src="http://image.ningxin.site/20200604001324.png" alt=""></p>
+<p>使用<code>hdfs dfs -put</code>命令将文件上传到hdfs中，然后使用<code>hdfs dfs -cat</code>命令查看文件中的具体内容。</p>
+<p><img src="http://image.ningxin.site/20200604001901.png" alt=""></p>
+<h1 id="3-运行wordcount程序"><a href="#3-运行wordcount程序" class="headerlink" title="3. 运行wordcount程序"></a>3. 运行wordcount程序</h1><p>wordcount程序在<code>share/hadoop/hadoop-mapreduce-examples-2.10.0.jar</code>包中, 运行该程序之前需要提前创建输入文件,输出文件不需要创建， 输入输出文件如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/wordcount/input/input.txt</span><br><span class="line">/wordcount/output（不要创建）</span><br></pre></td></tr></table></figure>
+<p>其中<code>input.txt</code>文件中的内容如下：</p>
+<p><img src="http://image.ningxin.site/20200603100517.png" alt=""></p>
+<p>然后使用命令<code>hadoop jar hadoop-mapreduce-examples-2.10.0.jar wordcount /wordcount/input/input.txt /wordcount/output</code>运行wordcount程序，结果如下：<br><img src="http://image.ningxin.site/20200603100155.png" alt=""></p>
+<p>使用命令<code>hdfs dfs -cat /wordcount/output/part-r-00000</code>查看输出结果：<br><img src="http://image.ningxin.site/20200603100430.png" alt=""></p>
+<h1 id="4-编写wordcount程序"><a href="#4-编写wordcount程序" class="headerlink" title="4. 编写wordcount程序"></a>4. 编写wordcount程序</h1><p>wordcount程序见附件<code>WordCount.java</code>。</p>
+<p>master中创建如下目录, 其中src存放java文件，classes存放class文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~/wordcount/src</span><br><span class="line">~/wordcount/classes</span><br></pre></td></tr></table></figure>
+<h2 id="4-1-编译"><a href="#4-1-编译" class="headerlink" title="4.1 编译"></a>4.1 编译</h2><p>编译时需要引入的包如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">share/hadoop/common/hadoop-common-2.10.0.jar</span><br><span class="line">share/hadoop/mapreduce/hadoop-mapreduce-client-core-2.10.0.jar</span><br><span class="line">share/hadoop/common/lib/commons-cli.1.2.jar</span><br></pre></td></tr></table></figure>
+<p>使用javac命令进行编译，并用<code>-classpath</code>指定引入的包，<code>-d</code>指定输出目录：</p>
+<p><img src="http://image.ningxin.site/20200603213806.png" alt=""></p>
+<h2 id="4-2-打包"><a href="#4-2-打包" class="headerlink" title="4.2 打包"></a>4.2 打包</h2><p>使用命令<code>jar -cvf wordcount.jar classes/</code>进行打包：</p>
+<p><img src="http://image.ningxin.site/20200603213924.png" alt=""></p>
+<h2 id="4-3-运行"><a href="#4-3-运行" class="headerlink" title="4.3 运行"></a>4.3 运行</h2><p>使用如下命令运行wordcount.jar</p>
+<p><code>hadoop jar wordcount.jar WordCount /wordcount/input/input.txt /output</code></p>
+<p>然后出现<code>Class WordCount$Reduce not found</code>的错误，最后使用如下打包命令，解决问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jar cf wordcount.jar WordCount*.class</span><br></pre></td></tr></table></figure>
+<p>运行界面如下：<br><img src="http://image.ningxin.site/20200603221301.png" alt=""></p>
+<p>运行后的输出结果如下：<br><img src="http://image.ningxin.site/20200603221509.png" alt=""></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">博客搭建</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">yilia</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Hadoop</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/06/07/虚拟机搭建Hadoop过程记录/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/06/03/3D-UNet笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">3D-UNet笔记</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-搭建Hadoop分布式集群环境"><span class="toc-number">1.</span> <span class="toc-text">1. 搭建Hadoop分布式集群环境</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-安装Linux虚拟机"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 安装Linux虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-配置Hadoop环境"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 配置Hadoop环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-3-前置条件"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.3 前置条件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-1-编辑hostname文件"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">1.2.3.1 编辑hostname文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-2-编辑hosts文件"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">1.2.3.2 编辑hosts文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-3-配置ssh免密登录"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">1.2.3.3 配置ssh免密登录</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-安装并配置jdk"><span class="toc-number">1.3.</span> <span class="toc-text">1.2 安装并配置jdk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-安装并配置Hadoop"><span class="toc-number">1.4.</span> <span class="toc-text">1.3 安装并配置Hadoop</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-1-配置环境变量"><span class="toc-number">1.4.1.</span> <span class="toc-text">1.3.1 配置环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-2-配置相关配置文件"><span class="toc-number">1.4.2.</span> <span class="toc-text">1.3.2 配置相关配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-1-hadoop-env-sh-和-yarn-env-sh"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">1.3.2.1 hadoop-env.sh 和 yarn-env.sh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-2-core-site-xml"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">1.3.2.2 core-site.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-3-hdfs-site-xml"><span class="toc-number">1.4.2.3.</span> <span class="toc-text">1.3.2.3 hdfs-site.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-4-mapred-site-xml"><span class="toc-number">1.4.2.4.</span> <span class="toc-text">1.3.2.4 mapred-site.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-5-yarn-site-xml"><span class="toc-number">1.4.2.5.</span> <span class="toc-text">1.3.2.5 yarn-site.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-6-slaves"><span class="toc-number">1.4.2.6.</span> <span class="toc-text">1.3.2.6 slaves</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-3-启动Hadoop"><span class="toc-number">1.4.3.</span> <span class="toc-text">1.3.3 启动Hadoop</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-HDFS文件上传"><span class="toc-number">2.</span> <span class="toc-text">2. HDFS文件上传</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-运行wordcount程序"><span class="toc-number">3.</span> <span class="toc-text">3. 运行wordcount程序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-编写wordcount程序"><span class="toc-number">4.</span> <span class="toc-text">4. 编写wordcount程序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-编译"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-打包"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 打包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-运行"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 运行</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script>
+  var cloudTieConfig = {
+    url: "http://yoursite.com/2020/06/07/虚拟机搭建Hadoop过程记录/", 
+    sourceId: "虚拟机搭建Hadoop过程记录",
+    productKey: "true",
+    target: "cloud-tie-wrapper"
+  };
+</script>
+<script src="//img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
   
 
-    
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css">
+<script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.js"></script> 
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2020/06/07/虚拟机搭建Hadoop过程记录/",
+  owner: 'Ningsir',
+  repo: 'Ningsir.github.io',
+  oauth: {
+    client_id: 'a96b66a633906885dd0d',
+    client_secret: '2455b6c50c8f1942b4f57da96eeeb7177f81fb88',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -249,9 +507,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
