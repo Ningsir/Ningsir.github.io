@@ -176,6 +176,14 @@
 
   
   
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
 </div>
 
             
@@ -290,23 +298,30 @@ optimizer.step()</code></pre>
               <div class="comments" id="comments">
                 
                 
+  <div id="vcomments"></div>
   <script type="text/javascript">
-    function loadUtterances() {
-      var s = document.createElement('script');
-      s.setAttribute('src', 'https://utteranc.es/client.js');
-      s.defer = false
-      s.setAttribute('repo', 'Ningsir/comments');
-      s.setAttribute('issue-term', 'pathname');
-      
-      s.setAttribute('label', 'utterances');
-      
-      s.setAttribute('theme', 'github-light');
-      s.setAttribute('crossorigin', 'anonymous');
-      var e = document.getElementsByTagName('script')[0];
-      e.parentNode.insertBefore(s, e);
+    function loadValine() {
+      addScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "RIPrHIBMNeTH5hqWK3v3S3tY-gzGzoHsz",
+          app_key: "v3JUvWKIM4IppVhBGgMhs66O",
+          placeholder: "说点什么",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail","link"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: false,
+          recordIP: false,
+          serverURLs: "https://riprhibm.lc-cn-n1-shared.com",
+        });
+      });
     }
-    createObserver(loadUtterances, 'comments')
+    createObserver(loadValine, 'vcomments');
   </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" rel="nofollow noopener">comments
+      powered by Valine.</a></noscript>
 
 
               </div>
