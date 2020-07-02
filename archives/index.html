@@ -158,12 +158,18 @@
                 
 
 <div class="list-group">
-  <p class="h4">共计 10 篇文章</p>
+  <p class="h4">共计 11 篇文章</p>
   <hr>
   
     
       
       <p class="h5">2020</p>
+    
+    <a href="/2020/07/02/softmax回归实现手写数字识别/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">softmax回归实现手写数字识别</span>
+      <span style="float: right;">07-02</span>
+    </a>
+  
     
     <a href="/2020/06/07/虚拟机搭建Hadoop过程记录/" class="list-group-item list-group-item-action">
       <span class="archive-post-title">虚拟机搭建Hadoop过程记录</span>
@@ -224,13 +230,19 @@
       <span style="float: right;">10-05</span>
     </a>
   
-    
-    <a href="/2018/10/05/First-blog/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">First blog</span>
-      <span style="float: right;">10-05</span>
-    </a>
-  
 </div>
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
+      ele.href += '#board';
+    }
+  </script>
 
 
 
