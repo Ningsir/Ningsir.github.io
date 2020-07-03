@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2k 字
+      2.1k 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      23
+      24
        分钟
     </span>
   
@@ -291,6 +291,7 @@ J(\omega, b) = \frac{1}{m} \sum_{i=1}^{m}L(y,a) + \frac {\lambda} {2m} \sum \ome
 <p>4）反向传播计算所有偏导数；</p>
 <p>5） 利用数值检验方法检验这些偏导数；</p>
 <p>6）使用优化来最小化代价函数。</p>
+<h2 id="随机初始化"><a href="#随机初始化" class="headerlink" title="随机初始化"></a>随机初始化</h2><p>参数初始化一般采用随机初始化，而不应该将所有参数都初始化为0，对于逻辑回归来说，全部初始化为0是可行的，因为逻辑回归是一层的神经网络，且只有一个神经元。对于复杂的神经网络来说，如果参数全部初始化为0，则对于同一层的所有神经元而言，其计算结果都是一样的，反向传播求的梯度也是一样的。</p>
 <h2 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h2><p><strong>反向传播</strong>（Back Propagation）是“误差反向传播”的简称，是一种与<a href="https://zh.wikipedia.org/wiki/最优化" target="_blank" rel="noopener">最优化方法</a>（如<a href="https://zh.wikipedia.org/wiki/梯度下降法" target="_blank" rel="noopener">梯度下降法</a>）结合使用的，用来训练<a href="https://zh.wikipedia.org/wiki/人工神经网络" target="_blank" rel="noopener">人工神经网络</a>的常见方法。该方法使用链式法则对网络中所有权重计算损失函数的梯度。这个梯度会反馈给最优化方法，用来更新权值以最小化损失函数。</p>
 <p>反向传播算法（BP 算法）主要由两个阶段组成：激励传播与权重更新。</p>
 <h3 id="第1阶段：激励传播"><a href="#第1阶段：激励传播" class="headerlink" title="第1阶段：激励传播"></a>第1阶段：激励传播</h3><p>每次迭代中的传播环节包含两步：</p>
