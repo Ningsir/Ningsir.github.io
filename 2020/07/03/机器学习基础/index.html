@@ -19,7 +19,7 @@
   <meta name="description" content="华中科技大学17级本科生">
   <meta name="author" content="XIN">
   <meta name="keywords" content="">
-  <title>3D-UNet笔记 - XIN&#39;S BLOG</title>
+  <title>机器学习基础 - XIN&#39;S BLOG</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -150,8 +150,8 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-06-03 14:10">
-      2020年6月3日 下午
+    <time datetime="2020-07-03 12:32">
+      2020年7月3日 下午
     </time>
   </div>
 
@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      504 字
+      2k 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5
+      23
        分钟
     </span>
   
@@ -210,19 +210,109 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <p><a href="https://arxiv.org/pdf/1606.06650.pdf" target="_blank" rel="noopener">论文地址</a></p>
-<h1 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h1><p>医学图像通常是由多个2D切片构成一整张图，对这样的数据进行标注比较困难,只能一张一张地标注2D图像，并将2D图像送进模型进行训练，但相邻的切片几乎一样，因此这样的做法效率很低。<br>论文的作者提出了3D U-Net模型，该模型主要有两种应用：</p>
+              <h1 id="1-监督学习和非监督学习"><a href="#1-监督学习和非监督学习" class="headerlink" title="1. 监督学习和非监督学习"></a>1. 监督学习和非监督学习</h1><h2 id="1-1-监督学习"><a href="#1-1-监督学习" class="headerlink" title="1.1 监督学习"></a>1.1 监督学习</h2><p>定义：监督学习中，训练的数据集中既有特征（feature）又有标签（label），通过训练，可以让机器找到特征与标签之间的联系。</p>
+<p>监督学习分为回归（Regression）、分类（Classification）</p>
+<h3 id="回归"><a href="#回归" class="headerlink" title="回归"></a>回归</h3><p>回归问题是针对连续型变量的。</p>
+<h4 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h4><h5 id="（1）单变量线性回归"><a href="#（1）单变量线性回归" class="headerlink" title="（1）单变量线性回归"></a>（1）单变量线性回归</h5><p>单变量线性回归只给出一个特征，比如预测房屋价格问题，样本中只给出房屋尺寸这一个特征，通过回归算法，找出房价与房屋尺寸的线性关系。</p>
+<script type="math/tex; mode=display">
+h_{\theta}(x) = {\theta}_{0} + {\theta}_{1} x</script><h5 id="（2）多变量线性回归"><a href="#（2）多变量线性回归" class="headerlink" title="（2）多变量线性回归"></a>（2）多变量线性回归</h5><p>多变量线性回归提供多个特征。比如预测房屋价格，给出房屋尺寸、房屋楼层等特征。<br>代价函数：</p>
+<script type="math/tex; mode=display">
+J({\theta}_0, {\theta}_1, \ldots, {\theta}_n) = \frac {1}{2m} {\sum}_{i=1}^{m}(h_{\theta}(x^{(i)}) - y^{(i)})^2</script><p>其中：</p>
+<script type="math/tex; mode=display">
+h_{\theta}(x) = {\theta}_0 + {\theta}_{1}x + ··· + {\theta}_{n}x</script><h4 id="逻辑回归（Logistics-Regression）"><a href="#逻辑回归（Logistics-Regression）" class="headerlink" title="逻辑回归（Logistics Regression）"></a>逻辑回归（Logistics Regression）</h4><p>适用于二分类问题，逻辑回归的输出是如下形式：</p>
+<script type="math/tex; mode=display">
+a = \sigma(\omega^{T}x + b)</script><p>$\sigma()$是指<code>sigmoid</code>函数：</p>
+<script type="math/tex; mode=display">
+\sigma(x) = \frac{1}{1 + e^{-x}}</script><p>使用<code>sigmoid</code>函数将线性函数转变成非线性，这也就是逻辑回归与线性回归的根本区别所在。</p>
+<p>逻辑回归使用二分类交叉熵函数作为代价函数，使用梯度下降法进行优化。</p>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p>分类是针对离散型变量的。</p>
+<h2 id="1-2-无监督学习"><a href="#1-2-无监督学习" class="headerlink" title="1.2 无监督学习"></a>1.2 无监督学习</h2><p>定义：训练数据集中没有标签，与监督学习相比更像是自学。</p>
+<h1 id="2-代价函数"><a href="#2-代价函数" class="headerlink" title="2. 代价函数"></a>2. 代价函数</h1><p>机器学习中，训练模型的过程就是优化代价函数的过程。一个好的代价函数需要满足两个基本的要求：</p>
 <ul>
-<li>semi-automated setup:  可以对只进行了稀疏标注的数据集进行训练；</li>
-<li>fully-automated setup:  假设稀疏标注集存在，对该数据集进行训练。</li>
+<li>能够评价模型的准确性；</li>
+<li>对参数可微。</li>
 </ul>
-<a id="more"></a>
-<h1 id="2-网络结构"><a href="#2-网络结构" class="headerlink" title="2. 网络结构"></a>2. 网络结构</h1><p><img src="http://image.ningxin.site/20200603160416.png" srcset="/img/loading.gif" alt="网络结构"><br>该模型分为<code>analysis path</code> 和 <code>synthesis path</code>两个部分，主要结构和<code>U-Net</code>一样。</p>
-<p><code>analysis path</code> 主要包括以下操作：该部分有4层，每一层都包含两个<code>3 x 3 x 3</code>的卷积，每次卷积之后进行<code>batch normalizetion</code>(BN) 操作和<code>ReLu</code>操作，然后进行strides为2的<code>2 x 2 x 2</code>的最大池化操作。</p>
-<p><code>synthesis path</code> 主要包括以下操作：该部分有3层，每一层首先使用一个strides为2、卷积核为<code>2 x 2 x 2</code>的反卷积操作，然后与<code>analysis path</code>中对应的<code>fature map</code>进行cat操作，再然后是两个<code>3 x 3 x 3</code>的卷积操作，每次卷积之后进行<code>batch normalizetion</code>(BN) 操作和<code>ReLu</code>操作，然后进行strides为2的<code>2 x 2 x 2</code>的最大池化操作。</p>
-<p>在最后一层输出时使用<code>1 x 1 x 1</code>的卷积来减少通道数。</p>
-<p>论文中提到的一个亮点就是，3D U-Net使用了<code>weighted softmax loss function</code>将未标记的像素点设置为0以至于可以让网络可以更多地仅仅学习标注到的像素点，从而达到普适性地特点。</p>
-<h1 id="3-训练"><a href="#3-训练" class="headerlink" title="3. 训练"></a>3. 训练</h1><p>3D U-Net采用了数据增强（data augmentation），主要是rotation、scaling和将图像设置为gray，于此同时在训练数据上和真实标注的数据上运用平滑的密集变形场(smooth dense deformation field)。</p>
+<p>代价函数与损失函数的区别：损失函数是计算单个样本的损失值，而代价函数是计算总代价。</p>
+<h2 id="2-1-均方误差"><a href="#2-1-均方误差" class="headerlink" title="2.1 均方误差"></a>2.1 均方误差</h2><p>线性回归中，常使用均方误差（Mean squared error）作为代价函数。</p>
+<script type="math/tex; mode=display">
+J({\theta}_0, {\theta}_1, \ldots, {\theta}_n) = \frac {1}{2m} {\sum}_{i=1}^{m}(h_{\theta}(x^{(i)}) - y^{(i)})^2</script><h2 id="2-2-交叉熵"><a href="#2-2-交叉熵" class="headerlink" title="2.2 交叉熵"></a>2.2 交叉熵</h2><p>交叉熵代价函数常常用于分类问题，分类问题又分为二分类和多分类。</p>
+<h3 id="二分类"><a href="#二分类" class="headerlink" title="二分类"></a>二分类</h3><p>逻辑回归是一个典型的二分类模型，使用如下代价函数进行参数优化。</p>
+<script type="math/tex; mode=display">
+J({y}, {a}) = - \frac{1}{m}{\sum}_{i=1}^{m}(y^{(i)}\log(a^{(i)}) + (1-y^{(i)})\log(1-a^{(i)}))</script><p>其中y是指实际结果，a是指预期结果。</p>
+<h3 id="多分类"><a href="#多分类" class="headerlink" title="多分类"></a>多分类</h3><script type="math/tex; mode=display">
+J(y, a) = - \frac{1}{m} \sum_{i=1}^{m}y^{(i)}\log(a^{(i)})</script><p>手写数字识别是一个多分类问题（识别0-9共10种数字），可以对labels进行one-hot编码，one-hot编码是指正确解的标签为1，其余为0，比如一个手写数字样本标签为3，则编码表示为$[0,0,0, 1, 0, 0, 0, 0, 0, 0]$, 如果计算的预期结果为$[2.2, 3.1, 1.2, 4.4, 0.1, 0.9, 3.5, 0.5, 0.9, 0.1]$，则单个样本的损失值为$-log(4.4)$</p>
+<h1 id="过拟合与欠拟合"><a href="#过拟合与欠拟合" class="headerlink" title="过拟合与欠拟合"></a>过拟合与欠拟合</h1><p><strong>过拟合（Over-Fitting）</strong></p>
+<p>在训练集上误差小，但在测试集上误差大，我们将这种情况称为高方差（high variance）</p>
+<p><strong>欠拟合（Under-Fitting）</strong></p>
+<p>在训练集上训练结果不好，准确率不高，我们将这种情况称为高偏差（high bias), 也叫欠拟合。</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200702165139.png" srcset="/img/loading.gif" alt=""></p>
+<p><strong>偏差：</strong>描述的是预测值（估计值）的期望与真实值之间的差距。偏差越大，越偏离真实数据，如下图第二行所示。</p>
+<p><strong>方差：</strong>描述的是预测值的变化范围，离散程度，也就是离其期望值的距离。方差越大，数据的分布越分散，如下图右列所示。</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200702170430.png" srcset="/img/loading.gif" alt=""></p>
+<h2 id="如何防止过拟合"><a href="#如何防止过拟合" class="headerlink" title="如何防止过拟合"></a>如何防止过拟合</h2><ul>
+<li>增加数据集</li>
+<li>减少不能帮助正确预测的特征</li>
+<li>正则化（L0、L1、L2正则化）</li>
+<li>Dropout</li>
+<li>Early Stopping</li>
+<li>简化模型</li>
+<li>增加噪声</li>
+<li>Bagging</li>
+<li>贝叶斯方法</li>
+<li>决策树剪枝</li>
+<li>集成方法，随机森林</li>
+<li>Batch Normalization</li>
+</ul>
+<h3 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h3><p>正则化就是对最小化经验误差函数上加约束，正则化项一般是模型复杂度的单调递增函数，模型越复杂，正则化值就越大。比如，正则化项可以是模型参数向量的范数。</p>
+<h4 id="范数"><a href="#范数" class="headerlink" title="范数"></a>范数</h4><p>$l_p$范数定义为：    </p>
+<script type="math/tex; mode=display">
+\|{x}\|_{p}=\sqrt[p]{\sum_{i}\left|x_{i}\right|^{p}}</script><p>其中$x$ 表示一个向量。</p>
+<h5 id="l-0-范数"><a href="#l-0-范数" class="headerlink" title="$l_0$范数"></a>$l_0$范数</h5><p>$l_0$范数表示向量中非0元素的个数，其优化模型是一个NP难问题，难以求解。</p>
+<h5 id="l-1-范数"><a href="#l-1-范数" class="headerlink" title="$l_1$范数"></a>$l_1$范数</h5><p>$l_1$范数等于向量中所有哦元素绝对值之和。</p>
+<script type="math/tex; mode=display">
+\|{x}\|_{1}=\sum_{i}|x_{i}|</script><h5 id="l-2-范数"><a href="#l-2-范数" class="headerlink" title="$l_2$范数"></a>$l_2$范数</h5><p>$l_2$范数即欧氏距离。</p>
+<script type="math/tex; mode=display">
+\|{x}\|_{2}=\sqrt[2]{\sum_{i}\left|x_{i}\right|^{2}}</script><h4 id="L-1-和-L-2-正则化"><a href="#L-1-和-L-2-正则化" class="headerlink" title="$L_1$和$L_2$正则化"></a>$L_1$和$L_2$正则化</h4><p>$L_1$正则化：正则化项是参数向量的$L_1$范数。</p>
+<script type="math/tex; mode=display">
+J(\omega, b) = \frac{1}{m} \sum_{i=1}^{m}L(y,a) + \frac {\lambda} {m} \sum \omega</script><p>$L_2$正则化：正则化项是参数向量的$L_2$范数的平方。</p>
+<script type="math/tex; mode=display">
+J(\omega, b) = \frac{1}{m} \sum_{i=1}^{m}L(y,a) + \frac {\lambda} {2m} \sum \omega ^2</script><p>注意：可以不正则化参数$b$，$\frac{\lambda}{2m}$只是一个常数项，除以2是为了后面求导方便。</p>
+<h2 id="如何防止欠拟合"><a href="#如何防止欠拟合" class="headerlink" title="如何防止欠拟合"></a>如何防止欠拟合</h2><ul>
+<li>添加新特征</li>
+<li>添加多项式特征</li>
+<li>减少正则化参数</li>
+<li>增加网络复杂度</li>
+<li>使用集成学习方法，如Bagging</li>
+</ul>
+<h1 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h1><p>训练神经网络的过程：</p>
+<p>1） 参数的随机初始化；</p>
+<p>2） 正向传播；</p>
+<p>3） 计算代价；</p>
+<p>4）反向传播计算所有偏导数；</p>
+<p>5） 利用数值检验方法检验这些偏导数；</p>
+<p>6）使用优化来最小化代价函数。</p>
+<h2 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h2><p><strong>反向传播</strong>（Back Propagation）是“误差反向传播”的简称，是一种与<a href="https://zh.wikipedia.org/wiki/最优化" target="_blank" rel="noopener">最优化方法</a>（如<a href="https://zh.wikipedia.org/wiki/梯度下降法" target="_blank" rel="noopener">梯度下降法</a>）结合使用的，用来训练<a href="https://zh.wikipedia.org/wiki/人工神经网络" target="_blank" rel="noopener">人工神经网络</a>的常见方法。该方法使用链式法则对网络中所有权重计算损失函数的梯度。这个梯度会反馈给最优化方法，用来更新权值以最小化损失函数。</p>
+<p>反向传播算法（BP 算法）主要由两个阶段组成：激励传播与权重更新。</p>
+<h3 id="第1阶段：激励传播"><a href="#第1阶段：激励传播" class="headerlink" title="第1阶段：激励传播"></a>第1阶段：激励传播</h3><p>每次迭代中的传播环节包含两步：</p>
+<ol>
+<li>（前向传播阶段）将训练输入送入网络以获得激励响应；</li>
+<li>（反向传播阶段）将激励响应同训练输入对应的目标输出求差，从而获得输出层和隐藏层的响应误差。</li>
+</ol>
+<h3 id="第2阶段：权重更新"><a href="#第2阶段：权重更新" class="headerlink" title="第2阶段：权重更新"></a>第2阶段：权重更新</h3><p>对于每个突触上的权重，按照以下步骤进行更新：</p>
+<ol>
+<li>将输入激励和响应误差相乘，从而获得权重的梯度；</li>
+<li>将这个梯度乘上一个比例并取反后加到权重上。</li>
+</ol>
+<p>这个比例（百分比）将会影响到训练过程的速度和效果，因此成为<strong>“学习率”</strong>。梯度的方向指明了误差扩大的方向，因此在更新权重的时候需要对其取反，从而减小权重引起的误差。</p>
+<p>第 1 和第 2 阶段可以反复循环迭代，直到网络对输入的响应达到满意的预定的目标范围为止。</p>
+<h2 id="梯度检验"><a href="#梯度检验" class="headerlink" title="梯度检验"></a>梯度检验</h2><p>通过估计梯度值来检验计算得到的导数值是否是正确的。下面对$\theta_1$进行检验：</p>
+<script type="math/tex; mode=display">
+\frac {\partial {J}}{\partial \theta_1} = \frac {J(\theta_1+\epsilon, \theta_2,\ldots, \theta_n)-J(\theta_1-\epsilon, \theta_2,\ldots, \theta_n)}{2\epsilon}</script><p>其中$\epsilon$是一个非常小的常量。将上式计算得到的梯度与反向传播的梯度进行比较，若相差很小，则梯度是正确的。</p>
+<h1 id="符号约定"><a href="#符号约定" class="headerlink" title="符号约定"></a>符号约定</h1><h2 id="数据标记与上下标"><a href="#数据标记与上下标" class="headerlink" title="数据标记与上下标"></a>数据标记与上下标</h2><ul>
+<li>上标： $^{(i)}$ 表示第i个样本；</li>
+<li>上标：$^{[i]}$ 代表第i层；</li>
+<li>m: 数据集的样本数； </li>
+</ul>
 
             </article>
             <hr>
@@ -232,7 +322,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/论文阅读/">论文阅读</a>
+                      <a class="hover-with-bg" href="/categories/机器学习/">机器学习</a>
                     
                   </div>
                 
@@ -240,9 +330,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/深度学习/">深度学习</a>
-                    
-                      <a class="hover-with-bg" href="/tags/论文阅读/">论文阅读</a>
+                      <a class="hover-with-bg" href="/tags/机器学习/">机器学习</a>
                     
                   </div>
                 
@@ -255,18 +343,12 @@
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/06/07/虚拟机搭建Hadoop过程记录/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">虚拟机搭建Hadoop过程记录</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/05/24/V-Net笔记/">
-                        <span class="hidden-mobile">V-Net笔记</span>
+                      <a href="/2020/07/03/LaTeX数学公式/">
+                        <span class="hidden-mobile">LaTeX数学公式</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -483,7 +565,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "3D-UNet笔记&nbsp;",
+        "机器学习基础&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
