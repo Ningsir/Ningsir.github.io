@@ -19,7 +19,7 @@
   <meta name="description" content="华中科技大学17级本科生">
   <meta name="author" content="XIN">
   <meta name="keywords" content="">
-  <title>V-Net笔记 - XIN&#39;S BLOG</title>
+  <title>LaTeX数学公式 - XIN&#39;S BLOG</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -150,8 +150,8 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-05-24 17:22">
-      2020年5月24日 下午
+    <time datetime="2020-07-03 09:30">
+      2020年7月3日 上午
     </time>
   </div>
 
@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      276 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      14
+      4
        分钟
     </span>
   
@@ -210,70 +210,487 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h1 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h1><p>V-Net用于3D图像分割（基于3D卷积），引入了新的目标函数（<code>Dice coefficient</code>）,采用<code>random non-linear transformation</code>和<code>histogram matching</code>的数据扩充方法。</p>
-<h1 id="2-网络结构"><a href="#2-网络结构" class="headerlink" title="2. 网络结构"></a>2. 网络结构</h1><p><img src="https://gitee.com/huster_ning/image/raw/master/image/Snipaste_2020-05-27_21-15-06.jpg" srcset="/img/loading.gif" alt="Snipaste_2020-05-27_21-15-06"></p>
-<a id="more"></a>
-<p>网络的左侧部分由压缩路径组成，而右侧部分解压缩直到达到其原始大小。</p>
-<h2 id="2-1-压缩路径"><a href="#2-1-压缩路径" class="headerlink" title="2.1 压缩路径"></a>2.1 压缩路径</h2><p>压缩路径中每个阶段中执行几次<code>5 x 5 x 5</code>大小的卷积操作，卷积之后使用<code>PReLU</code>函数进行非线性化操作，然后执行<code>element-wise sum</code>操作，再执行步幅为2的<code>2 x 2 x 2</code>的卷积（该步骤是使用卷积代替池化操作），将分辨率变为原来的一半。每个阶段执行完后，通道数变为原来的两倍。</p>
-<ul>
-<li>卷积代替池化：能够有更小的内存占用，网络性能更好</li>
-<li>element-wise sum操作：如下图所示，首先16个x执行cat操作得到x16, 得到的x16的维度与out一致，<code>element-wise sum</code>操作就是将x16和out的对应像素点执行相加操作。</li>
-</ul>
-<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span><span class="hljs-params">(self, x)</span>:</span>
-    <span class="hljs-comment"># do we want a PRELU here as well?</span>
-    out = self.bn1(self.conv1(x))
-    <span class="hljs-comment"># split input in to 16 channels</span>
-    <span class="hljs-comment"># 增加通道数与out一致</span>
-    x16 = torch.cat((x, x, x, x, x, x, x, x,
-                     x, x, x, x, x, x, x, x), <span class="hljs-number">0</span>)
-    <span class="hljs-comment"># 执行element-wise sum操作之后在执行relu1</span>
-    out = self.relu1(torch.add(out, x16))
-    <span class="hljs-keyword">return</span> out</code></pre>
-<h2 id="2-2-解压缩路径"><a href="#2-2-解压缩路径" class="headerlink" title="2.2 解压缩路径"></a>2.2 解压缩路径</h2><p>在解压缩路径中，与<code>U-Net</code>类似，将网络左侧部分的早期阶段提取的特征转发到右侧部分，即网络结构图中的<code>Fine-grained features forwarding</code>操作。通过这种方式，可以收集在压缩路径中丢失的细粒度细节，并且可以提高最终轮廓预测的质量。每个阶段采用反卷积操作，将分辨率提高到原来的两倍，并且通道数变为原来的一半。最后使用一个<code>1 x 1 x 1</code>的卷积得到与输入大小相同的结果，并使用softmax函数得到概率分割图。</p>
-<ul>
-<li><code>Fine-grained features fowarding</code>: 左侧特征图与右侧对应特征图执行拼接操作。 </li>
-</ul>
-<h1 id="3-Dice-loss-layer"><a href="#3-Dice-loss-layer" class="headerlink" title="3. Dice loss layer"></a>3. Dice loss layer</h1><h2 id="3-1-Dice系数"><a href="#3-1-Dice系数" class="headerlink" title="3.1 Dice系数"></a>3.1 Dice系数</h2><p>参考博客<a href="https://www.aiuai.cn/aifarm1159.html" target="_blank" rel="noopener">医学图像分割之 Dice Loss</a></p>
-<p>Dice系数，是一种集合相似度度量函数，通常用于计算两个样本的相似度（值范围为[0, 1]）:</p>
-<script type="math/tex; mode=display">
-s=\frac{2|X \bigcap Y|}{|X|+|Y|}</script><p> $|X \bigcap Y|$ 表示X 和 Y 之间的交集；|X| 和 |Y| 分别表示 X 和 Y 的元素个数. 其中，分子中的系数 2，是因为分母存在重复计算 X 和 Y 之间的共同元素的原因.</p>
-<p>在真正计算时可以将 |X⋂Y| 近似为预测图与 GT 分割图之间的点乘，并将点乘的元素结果相加求和：</p>
-<script type="math/tex; mode=display">|X \bigcap Y|=\left[\begin{array}{cccc}
-0.01 & 0.03 & 0.02 & 0.02 \\
-0.05 & 0.12 & 0.09 & 0.07 \\
-0.89 & 0.85 & 0.88 & 0.91 \\
-0.99 & 0.97 & 0.95 & 0.97
-\end{array}\right] *\left[\begin{array}{cccc}
-0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 \\
-1 & 1 & 1 & 1 \\
-1 & 1 & 1 & 1
-\end{array}\right]</script><h2 id="3-2-Dice系数在医学图像分割中的应用"><a href="#3-2-Dice系数在医学图像分割中的应用" class="headerlink" title="3.2 Dice系数在医学图像分割中的应用"></a>3.2 Dice系数在医学图像分割中的应用</h2><p>在以前的损失函数中，前景区域在学习期间比背景区域更重要。在V-Net中提出了一个基于Dice系数的新的目标函数，目标是求最大值。</p>
-<script type="math/tex; mode=display">
-D=\frac{2 \sum_{i}^{N} p_{i} g_{i}}{\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}}</script><p>其中pi为预测结果，gi为实际结果。Dice系数的梯度为：</p>
-<script type="math/tex; mode=display">
-\frac{\partial D}{\partial p_{j}}=2\left[\frac{g_{j}\left(\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}\right)-2 p_{j}\left(\sum_{i}^{N} p_{i} g_{i}\right)}{\left(\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}\right)^{2}}\right]</script><h2 id="3-3-Dice系数的Pytorch实现"><a href="#3-3-Dice系数的Pytorch实现" class="headerlink" title="3.3 Dice系数的Pytorch实现"></a>3.3 Dice系数的Pytorch实现</h2><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dice_loss</span><span class="hljs-params">(pred, target)</span>:</span>
-    <span class="hljs-string">"""This definition generalize to real valued pred and target vector.
-This should be differentiable.
-    pred: tensor with first dimension as batch
-    target: tensor with first dimension as batch
-    """</span>
-smooth = <span class="hljs-number">1.</span>
-
-<span class="hljs-comment"># have to use contiguous since they may from a torch.view op</span>
-iflat = pred.contiguous().view(<span class="hljs-number">-1</span>)
-tflat = target.contiguous().view(<span class="hljs-number">-1</span>)
-intersection = (iflat * tflat).sum()
-
-A_sum = torch.sum(iflat * iflat)
-B_sum = torch.sum(tflat * tflat)
-
-<span class="hljs-keyword">return</span> (<span class="hljs-number">2.</span> * intersection + smooth) / (A_sum + B_sum + smooth)</code></pre>
-<h1 id="4-训练"><a href="#4-训练" class="headerlink" title="4. 训练"></a>4. 训练</h1><p>训练时主要采用下面的数据增强方法：</p>
-<ul>
-<li>使用<code>2 x 2 x 2</code>的网格控制点和<code>B-spline interpolation</code>(B样条插值)来获得稠密的形变场对图像进行非线性形变；</li>
-<li>使用直方图匹配来获得不同的灰度分布的图像。 </li>
-</ul>
+              <h2 id="常用符号"><a href="#常用符号" class="headerlink" title="常用符号"></a>常用符号</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>示例</th>
+<th>显示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>偏导</td>
+<td><script type="math/tex">\partial y</script></td>
+<td>$\partial y$</td>
+</tr>
+<tr>
+<td>上下标</td>
+<td><script type="math/tex">S=a_{1}^2+a_{2}^2+a_{3}^2</script></td>
+<td>$S=a_{1}^2+a_{2}^2+a_{3}^2$</td>
+</tr>
+<tr>
+<td>括号</td>
+<td><script type="math/tex">f(x, y) = 100 * \lbrace[(x + y) * 3] - 5\rbrace</script></td>
+<td>$f(x, y) = 100 <em> \lbrace[(x + y) </em> 3] - 5\rbrace$</td>
+</tr>
+<tr>
+<td>分数</td>
+<td><code>$\frac{1}{3}</code></td>
+<td>$\frac{1}{3} $</td>
+</tr>
+<tr>
+<td>开方</td>
+<td><script type="math/tex">\sqrt[3]{X}</script></td>
+<td>$\sqrt[3]{X}$</td>
+</tr>
+<tr>
+<td></td>
+<td><script type="math/tex">\bar x</script></td>
+<td>$\bar x$</td>
+</tr>
+<tr>
+<td>求导</td>
+<td><code>\mathrm{d}y</code></td>
+<td>$\mathrm{d}y$</td>
+</tr>
+<tr>
+<td>向量</td>
+<td><script type="math/tex">\vec x</script></td>
+<td>$\vec{x}$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="其他字符"><a href="#其他字符" class="headerlink" title="其他字符"></a>其他字符</h2><h3 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>符号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\pm</td>
+<td>$\pm$</td>
+</tr>
+<tr>
+<td>\times</td>
+<td>$\times$</td>
+</tr>
+<tr>
+<td>\div</td>
+<td>$\div$</td>
+</tr>
+<tr>
+<td>\mid</td>
+<td>$\mid$</td>
+</tr>
+<tr>
+<td>`\</td>
+<td>`</td>
+<td>$\</td>
+<td>$</td>
+</tr>
+<tr>
+<td>\nmid</td>
+<td>$\nmid$</td>
+</tr>
+<tr>
+<td>\cdot</td>
+<td>$\cdot$</td>
+</tr>
+<tr>
+<td>\ldots</td>
+<td>$\ldots$</td>
+</tr>
+<tr>
+<td>\circ</td>
+<td>$\circ$</td>
+</tr>
+<tr>
+<td>\ast</td>
+<td>$\ast$</td>
+</tr>
+<tr>
+<td>\bigodot</td>
+<td>$\bigodot$</td>
+</tr>
+<tr>
+<td>\bigotimes</td>
+<td>$\bigotimes$</td>
+</tr>
+<tr>
+<td>\bigoplus</td>
+<td>$\bigoplus$</td>
+</tr>
+<tr>
+<td>\leq</td>
+<td>$\leq$</td>
+</tr>
+<tr>
+<td>\geq</td>
+<td>$\geq$</td>
+</tr>
+<tr>
+<td>\neq</td>
+<td>$\neq$</td>
+</tr>
+<tr>
+<td>\approx</td>
+<td>$\approx$</td>
+</tr>
+<tr>
+<td>\equiv</td>
+<td>$\equiv$</td>
+</tr>
+<tr>
+<td>\sum</td>
+<td>$\sum$</td>
+</tr>
+<tr>
+<td>\prod</td>
+<td>$\prod$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="对数运算符"><a href="#对数运算符" class="headerlink" title="对数运算符"></a>对数运算符</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>符号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\log</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Clog" srcset="/img/loading.gif" alt="\log"></td>
+</tr>
+<tr>
+<td>\lg</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Clg" srcset="/img/loading.gif" alt="\lg"></td>
+</tr>
+<tr>
+<td>\ln</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cln" srcset="/img/loading.gif" alt="\ln"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="三角运算符"><a href="#三角运算符" class="headerlink" title="三角运算符"></a>三角运算符</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>符号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\bot</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cbot" srcset="/img/loading.gif" alt="\bot"></td>
+</tr>
+<tr>
+<td>\angle</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cangle" srcset="/img/loading.gif" alt="\angle"></td>
+</tr>
+<tr>
+<td>\sin</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Csin" srcset="/img/loading.gif" alt="\sin"></td>
+</tr>
+<tr>
+<td>\cos</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Ccos" srcset="/img/loading.gif" alt="\cos"></td>
+</tr>
+<tr>
+<td>\tan</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Ctan" srcset="/img/loading.gif" alt="\tan"></td>
+</tr>
+<tr>
+<td>\cot</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Ccot" srcset="/img/loading.gif" alt="\cot"></td>
+</tr>
+<tr>
+<td>\sec</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Csec" srcset="/img/loading.gif" alt="\sec"></td>
+</tr>
+<tr>
+<td>\csc</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Ccsc" srcset="/img/loading.gif" alt="\csc"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="微积分运算符"><a href="#微积分运算符" class="headerlink" title="微积分运算符"></a>微积分运算符</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>符号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\prime</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cprime" srcset="/img/loading.gif" alt="\prime"></td>
+</tr>
+<tr>
+<td>\int</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cint" srcset="/img/loading.gif" alt="\int"></td>
+</tr>
+<tr>
+<td>\iint</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Ciint" srcset="/img/loading.gif" alt="\iint"></td>
+</tr>
+<tr>
+<td>\iiint</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Ciiint" srcset="/img/loading.gif" alt="\iiint"></td>
+</tr>
+<tr>
+<td>\oint</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Coint" srcset="/img/loading.gif" alt="\oint"></td>
+</tr>
+<tr>
+<td>\lim</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Clim" srcset="/img/loading.gif" alt="\lim"></td>
+</tr>
+<tr>
+<td>\infty</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cinfty" srcset="/img/loading.gif" alt="\infty"></td>
+</tr>
+<tr>
+<td>\nabla</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cnabla" srcset="/img/loading.gif" alt="\nabla"></td>
+</tr>
+<tr>
+<td>\mathrm{d}</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cmathrm%7Bd%7D" srcset="/img/loading.gif" alt="\mathrm{d}"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="集合运算符"><a href="#集合运算符" class="headerlink" title="集合运算符"></a>集合运算符</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>符号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\emptyset</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cemptyset" srcset="/img/loading.gif" alt="\emptyset"></td>
+</tr>
+<tr>
+<td>\in</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cin" srcset="/img/loading.gif" alt="\in"></td>
+</tr>
+<tr>
+<td>\notin</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cnotin" srcset="/img/loading.gif" alt="\notin"></td>
+</tr>
+<tr>
+<td>\subset</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Csubset" srcset="/img/loading.gif" alt="\subset"></td>
+</tr>
+<tr>
+<td>\subseteq</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Csubseteq" srcset="/img/loading.gif" alt="\subseteq"></td>
+</tr>
+<tr>
+<td>\supseteq</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Csupseteq" srcset="/img/loading.gif" alt="\supseteq"></td>
+</tr>
+<tr>
+<td>\bigcap</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cbigcap" srcset="/img/loading.gif" alt="\bigcap"></td>
+</tr>
+<tr>
+<td>\bigcup</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cbigcup" srcset="/img/loading.gif" alt="\bigcup"></td>
+</tr>
+<tr>
+<td>\bigvee</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cbigvee" srcset="/img/loading.gif" alt="\bigvee"></td>
+</tr>
+<tr>
+<td>\bigwedge</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cbigwedge" srcset="/img/loading.gif" alt="\bigwedge"></td>
+</tr>
+<tr>
+<td>\biguplus</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cbiguplus" srcset="/img/loading.gif" alt="\biguplus"></td>
+</tr>
+<tr>
+<td>\bigsqcup</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cbigsqcup" srcset="/img/loading.gif" alt="\bigsqcup"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="希腊字母"><a href="#希腊字母" class="headerlink" title="希腊字母"></a>希腊字母</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>大写</th>
+<th>代码</th>
+<th>小写</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td><img src="https://math.jianshu.com/math?formula=A" srcset="/img/loading.gif" alt="A"></td>
+<td>\alpha</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Calpha" srcset="/img/loading.gif" alt="\alpha"></td>
+</tr>
+<tr>
+<td>B</td>
+<td><img src="https://math.jianshu.com/math?formula=B" srcset="/img/loading.gif" alt="B"></td>
+<td>\beta</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cbeta" srcset="/img/loading.gif" alt="\beta"></td>
+</tr>
+<tr>
+<td>\Gamma</td>
+<td><img src="https://math.jianshu.com/math?formula=%5CGamma" srcset="/img/loading.gif" alt="\Gamma"></td>
+<td>\gamma</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cgamma" srcset="/img/loading.gif" alt="\gamma"></td>
+</tr>
+<tr>
+<td>\Delta</td>
+<td><img src="https://math.jianshu.com/math?formula=%5CDelta" srcset="/img/loading.gif" alt="\Delta"></td>
+<td>\delta</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cdelta" srcset="/img/loading.gif" alt="\delta"></td>
+</tr>
+<tr>
+<td>E</td>
+<td><img src="https://math.jianshu.com/math?formula=E" srcset="/img/loading.gif" alt="E"></td>
+<td>\epsilon</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cepsilon" srcset="/img/loading.gif" alt="\epsilon"></td>
+</tr>
+<tr>
+<td>Z</td>
+<td><img src="https://math.jianshu.com/math?formula=Z" srcset="/img/loading.gif" alt="Z"></td>
+<td>\zeta</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Czeta" srcset="/img/loading.gif" alt="\zeta"></td>
+</tr>
+<tr>
+<td>H</td>
+<td><img src="https://math.jianshu.com/math?formula=H" srcset="/img/loading.gif" alt="H"></td>
+<td>\eta</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Ceta" srcset="/img/loading.gif" alt="\eta"></td>
+</tr>
+<tr>
+<td>\Theta</td>
+<td><img src="https://math.jianshu.com/math?formula=%5CTheta" srcset="/img/loading.gif" alt="\Theta"></td>
+<td>\theta</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Ctheta" srcset="/img/loading.gif" alt="\theta"></td>
+</tr>
+<tr>
+<td>I</td>
+<td><img src="https://math.jianshu.com/math?formula=I" srcset="/img/loading.gif" alt="I"></td>
+<td>\iota</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Ciota" srcset="/img/loading.gif" alt="\iota"></td>
+</tr>
+<tr>
+<td>K</td>
+<td><img src="https://math.jianshu.com/math?formula=K" srcset="/img/loading.gif" alt="K"></td>
+<td>\kappa</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Ckappa" srcset="/img/loading.gif" alt="\kappa"></td>
+</tr>
+<tr>
+<td>Lambda</td>
+<td><img src="https://math.jianshu.com/math?formula=%5CLambda" srcset="/img/loading.gif" alt="\Lambda"></td>
+<td>\lambda</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Clambda" srcset="/img/loading.gif" alt="\lambda"></td>
+</tr>
+<tr>
+<td>M</td>
+<td><img src="https://math.jianshu.com/math?formula=M" srcset="/img/loading.gif" alt="M"></td>
+<td>\mu</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cmu" srcset="/img/loading.gif" alt="\mu"></td>
+</tr>
+<tr>
+<td>N</td>
+<td><img src="https://math.jianshu.com/math?formula=N" srcset="/img/loading.gif" alt="N"></td>
+<td>\nu</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cnu" srcset="/img/loading.gif" alt="\nu"></td>
+</tr>
+<tr>
+<td>Xi</td>
+<td><img src="https://math.jianshu.com/math?formula=Xi" srcset="/img/loading.gif" alt="Xi"></td>
+<td>\xi</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cxi" srcset="/img/loading.gif" alt="\xi"></td>
+</tr>
+<tr>
+<td>O</td>
+<td><img src="https://math.jianshu.com/math?formula=O" srcset="/img/loading.gif" alt="O"></td>
+<td>\omicron</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Comicron" srcset="/img/loading.gif" alt="\omicron"></td>
+</tr>
+<tr>
+<td>\Pi</td>
+<td><img src="https://math.jianshu.com/math?formula=%5CPi" srcset="/img/loading.gif" alt="\Pi"></td>
+<td>\pi</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cpi" srcset="/img/loading.gif" alt="\pi"></td>
+</tr>
+<tr>
+<td>P</td>
+<td><img src="https://math.jianshu.com/math?formula=P" srcset="/img/loading.gif" alt="P"></td>
+<td>\rho</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Crho" srcset="/img/loading.gif" alt="\rho"></td>
+</tr>
+<tr>
+<td>\Sigma</td>
+<td><img src="https://math.jianshu.com/math?formula=%5CSigma" srcset="/img/loading.gif" alt="\Sigma"></td>
+<td>\sigma</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Csigma" srcset="/img/loading.gif" alt="\sigma"></td>
+</tr>
+<tr>
+<td>T</td>
+<td><img src="https://math.jianshu.com/math?formula=T" srcset="/img/loading.gif" alt="T"></td>
+<td>\tau</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Ctau" srcset="/img/loading.gif" alt="\tau"></td>
+</tr>
+<tr>
+<td>\Upsilon</td>
+<td><img src="https://math.jianshu.com/math?formula=%5CUpsilon" srcset="/img/loading.gif" alt="\Upsilon"></td>
+<td>\upsilon</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cupsilon" srcset="/img/loading.gif" alt="\upsilon"></td>
+</tr>
+<tr>
+<td>\Phi</td>
+<td><img src="https://math.jianshu.com/math?formula=%5CPhi" srcset="/img/loading.gif" alt="\Phi"></td>
+<td>\phi</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cphi" srcset="/img/loading.gif" alt="\phi"></td>
+</tr>
+<tr>
+<td>X</td>
+<td><img src="https://math.jianshu.com/math?formula=X" srcset="/img/loading.gif" alt="X"></td>
+<td>\chi</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cchi" srcset="/img/loading.gif" alt="\chi"></td>
+</tr>
+<tr>
+<td>\Psi</td>
+<td><img src="https://math.jianshu.com/math?formula=%5CPsi" srcset="/img/loading.gif" alt="\Psi"></td>
+<td>\psi</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Cpsi" srcset="/img/loading.gif" alt="\psi"></td>
+</tr>
+<tr>
+<td>\Omega</td>
+<td><img src="https://math.jianshu.com/math?formula=%5COmega" srcset="/img/loading.gif" alt="\Omega"></td>
+<td>\omega</td>
+<td><img src="https://math.jianshu.com/math?formula=%5Comega" srcset="/img/loading.gif" alt="\omega"></td>
+</tr>
+</tbody>
+</table>
+</div>
 
             </article>
             <hr>
@@ -283,7 +700,7 @@ B_sum = torch.sum(tflat * tflat)
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/论文阅读/">论文阅读</a>
+                      <a class="hover-with-bg" href="/categories/LaTeX/">LaTeX</a>
                     
                   </div>
                 
@@ -291,9 +708,7 @@ B_sum = torch.sum(tflat * tflat)
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/深度学习/">深度学习</a>
-                    
-                      <a class="hover-with-bg" href="/tags/论文阅读/">论文阅读</a>
+                      <a class="hover-with-bg" href="/tags/LaTex/">LaTex</a>
                     
                   </div>
                 
@@ -306,18 +721,12 @@ B_sum = torch.sum(tflat * tflat)
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/05/28/经典网络/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">经典网络</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/05/21/U-net笔记/">
-                        <span class="hidden-mobile">U-net笔记</span>
+                      <a href="/2020/07/02/softmax回归实现手写数字识别/">
+                        <span class="hidden-mobile">softmax回归实现手写数字识别</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -534,7 +943,7 @@ B_sum = torch.sum(tflat * tflat)
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "V-Net笔记&nbsp;",
+        "LaTeX数学公式&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
