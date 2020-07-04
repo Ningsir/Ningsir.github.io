@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      469 字
+      491 字
     </span>
   
 
@@ -210,24 +210,33 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h1 id="U-net"><a href="#U-net" class="headerlink" title="U-net"></a>U-net</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>U-net是对FCN的改进，主要应用于医学图像分割。</p>
+              <h1 id="u-net"><a class="markdownIt-Anchor" href="#u-net"></a> U-net</h1>
+<h2 id="介绍"><a class="markdownIt-Anchor" href="#介绍"></a> 介绍</h2>
+<p>U-net是对FCN的改进，主要应用于医学图像分割。</p>
 <p>U-net的网络结构如下所示：</p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master/image/v2-96f5e828c1e83c930aa4a2bb91e64c10_r.jpg" srcset="/img/loading.gif" alt="preview"></p>
 <a id="more"></a>
 <p>U-net包括<code>Contracting Path</code> 和 <code>Expanding Path</code> 两个部分，所有卷积层的<code>padding = 0</code>. U-net的计算过程如下：</p>
 <ul>
-<li><p><code>Contracting Path</code>部分进行下采样操作：2个<code>3 x 3</code>的卷积层 + 1个 <code>2 x 2 的 max pool</code>，重复四次以上操作；</p>
+<li>
+<p><code>Contracting Path</code>部分进行下采样操作：2个<code>3 x 3</code>的卷积层 + 1个 <code>2 x 2 的 max pool</code>，重复四次以上操作；</p>
 </li>
-<li><p><code>Expanding Path</code>部分：2个<code>3 x 3</code>卷积层 + 1个<code>2 x 2</code>反卷积操作，然后与前面对应的层使用 <strong>拼接操作</strong> 进行特征融合，重复四次以上操作；</p>
+<li>
+<p><code>Expanding Path</code>部分：2个<code>3 x 3</code>卷积层 + 1个<code>2 x 2</code>反卷积操作，然后与前面对应的层使用 <strong>拼接操作</strong> 进行特征融合，重复四次以上操作；</p>
 </li>
-<li><p>最后经过2个<code>3 x 3</code>卷积， 1个<code>1 x 1</code>卷积(类似于残差网络，用来降维)，然后使用softmax进行输出。</p>
+<li>
+<p>最后经过2个<code>3 x 3</code>卷积， 1个<code>1 x 1</code>卷积(类似于残差网络，用来降维)，然后使用softmax进行输出。</p>
 </li>
 </ul>
-<h3 id="特征融合"><a href="#特征融合" class="headerlink" title="特征融合"></a>特征融合</h3><p>使用concat操作进行特征融合，而不是使用相加操作进行特征融合</p>
+<h3 id="特征融合"><a class="markdownIt-Anchor" href="#特征融合"></a> 特征融合</h3>
+<p>使用concat操作进行特征融合，而不是使用相加操作进行特征融合</p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master/image/image-20200520160912870.png" srcset="/img/loading.gif" alt="image-20200520160912870"></p>
-<h2 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h2><h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p>U-net使用的是带权损失函数：</p>
-<script type="math/tex; mode=display">
-E = \sum_{x\in\Omega}{\omega(x)\log(p_{l(x)}(x))}</script><p>其中 $w(x)$ 指的是权重，其实就是相当于交叉熵乘了一个权重，有点不解的是我看的代码中都是直接使用<code>CrossEntropyLoss</code>进行计算loss，如下代码所示：</p>
+<h2 id="训练"><a class="markdownIt-Anchor" href="#训练"></a> 训练</h2>
+<h3 id="损失函数"><a class="markdownIt-Anchor" href="#损失函数"></a> 损失函数</h3>
+<p>U-net使用的是带权损失函数：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>E</mi><mo>=</mo><munder><mo>∑</mo><mrow><mi>x</mi><mo>∈</mo><mi mathvariant="normal">Ω</mi></mrow></munder><mrow><mi>ω</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mi>log</mi><mo>⁡</mo><mo stretchy="false">(</mo><msub><mi>p</mi><mrow><mi>l</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></msub><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow></mrow><annotation encoding="application/x-tex">E = \sum_{x\in\Omega}{\omega(x)\log(p_{l(x)}(x))}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.3717110000000003em;vertical-align:-1.321706em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.050005em;"><span style="top:-1.8556639999999998em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="mrel mtight">∈</span><span class="mord mtight">Ω</span></span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.321706em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">ω</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">x</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></span></p>
+<p>其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">w(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span> 指的是权重，其实就是相当于交叉熵乘了一个权重，有点不解的是我看的代码中都是直接使用<code>CrossEntropyLoss</code>进行计算loss，如下代码所示：</p>
 <div class="hljs"><pre><code class="hljs python">unet = Unet(in_channel=<span class="hljs-number">1</span>,out_channel=<span class="hljs-number">2</span>)
 <span class="hljs-comment">#out_channel represents number of segments desired</span>
 criterion = torch.nn.CrossEntropyLoss()
@@ -248,7 +257,8 @@ optimizer.step()</code></pre></div>
 <li>对预期输出从中心crop，使其与输出大小一致;</li>
 <li>对输出结果进行padding操作，使其与输入大小一致。</li>
 </ul>
-<h3 id="优化器"><a href="#优化器" class="headerlink" title="优化器"></a>优化器</h3><p>使用梯度下降法（SGD）进行优化。</p>
+<h3 id="优化器"><a class="markdownIt-Anchor" href="#优化器"></a> 优化器</h3>
+<p>使用梯度下降法（SGD）进行优化。</p>
 
             </article>
             <hr>

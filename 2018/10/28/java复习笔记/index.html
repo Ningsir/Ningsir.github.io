@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2k 字
+      3.1k 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      21
+      34
        分钟
     </span>
   
@@ -210,43 +210,55 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h2 id="一、没有“对象”的java"><a href="#一、没有“对象”的java" class="headerlink" title="一、没有“对象”的java"></a>一、没有“对象”的java</h2><h3 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h3><ul>
-<li>整数的默认类型是 int </li>
-<li>定义 float 类型时必须在数字后面跟上 F 或者 f </li>
+              <h2 id="一-没有对象的java"><a class="markdownIt-Anchor" href="#一-没有对象的java"></a> 一、没有“对象”的java</h2>
+<h3 id="基本类型"><a class="markdownIt-Anchor" href="#基本类型"></a> 基本类型</h3>
+<ul>
+<li>整数的默认类型是 int</li>
+<li>定义 float 类型时必须在数字后面跟上 F 或者 f</li>
 <li>使用 long 类型时必须在数字后面跟上 L</li>
 </ul>
-<h3 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h3><a id="more"></a>
+<h3 id="运算符优先级"><a class="markdownIt-Anchor" href="#运算符优先级"></a> 运算符优先级</h3>
+<a id="more"></a>
 <p><img src="https://gitee.com/huster_ning/image/raw/master/image/%E4%BC%98%E5%85%88%E7%BA%A7.PNG" srcset="/img/loading.gif" alt="优先级"></p>
 <ul>
-<li><p>静态变量与静态方法属于类所有，因此也叫作<code>类变量</code>、<code>类方法</code>（因此也能理解static方法中不能使用<code>this</code>和<code>super</code>关键字）， <strong>静态变量只能在类主体中定义，不能在方法中定义</strong></p>
+<li>
+<p>静态变量与静态方法属于类所有，因此也叫作<code>类变量</code>、<code>类方法</code>（因此也能理解static方法中不能使用<code>this</code>和<code>super</code>关键字）， <strong>静态变量只能在类主体中定义，不能在方法中定义</strong></p>
 </li>
-<li><p>静态变量与实例变量的区别：静态变量在<code>编译时</code>内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了<code>实例对象</code>时，才会分配空间</p>
+<li>
+<p>静态变量与实例变量的区别：静态变量在<code>编译时</code>内存就为其分配空间，直到程序停止才释放；实例变量只有在创建了<code>实例对象</code>时，才会分配空间</p>
 </li>
 </ul>
-<h2 id="二、包"><a href="#二、包" class="headerlink" title="二、包"></a>二、包</h2><p><strong>父包中的类不能直接引用子包中定义的类，import引用父包中所有的类不会引用子包中所有的类</strong></p>
-<h3 id="基础包：java-lang"><a href="#基础包：java-lang" class="headerlink" title="基础包：java.lang"></a>基础包：<code>java.lang</code></h3><ul>
-<li><p>java.lang.Object</p>
+<h2 id="二-包"><a class="markdownIt-Anchor" href="#二-包"></a> 二、包</h2>
+<p><strong>父包中的类不能直接引用子包中定义的类，import引用父包中所有的类不会引用子包中所有的类</strong></p>
+<h3 id="基础包javalang"><a class="markdownIt-Anchor" href="#基础包javalang"></a> 基础包：<code>java.lang</code></h3>
+<ul>
+<li>java.lang.Object</li>
+</ul>
 <blockquote>
 <ul>
 <li>所有类的祖先</li>
 <li>仅有一个默认构造方法</li>
-<li>主要成员方法：<blockquote>
+<li>主要成员方法：</li>
+</ul>
+<blockquote>
 <ul>
 <li>equals(Object obj) : 判断是否为同一对象</li>
 <li>toString() : 返回对象的字符串表示，“类名@对象的十六进制哈希码”</li>
 </ul>
 </blockquote>
-</li>
-</ul>
 </blockquote>
-</li>
-<li><p>包装类</p>
+<ul>
+<li>包装类</li>
+</ul>
 <blockquote>
-<p>1) 包装类覆盖了Object类的toString()方法，打印时返回对应字符串值<br>2) 数值类都有<code>valueOf(Strings)</code>静态方法，用于创建包装类对象<br>3) 数值类都有<code>parseXXX(Strings)</code>静态方法，用于将字符串转为对应的基本数据类型，<code>parseInteger(String, int radix)</code>按指定进制解析为十进制数</p>
+<ol>
+<li>包装类覆盖了Object类的toString()方法，打印时返回对应字符串值</li>
+<li>数值类都有<code>valueOf(Strings)</code>静态方法，用于创建包装类对象</li>
+<li>数值类都有<code>parseXXX(Strings)</code>静态方法，用于将字符串转为对应的基本数据类型，<code>parseInteger(String, int radix)</code>按指定进制解析为十进制数</li>
+</ol>
 </blockquote>
-</li>
-</ul>
-<h2 id="三、String理解"><a href="#三、String理解" class="headerlink" title="三、String理解"></a>三、String理解</h2><p><strong><code>10.14补充内容：</code></strong></p>
+<h2 id="三-string理解"><a class="markdownIt-Anchor" href="#三-string理解"></a> 三、String理解</h2>
+<p><strong><code>10.14补充内容：</code></strong></p>
 <div class="hljs"><pre><code class="hljs java"><span class="hljs-comment">/**
 * 下面代码中使用了StringBuilder类和 String.valueOf()方法
 * 
@@ -265,27 +277,34 @@ String s2 = s1 + <span class="hljs-string">"ger"</span>;<span class="hljs-commen
 <span class="hljs-comment">//的对象，s == s2为false</span>
 &#125;</code></pre></div>
 <p>第二个s生成了新的对象</p>
-<p><strong>字符串常量的“+” 与字符串引用的“+”的区别:</strong><br>前者在编译器完成，所得常量放在常量池中，后者在运行期间完成，在堆中创建了新的对象</p>
-<h3 id="2-字符串比较"><a href="#2-字符串比较" class="headerlink" title="2.字符串比较"></a>2.字符串比较</h3><ul>
+<p><strong>字符串常量的“+” 与字符串引用的“+”的区别:</strong><br>
+前者在编译器完成，所得常量放在常量池中，后者在运行期间完成，在堆中创建了新的对象</p>
+<h3 id="2字符串比较"><a class="markdownIt-Anchor" href="#2字符串比较"></a> 2.字符串比较</h3>
+<ul>
 <li>== 比较引用而不是值</li>
 <li>equals(Object o) 比较值</li>
 <li>int compareTo() 从左至右比较值的大小,相等返回0</li>
 </ul>
-<h3 id="3-字符串常量池、堆、栈"><a href="#3-字符串常量池、堆、栈" class="headerlink" title="3.字符串常量池、堆、栈"></a>3.字符串常量池、堆、栈</h3><ul>
+<h3 id="3字符串常量池-堆-栈"><a class="markdownIt-Anchor" href="#3字符串常量池-堆-栈"></a> 3.字符串常量池、堆、栈</h3>
+<ul>
 <li>String s = “xinger” : constant pool</li>
 <li>String s = new String(“xinger”) : heap</li>
 <li>对象引用 变量 : stack</li>
 </ul>
-<h3 id="4-常用方法"><a href="#4-常用方法" class="headerlink" title="4.常用方法"></a>4.常用方法</h3><ul>
+<h3 id="4常用方法"><a class="markdownIt-Anchor" href="#4常用方法"></a> 4.常用方法</h3>
+<ul>
 <li><code>String[] split(String regex,int limit)</code></li>
 </ul>
 <blockquote>
 <p>用来分割字符串，limit用来限制匹配次数，并且获得的数组长度不能大于limit</p>
 </blockquote>
-<h4 id="5-StringBuilder"><a href="#5-StringBuilder" class="headerlink" title="5.StringBuilder"></a>5.StringBuilder</h4><blockquote>
+<h4 id="5stringbuilder"><a class="markdownIt-Anchor" href="#5stringbuilder"></a> 5.StringBuilder</h4>
+<blockquote>
 <p><code>StringBuilder</code>是可变字符串，能够多次修改并且不产生新的对象，一个String不能直接给其赋初值，比如：<code>StringBuilder s = &quot;xinger&quot;</code>这是错误的</p>
 </blockquote>
-<h2 id="四、面向对象"><a href="#四、面向对象" class="headerlink" title="四、面向对象"></a>四、面向对象</h2><h3 id="修饰符访问权限"><a href="#修饰符访问权限" class="headerlink" title="修饰符访问权限"></a>修饰符访问权限</h3><blockquote>
+<h2 id="四-面向对象"><a class="markdownIt-Anchor" href="#四-面向对象"></a> 四、面向对象</h2>
+<h3 id="修饰符访问权限"><a class="markdownIt-Anchor" href="#修饰符访问权限"></a> 修饰符访问权限</h3>
+<blockquote>
 <p>修饰符的访问权限是java更是面向对象最最基础的知识点</p>
 </blockquote>
 <ul>
@@ -297,94 +316,112 @@ String s2 = s1 + <span class="hljs-string">"ger"</span>;<span class="hljs-commen
 <li>类是对象的抽象，对象是类的实例</li>
 <li>继承：代码重用、可扩展性</li>
 </ul>
-<h3 id="一、封装：隐藏细节、模块化"><a href="#一、封装：隐藏细节、模块化" class="headerlink" title="一、封装：隐藏细节、模块化"></a>一、封装：隐藏细节、模块化</h3><ul>
-<li>定义：<code>封装</code>是指一种将抽象性函数接口的<code>实现细节部分包装</code>、<code>隐藏</code>起来的方法。<br>封装可以防止一个类的代码和数据被外部类定义的代码随机访问。<br>而要访问该类的代码和数据，必须通过严格的<code>接口</code>控制。</li>
+<h3 id="一-封装隐藏细节-模块化"><a class="markdownIt-Anchor" href="#一-封装隐藏细节-模块化"></a> 一、封装：隐藏细节、模块化</h3>
+<ul>
+<li>定义：<code>封装</code>是指一种将抽象性函数接口的<code>实现细节部分包装</code>、<code>隐藏</code>起来的方法。<br>
+封装可以防止一个类的代码和数据被外部类定义的代码随机访问。<br>
+而要访问该类的代码和数据，必须通过严格的<code>接口</code>控制。</li>
 </ul>
 <blockquote>
 <p>从设计上讲，为了<code>实现模块化</code></p>
 <ol>
-<li>以类为最小单元，减少修改带来的连锁效应； <ol>
+<li>以类为最小单元，减少修改带来的连锁效应；</li>
 <li>可以对成员变量进行更精确的控制（getter, setter）；</li>
 </ol>
-</li>
-</ol>
+</blockquote>
+<blockquote>
 <p>从使用上讲，<code>减少了复杂度</code></p>
 <ol>
-<li>代码使用者无需考虑实现细节就能直接使用一个类； <ol>
+<li>代码使用者无需考虑实现细节就能直接使用一个类；</li>
 <li>更有效的协作；</li>
-</ol>
-</li>
 </ol>
 </blockquote>
 <ul>
 <li>良好的封装能够减少代码的耦合，抵御变化</li>
 </ul>
-<h3 id="二、继承：是一种“is-a-kind-of”的关系"><a href="#二、继承：是一种“is-a-kind-of”的关系" class="headerlink" title="二、继承：是一种“is a kind of”的关系"></a>二、继承：是一种“is a kind of”的关系</h3><h4 id="1-继承的特点"><a href="#1-继承的特点" class="headerlink" title="1.继承的特点"></a>1.继承的特点</h4><blockquote>
+<h3 id="二-继承是一种is-a-kind-of的关系"><a class="markdownIt-Anchor" href="#二-继承是一种is-a-kind-of的关系"></a> 二、继承：是一种“is a kind of”的关系</h3>
+<h4 id="1继承的特点"><a class="markdownIt-Anchor" href="#1继承的特点"></a> 1.继承的特点</h4>
+<blockquote>
 <ul>
 <li>在设计时，它允许创建分等级层次的类，思路更清晰，减少了冗余代码，<code>易于修改</code>；</li>
 <li>定义新类时，可以以原来的类为基础，借助代码的<code>重用</code>，使系统变得<code>容易扩展</code>，提 高了开发效率。</li>
 <li>继承帮助我们统一了函数的调用接口，在增加新类后减少对已有系统的修改。</li>
 </ul>
 </blockquote>
-<h4 id="2-继承的实现"><a href="#2-继承的实现" class="headerlink" title="2.继承的实现"></a>2.继承的实现</h4><blockquote>
+<h4 id="2继承的实现"><a class="markdownIt-Anchor" href="#2继承的实现"></a> 2.继承的实现</h4>
+<blockquote>
 <ul>
 <li>创建子类对象实例时，首先调用子类的构造方法，再由子类的构造方法<code>默认</code>地调用父类的<code>无参数</code>的构造方法(隐式调用)， 生成父类的对象。接下来完成调用子类的构造方法，生成子类的对象。</li>
 <li><code>注意</code>：如果父类没有<code>无参数</code>构造函数，则必须用<code>super()</code>显示调用父类构造函数，并且必须放在第一行(<code>super</code>关键字可以调用父类方法)</li>
 <li>向上转型：父类对象是子类对象的上转型对象，不能操作子类新增的方法与属性，但能操作子类重写的方法（这也是与直接使用父类的区别）</li>
 </ul>
 </blockquote>
-<h3 id="三、抽象类"><a href="#三、抽象类" class="headerlink" title="三、抽象类"></a>三、抽象类</h3><ul>
+<h3 id="三-抽象类"><a class="markdownIt-Anchor" href="#三-抽象类"></a> 三、抽象类</h3>
+<ul>
 <li>抽象类中可能不含有抽象方法，但含有抽象方法的类一定是抽象类</li>
 <li>抽象类不能被实例化，但可以有构造函数</li>
 <li>子类必须实现父类所有的抽象方法，除非子类也是抽象类</li>
 <li>通过子类调用父类非抽象方法</li>
 </ul>
-<h3 id="四、接口"><a href="#四、接口" class="headerlink" title="四、接口"></a>四、接口</h3><ul>
+<h3 id="四-接口"><a class="markdownIt-Anchor" href="#四-接口"></a> 四、接口</h3>
+<ul>
 <li>接口是一种不同于类的引用类型，是一系列抽象方法的集合；</li>
 <li>方法默认为<code>public abstract</code>,变量默认为<code>public static final</code>，接口中的成员变量可以直接通过<code>接口名调用</code></li>
 </ul>
-<h4 id="接口的功能"><a href="#接口的功能" class="headerlink" title="接口的功能"></a>接口的功能</h4><blockquote>
+<h4 id="接口的功能"><a class="markdownIt-Anchor" href="#接口的功能"></a> 接口的功能</h4>
+<blockquote>
 <ul>
 <li>1.接口提供了一组功能的命名集合，一个类通过实现接口的方式，从而获得接口所声明的抽象方法。</li>
 <li>2.接口定义了不同类交互的标准(一个类可以调用另一个类(实现了某个接口)的接口方法)</li>
 </ul>
 </blockquote>
-<h4 id="接口与抽象类的区别"><a href="#接口与抽象类的区别" class="headerlink" title="接口与抽象类的区别"></a>接口与抽象类的区别</h4><ul>
-<li>抽象层次不同<blockquote>
+<h4 id="接口与抽象类的区别"><a class="markdownIt-Anchor" href="#接口与抽象类的区别"></a> 接口与抽象类的区别</h4>
+<ul>
+<li>抽象层次不同</li>
+</ul>
+<blockquote>
 <p>抽象类是对类抽象，而接口是对行为的抽象</p>
 </blockquote>
-</li>
-<li>设计层次不同<blockquote>
+<ul>
+<li>设计层次不同</li>
+</ul>
+<blockquote>
 <p>抽象类是自底向上抽象而来的，接口是自顶向下设计出来的。</p>
 </blockquote>
-</li>
+<h3 id="五-多态"><a class="markdownIt-Anchor" href="#五-多态"></a> 五、多态</h3>
+<ul>
+<li>定义：</li>
 </ul>
-<h3 id="五、多态"><a href="#五、多态" class="headerlink" title="五、多态"></a>五、多态</h3><ul>
-<li>定义：<blockquote>
-<p>在代码中为同一名称的方法（接口）提供不同的实现，<br>为一组类提供了统一的交互接口，又保留了类间的差异。</p>
+<blockquote>
+<p>在代码中为同一名称的方法（接口）提供不同的实现，<br>
+为一组类提供了统一的交互接口，又保留了类间的差异。</p>
 </blockquote>
-</li>
+<ul>
 <li>类型</li>
 </ul>
 <blockquote>
 <ul>
 <li>编译时多态：方法的重载</li>
-<li>运行时多态 :<blockquote>
+<li>运行时多态 :</li>
+</ul>
+<blockquote>
 <p>程序中定义的引用变量所指向的具体类型和通过该引用变量发出的方法调用在编程 时并不确定，而是在程序运行期间才确定，即一个引用变量倒底会指向哪个类的实 例对象，该引用变量发出的方法调用到底是哪个类中实现的方法，必须在由程序运 行期间才能决定。</p>
 </blockquote>
-</li>
-</ul>
 </blockquote>
 <ul>
-<li>如何使用多态<blockquote>
+<li>如何使用多态</li>
+</ul>
+<blockquote>
 <ul>
 <li>为一组类抽象出公共父类或者接口</li>
 <li>统一方法名</li>
 </ul>
 </blockquote>
-</li>
+<ul>
 <li>好处：统一接口，更易于扩展</li>
-<li>重写原则：<blockquote>
+<li>重写原则：</li>
+</ul>
+<blockquote>
 <ul>
 <li>参数列表完全一致</li>
 <li>子类返回类型小于等于父类方法返回类型，</li>
@@ -392,27 +429,38 @@ String s2 = s1 + <span class="hljs-string">"ger"</span>;<span class="hljs-commen
 <li>子类访问权限大于等于父类方法访问权限。</li>
 </ul>
 </blockquote>
-</li>
+<h2 id="io"><a class="markdownIt-Anchor" href="#io"></a> IO</h2>
+<p><img src="https://gitee.com/huster_ning/image/raw/master/image/io.PNG" srcset="/img/loading.gif" alt="io"></p>
+<h2 id="泛型"><a class="markdownIt-Anchor" href="#泛型"></a> 泛型</h2>
+<ul>
+<li>减少了cast带来的运行时异常，<br>
+使算法和框架更为通用，减少了冗余代码</li>
+<li>泛型方法</li>
 </ul>
-<h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><p><img src="https://gitee.com/huster_ning/image/raw/master/image/io.PNG" srcset="/img/loading.gif" alt="io"></p>
-<h2 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h2><ul>
-<li>减少了cast带来的运行时异常，<br>使算法和框架更为通用，减少了冗余代码</li>
-<li>泛型方法<blockquote>
+<blockquote>
 <ul>
 <li>所有泛型方法声明都有一个类型<code>参数声明</code>部分（由尖括号分隔），该类型参数声明部分在方 法返回类型之前。</li>
 <li>泛型方法体的声明和其他方法一样。注意类型参数<code>只能代表引用型类型</code>(只能是类)，不能是<code>基本类型</code>(比如int 、double)。</li>
 </ul>
 </blockquote>
-</li>
-<li>通配符<blockquote>
 <ul>
-<li>&lt;? extends T&gt; 上界为T</li>
-<li>&lt;? super T&gt;   下界为T</li>
-<li><e extends="" comparable<e="">&gt; : <strong>类型 E 必须实现 Comparable 接口</strong>，并且这个接口的类型是 E</e></li>
+<li>通配符</li>
+</ul>
+<blockquote>
+<ul>
+<li>
+<? extends T> 上界为T
+</li>
+<li>
+<? super T>   下界为T
+</li>
+<li>&lt;E extends Comparable<e>&gt; : <strong>类型 E 必须实现 Comparable 接口</strong>，并且这个接口的类型是 E</e></li>
 </ul>
 </blockquote>
-</li>
-<li>使用泛型进行排序<div class="hljs"><pre><code class="hljs java">   <span class="hljs-comment">//使用Comparable接口确保E能够进行比较</span>
+<ul>
+<li>使用泛型进行排序</li>
+</ul>
+<div class="hljs"><pre><code class="hljs java">   <span class="hljs-comment">//使用Comparable接口确保E能够进行比较</span>
  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;E extends Comparable&lt;E&gt;&gt; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bubbleSort</span><span class="hljs-params">(E[] a)</span> </span>&#123; 
 <span class="hljs-keyword">int</span> n = a.length;
 <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;n-<span class="hljs-number">1</span>; i++)&#123; 
@@ -426,21 +474,25 @@ String s2 = s1 + <span class="hljs-string">"ger"</span>;<span class="hljs-commen
 		&#125; 
 	&#125; 
 &#125;</code></pre></div>
-</li>
-</ul>
-<h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><p>Throwable 类中定义的方法：</p>
+<h2 id="异常"><a class="markdownIt-Anchor" href="#异常"></a> 异常</h2>
+<p>Throwable 类中定义的方法：</p>
 <ul>
-<li>getMessage()：获得详细的异常信息 </li>
-<li>toString()：获得异常的简短描述 </li>
-<li>printStackTrace()：打印异常发生处栈跟踪信息，包括类名、方法名和所在行数<blockquote>
+<li>getMessage()：获得详细的异常信息</li>
+<li>toString()：获得异常的简短描述</li>
+<li>printStackTrace()：打印异常发生处栈跟踪信息，包括类名、方法名和所在行数</li>
+</ul>
+<blockquote>
 <p>用 throws 关键字指出可能出现的异常类型，自己不进行处理，由该函数的调用者处理</p>
 </blockquote>
-</li>
-</ul>
 <p><img src="https://gitee.com/huster_ning/image/raw/master/image/exception.PNG" srcset="/img/loading.gif" alt="exception"></p>
-<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><h3 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h3><p><img src="https://gitee.com/huster_ning/image/raw/master/image/thread.PNG" srcset="/img/loading.gif" alt="thread"> </p>
-<h3 id="启动线程"><a href="#启动线程" class="headerlink" title="启动线程"></a>启动线程</h3><p><img src="https://gitee.com/huster_ning/image/raw/master/image/%E5%90%AF%E5%8A%A8%E7%BA%BF%E7%A8%8B.png" srcset="/img/loading.gif" alt="启动线程"></p>
-<h2 id="UML"><a href="#UML" class="headerlink" title="UML"></a>UML</h2><h3 id="类的关系"><a href="#类的关系" class="headerlink" title="类的关系"></a>类的关系</h3><blockquote>
+<h2 id="线程"><a class="markdownIt-Anchor" href="#线程"></a> 线程</h2>
+<h3 id="创建线程"><a class="markdownIt-Anchor" href="#创建线程"></a> 创建线程</h3>
+<p><img src="https://gitee.com/huster_ning/image/raw/master/image/thread.PNG" srcset="/img/loading.gif" alt="thread"></p>
+<h3 id="启动线程"><a class="markdownIt-Anchor" href="#启动线程"></a> 启动线程</h3>
+<p><img src="https://gitee.com/huster_ning/image/raw/master/image/%E5%90%AF%E5%8A%A8%E7%BA%BF%E7%A8%8B.png" srcset="/img/loading.gif" alt="启动线程"></p>
+<h2 id="uml"><a class="markdownIt-Anchor" href="#uml"></a> UML</h2>
+<h3 id="类的关系"><a class="markdownIt-Anchor" href="#类的关系"></a> 类的关系</h3>
+<blockquote>
 <p><code>1+3+1</code>: 继承(泛化)、关联、聚合、组合、依赖</p>
 <blockquote>
 <ul>
@@ -449,66 +501,80 @@ String s2 = s1 + <span class="hljs-string">"ger"</span>;<span class="hljs-commen
 </ul>
 </blockquote>
 </blockquote>
-<h3 id="常见图模型"><a href="#常见图模型" class="headerlink" title="常见图模型"></a>常见图模型</h3><h4 id="静态模型："><a href="#静态模型：" class="headerlink" title="静态模型："></a>静态模型：</h4><ul>
-<li>用例图（Use Case Diagram）：从用户角度描述系统功能。<blockquote>
+<h3 id="常见图模型"><a class="markdownIt-Anchor" href="#常见图模型"></a> 常见图模型</h3>
+<h4 id="静态模型"><a class="markdownIt-Anchor" href="#静态模型"></a> 静态模型：</h4>
+<ul>
+<li>用例图（Use Case Diagram）：从用户角度描述系统功能。</li>
+</ul>
+<blockquote>
 <p>用例图的描述：</p>
 <blockquote>
 <ul>
 <li>简要说明</li>
-<li>主事件流和其他事件流 </li>
-<li>前提条件 </li>
+<li>主事件流和其他事件流</li>
+<li>前提条件</li>
 <li>事后条件</li>
 </ul>
 </blockquote>
 </blockquote>
-</li>
-<li>类图（ClassDiagram）：描述对象模型中类与类之间的关系。 </li>
-<li>组件图（ComponentDiagram）：描述系统中各个组件之间的依赖关系，还可以描 述组件的源代码组织结构。 </li>
+<ul>
+<li>类图（ClassDiagram）：描述对象模型中类与类之间的关系。</li>
+<li>组件图（ComponentDiagram）：描述系统中各个组件之间的依赖关系，还可以描 述组件的源代码组织结构。</li>
 <li>部署图（DeploymentDiagram）：定义系统中软硬件的物理体系结构。</li>
 </ul>
-<h4 id="动态态模型："><a href="#动态态模型：" class="headerlink" title="动态态模型："></a>动态态模型：</h4><ul>
-<li>时序图（Sequence Diagram）：显示对象之间的动态协作关系，强调对象之间消息 发送的时间顺序。 <blockquote>
+<h4 id="动态态模型"><a class="markdownIt-Anchor" href="#动态态模型"></a> 动态态模型：</h4>
+<ul>
+<li>时序图（Sequence Diagram）：显示对象之间的动态协作关系，强调对象之间消息 发送的时间顺序。</li>
+</ul>
+<blockquote>
 <p>时序图的构成：</p>
 <ul>
-<li>对象生命线（垂直的虚线）； </li>
+<li>对象生命线（垂直的虚线）；</li>
 <li>对象激活框（细长矩形）；</li>
-<li>消息（带箭头的水平线 + 消息名）； </li>
-<li>调用：实线段，实心箭头 </li>
-<li>返回：虚线段，枝状箭头  </li>
-<li>顶部方框表示类的对象或类，有3种写法            <blockquote>
+<li>消息（带箭头的水平线 + 消息名）；</li>
+<li>调用：实线段，实心箭头</li>
+<li>返回：虚线段，枝状箭头</li>
+<li>顶部方框表示类的对象或类，有3种写法</li>
+</ul>
+<blockquote>
 <ol>
 <li>对象名和类名间用冒号隔开，如 c：Car;</li>
 <li>省略对象名称，：Car ;</li>
 <li>只保留对象名，c。</li>
 </ol>
 </blockquote>
-</li>
-</ul>
 </blockquote>
-</li>
-</ul>
-<p><br><br><img src="/2018/10/28/java复习笔记/D:%5Chexo%5Csource%5C_posts%5Cjava%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%5Csequence.PNG" srcset="/img/loading.gif" alt="sequence"><br><br></p>
+<br>
+![sequence](D:%5Chexo%5Csource%5C_posts%5Cjava%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%5Csequence.PNG)
+<br>
 <ul>
 <li>活动图（Activity Diagram）：显示活动的顺序控制流。</li>
 <li>状态转换图（StateTransitionDiagram）：描述对象所有可能的状态，以及导致状 态转换的条件。</li>
 </ul>
-<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><h3 id="1-SOLID原则"><a href="#1-SOLID原则" class="headerlink" title="1.SOLID原则"></a>1.SOLID原则</h3><blockquote>
+<h2 id="设计模式"><a class="markdownIt-Anchor" href="#设计模式"></a> 设计模式</h2>
+<h3 id="1solid原则"><a class="markdownIt-Anchor" href="#1solid原则"></a> 1.SOLID原则</h3>
+<blockquote>
 <ul>
 <li>单一职责原则 Single Responsibility Principle</li>
 <li>开放闭合原则 Open Closed Principle</li>
 <li>Liskov替换原则 Liskov Substitution Principle</li>
 <li>接口隔离原则 Interface Segregation Principle</li>
-<li>依赖倒置原则 Dependency Inversion Principle </li>
+<li>依赖倒置原则 Dependency Inversion Principle</li>
 </ul>
 </blockquote>
-<h3 id="2-OOD模式实例"><a href="#2-OOD模式实例" class="headerlink" title="2.OOD模式实例"></a>2.OOD模式实例</h3><h4 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h4><ul>
+<h3 id="2ood模式实例"><a class="markdownIt-Anchor" href="#2ood模式实例"></a> 2.OOD模式实例</h3>
+<h4 id="观察者模式"><a class="markdownIt-Anchor" href="#观察者模式"></a> 观察者模式</h4>
+<ul>
 <li>实例: JButton与ActionListener、气象站</li>
 <li>定义：观察者模式定义了对象之间的一对多依赖，当一个对象改变状态时， 它的所有依赖者都会收到通知并自动更新。</li>
 </ul>
-<h4 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h4><ul>
+<h4 id="装饰者模式"><a class="markdownIt-Anchor" href="#装饰者模式"></a> 装饰者模式</h4>
+<ul>
 <li>实例：咖啡店、java io</li>
 <li>定义：装饰者模式动态地将责任附加到对象上。 若要扩展功能，装饰者提供了比继承更 有弹性的替代方案。</li>
-<li>特点：<blockquote>
+<li>特点：</li>
+</ul>
+<blockquote>
 <ul>
 <li>装饰者和被装饰对象拥有相同的超类型。</li>
 <li>可以用一个或者多个装饰者包装一个对象。</li>
@@ -516,14 +582,15 @@ String s2 = s1 + <span class="hljs-string">"ger"</span>;<span class="hljs-commen
 <li>装饰过程可以在运行时动态地完成。</li>
 </ul>
 </blockquote>
-</li>
-</ul>
-<h3 id="3-OOD架构"><a href="#3-OOD架构" class="headerlink" title="3.OOD架构"></a>3.OOD架构</h3><h4 id="模型-视图-控制器-Model-View-Controller-MVC"><a href="#模型-视图-控制器-Model-View-Controller-MVC" class="headerlink" title="模型-视图-控制器 Model-View-Controller (MVC)"></a>模型-视图-控制器 Model-View-Controller (MVC)</h4><h4 id="三层程序设计模型-Three-tier-design-model"><a href="#三层程序设计模型-Three-tier-design-model" class="headerlink" title="三层程序设计模型 Three-tier design model"></a>三层程序设计模型 Three-tier design model</h4><ul>
+<h3 id="3ood架构"><a class="markdownIt-Anchor" href="#3ood架构"></a> 3.OOD架构</h3>
+<h4 id="模型-视图-控制器-model-view-controller-mvc"><a class="markdownIt-Anchor" href="#模型-视图-控制器-model-view-controller-mvc"></a> 模型-视图-控制器 Model-View-Controller (MVC)</h4>
+<h4 id="三层程序设计模型-three-tier-design-model"><a class="markdownIt-Anchor" href="#三层程序设计模型-three-tier-design-model"></a> 三层程序设计模型 Three-tier design model</h4>
+<ul>
 <li>表示层 （用户界面）</li>
 </ul>
 <blockquote>
 <ul>
-<li>GUI class </li>
+<li>GUI class</li>
 <li>显示数据，接收操作</li>
 </ul>
 </blockquote>
@@ -532,19 +599,19 @@ String s2 = s1 + <span class="hljs-string">"ger"</span>;<span class="hljs-commen
 </ul>
 <blockquote>
 <ul>
-<li>PD class </li>
+<li>PD class</li>
 <li>从用户界面接收请求，根据业务逻辑处理请求，从DA类获得数据/向DA类发 送数据，将处理结果送回表示层</li>
 </ul>
 </blockquote>
 <ul>
-<li>数据访问层<blockquote>
+<li>数据访问层</li>
+</ul>
+<blockquote>
 <ul>
-<li>DA class </li>
+<li>DA class</li>
 <li>建立与数据库的连接，完成增删改查，关闭连接。</li>
 </ul>
 </blockquote>
-</li>
-</ul>
 
             </article>
             <hr>
