@@ -210,12 +210,8 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h1 id="1jdbc连接mysql"><a class="markdownIt-Anchor" href="#1jdbc连接mysql"></a> 1.JDBC连接MySql</h1>
-<p>首先新建一个数据库，<code>create database new_database</code>,<code>use new_database</code>,<code>create new_table(.....)</code>,注意mysql命令<br>
-要有冒号作为一个语句的结束，然后需要下载驱动包，<a href="http://downloads.mysql.com/archives/c-j/" target="_blank" rel="noopener">http://downloads.mysql.com/archives/c-j/</a>, 解压导入到项目中即可<br>
-<font color="#DC1818">注意：下面的代码中的<code>Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;)</code>	注册驱动文件 ，与网上的教程<code>Class.forName(&quot;com.mysql.jdbc.Driver&quot;)</code>有所区别，是由于驱动包版本不同所致，请注意区分</font></p>
-<a id="more"></a>
-<div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.sql.*;
+              <h1 id="1-JDBC连接MySql"><a href="#1-JDBC连接MySql" class="headerlink" title="1.JDBC连接MySql"></a>1.JDBC连接MySql</h1><p>首先新建一个数据库，<code>create database new_database</code>,<code>use new_database</code>,<code>create new_table(.....)</code>,注意mysql命令<br>要有冒号作为一个语句的结束，然后需要下载驱动包，<a href="http://downloads.mysql.com/archives/c-j/" target="_blank" rel="noopener">http://downloads.mysql.com/archives/c-j/</a>, 解压导入到项目中即可</p>
+<p><font color="#DC1818">注意：下面的代码中的<code>Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;)</code>    注册驱动文件 ，与网上的教程<code>Class.forName(&quot;com.mysql.jdbc.Driver&quot;)</code>有所区别，是由于驱动包版本不同所致，请注意区分</font><br><a id="more"></a><br><div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.sql.*;
 
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MySql</span> </span>&#123;
     <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String url = <span class="hljs-string">"jdbc:mysql://localhost:3306/database_name?useSSL=false"</span>;
@@ -261,15 +257,11 @@
 		&#125;	 
 	&#125;
 
-&#125;</code></pre></div>
-<h1 id="2statement接口"><a class="markdownIt-Anchor" href="#2statement接口"></a> 2.Statement接口</h1>
-<p>需要使用<code>Connection</code>对象的<code>createStatement()</code>方法创建一个<code>Statement</code>对象；<br>
-<code>Statement</code>中的方法：</p>
-<p><font color="#1EE4F1">boolean execute (String SQL)</font> 如果可以检索到ResultSet对象，则返回一个布尔值true; 否则返回false。使用此方法执行SQLDDL语句或需要使用真正的动态SQL，可使用于执行创建数据库，创建表的SQL语句等等。</p>
-<p><font color="#1EE4F1">int executeUpdate (String SQL)</font>:返回受SQL语句执行影响的行数。使用此方法执行预期会影响多行的SQL语句，例如:INSERT，<br>
-UPDATE或DELETE语句。</p>
-<p><font color="#1EE4F1">ResultSet executeQuery(String SQL)</font>：返回一个ResultSet对象。 当您希望获得结果集时，请使用此方法，就像使用SELECT语<br>
-句一样。</p>
+&#125;</code></pre></div></p>
+<h1 id="2-Statement接口"><a href="#2-Statement接口" class="headerlink" title="2.Statement接口"></a>2.Statement接口</h1><p>   需要使用<code>Connection</code>对象的<code>createStatement()</code>方法创建一个<code>Statement</code>对象；<br>   <code>Statement</code>中的方法：</p>
+<p> <font color="#1EE4F1">boolean execute (String SQL)</font> 如果可以检索到ResultSet对象，则返回一个布尔值true; 否则返回false。使用此方法执行SQLDDL语句或需要使用真正的动态SQL，可使用于执行创建数据库，创建表的SQL语句等等。</p>
+<p><font color="#1EE4F1">int executeUpdate (String SQL)</font>:返回受SQL语句执行影响的行数。使用此方法执行预期会影响多行的SQL语句，例如:INSERT，<br>UPDATE或DELETE语句。</p>
+<p><font color="#1EE4F1">ResultSet executeQuery(String SQL)</font>：返回一个ResultSet对象。 当您希望获得结果集时，请使用此方法，就像使用SELECT语<br>句一样。</p>
 
             </article>
             <hr>

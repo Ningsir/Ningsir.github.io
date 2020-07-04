@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      13
+      12
        分钟
     </span>
   
@@ -210,9 +210,7 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h1 id="用户"><a class="markdownIt-Anchor" href="#用户"></a> 用户</h1>
-<h2 id="passwd文件"><a class="markdownIt-Anchor" href="#passwd文件"></a> passwd文件</h2>
-<p>passwd文件位于<code>/etc/passwd</code>, 各字段含义如下：</p>
+              <h1 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h1><h2 id="passwd文件"><a href="#passwd文件" class="headerlink" title="passwd文件"></a>passwd文件</h2><p>passwd文件位于<code>/etc/passwd</code>, 各字段含义如下：</p>
 <ul>
 <li>1、账户名称：用来对应UID</li>
 <li>2、密码：早起Unix系统的密码就是防止这个字段上，但是英文这个档案的特性是所有程序都能读取，容易造成密码数据被窃取应此后来就将这个字段的密码数据放到了/etc/shadow中了，所以这里使用【X】，</li>
@@ -220,65 +218,50 @@
 <li>4、GID：这个与/etc/group有关！其实/etc/group的观念与/etc/passwd差不多，应用来规范组名</li>
 <li>5、用户信息说明栏：</li>
 <li>6、家目录：root的家目录在/root，所以当root登陆的之后，就会立刻跑到/root目录里头，如果坏、这个账号需要使用特别大的空间，就可以对这个字段进行修改，已移动到其他同硬盘。默认的用户家目录在/home/youIdname, home目录即<code>~</code>。</li>
-<li>7、Shell:定义用户登陆系统使用什么shell，这里需要注意，有一个shell可以用来特带成让账户无法取得shell环境的登陆动作！那就是/sbin/nologin这个特殊东西，也可以用来制作pop邮件账号者的数据。</li>
-</ul>
-<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-symbol">:/etc</span><span class="hljs-variable">$ </span>cat /etc/passwd
+<li>7、Shell:定义用户登陆系统使用什么shell，这里需要注意，有一个shell可以用来特带成让账户无法取得shell环境的登陆动作！那就是/sbin/nologin这个特殊东西，也可以用来制作pop邮件账号者的数据。<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-symbol">:/etc</span><span class="hljs-variable">$ </span>cat /etc/passwd
 <span class="hljs-symbol">root:</span><span class="hljs-symbol">x:</span><span class="hljs-number">0</span><span class="hljs-symbol">:</span><span class="hljs-number">0</span><span class="hljs-symbol">:root</span><span class="hljs-symbol">:/root</span><span class="hljs-symbol">:/bin/bash</span>
 <span class="hljs-symbol">xinger:</span><span class="hljs-symbol">x:</span><span class="hljs-number">1000</span><span class="hljs-symbol">:</span><span class="hljs-number">1000</span><span class="hljs-symbol">:</span>,,,<span class="hljs-symbol">:/home/xinger</span><span class="hljs-symbol">:/bin/bash</span>
 <span class="hljs-symbol">mongodb:</span><span class="hljs-symbol">x:</span><span class="hljs-number">111</span><span class="hljs-symbol">:</span><span class="hljs-number">116</span><span class="hljs-symbol">:</span><span class="hljs-symbol">:/var/lib/mongodb</span><span class="hljs-symbol">:/usr/sbin/nologin</span>
 <span class="hljs-symbol">redis:</span><span class="hljs-symbol">x:</span><span class="hljs-number">112</span><span class="hljs-symbol">:</span><span class="hljs-number">117</span><span class="hljs-symbol">:</span><span class="hljs-symbol">:/var/lib/redis</span><span class="hljs-symbol">:/usr/sbin/nologin</span></code></pre></div>
-<h3 id="禁止用户shell登录权限"><a class="markdownIt-Anchor" href="#禁止用户shell登录权限"></a> 禁止用户shell登录权限</h3>
-<p>比如禁止git用户shell登录权限</p>
+</li>
+</ul>
+<h3 id="禁止用户shell登录权限"><a href="#禁止用户shell登录权限" class="headerlink" title="禁止用户shell登录权限"></a>禁止用户shell登录权限</h3><p>比如禁止git用户shell登录权限</p>
 <div class="hljs"><pre><code class="hljs undefined">- <span class="hljs-symbol">git:</span><span class="hljs-symbol">x:</span><span class="hljs-number">1001</span><span class="hljs-symbol">:</span><span class="hljs-number">1001</span><span class="hljs-symbol">:</span>,,,<span class="hljs-symbol">:/home/git</span><span class="hljs-symbol">:/bin/bash</span>
 <span class="hljs-comment"># 修改成如下</span>
 + <span class="hljs-symbol">git:</span><span class="hljs-symbol">x:</span><span class="hljs-number">1001</span><span class="hljs-symbol">:</span><span class="hljs-number">1001</span><span class="hljs-symbol">:</span>,,,<span class="hljs-symbol">:/home/git</span><span class="hljs-symbol">:/usr/bin/git-shell</span></code></pre></div>
-<h2 id="用户相关操作"><a class="markdownIt-Anchor" href="#用户相关操作"></a> 用户相关操作</h2>
-<h3 id="新建用户"><a class="markdownIt-Anchor" href="#新建用户"></a> 新建用户</h3>
-<p>有以下两种方式：</p>
-<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-keyword">adduser </span>username
-<span class="hljs-symbol">useradd</span> username</code></pre></div>
-<h3 id="删除用户"><a class="markdownIt-Anchor" href="#删除用户"></a> 删除用户</h3>
-<p>对应不同的创建有不同的删除方式：</p>
-<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-attribute">deluser username
-userdel username</span></code></pre></div>
-<h3 id="切换用户"><a class="markdownIt-Anchor" href="#切换用户"></a> 切换用户</h3>
-<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-attribute">su username</span></code></pre></div>
-<h3 id="改变文件用户"><a class="markdownIt-Anchor" href="#改变文件用户"></a> 改变文件用户</h3>
-<div class="hljs"><pre><code class="hljs undefined">chown -R username <span class="hljs-keyword">dir </span><span class="hljs-comment"># 用户</span>
+<h2 id="用户相关操作"><a href="#用户相关操作" class="headerlink" title="用户相关操作"></a>用户相关操作</h2><h3 id="新建用户"><a href="#新建用户" class="headerlink" title="新建用户"></a>新建用户</h3><p>有以下两种方式：<br><div class="hljs"><pre><code class="hljs undefined"><span class="hljs-keyword">adduser </span>username
+<span class="hljs-symbol">useradd</span> username</code></pre></div></p>
+<h3 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h3><p>对应不同的创建有不同的删除方式：<br><div class="hljs"><pre><code class="hljs undefined"><span class="hljs-attribute">deluser username
+userdel username</span></code></pre></div></p>
+<h3 id="切换用户"><a href="#切换用户" class="headerlink" title="切换用户"></a>切换用户</h3><div class="hljs"><pre><code class="hljs undefined"><span class="hljs-attribute">su username</span></code></pre></div>
+<h3 id="改变文件用户"><a href="#改变文件用户" class="headerlink" title="改变文件用户"></a>改变文件用户</h3><div class="hljs"><pre><code class="hljs undefined">chown -R username <span class="hljs-keyword">dir </span><span class="hljs-comment"># 用户</span>
 chgrp -R grpname <span class="hljs-keyword">dir </span><span class="hljs-comment"># 用户组</span></code></pre></div>
-<h3 id="修改密码"><a class="markdownIt-Anchor" href="#修改密码"></a> 修改密码</h3>
-<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-attribute">passwd</span> username <span class="hljs-comment"># 修改密码</span>
+<h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><div class="hljs"><pre><code class="hljs undefined"><span class="hljs-attribute">passwd</span> username <span class="hljs-comment"># 修改密码</span>
 passwd username -d <span class="hljs-comment"># 删除密码</span></code></pre></div>
-<h2 id="etcsudoers文件"><a class="markdownIt-Anchor" href="#etcsudoers文件"></a> /etc/sudoers文件</h2>
-<p>修改sudoers文件让用户获得sudo的使用权, 避免出现如下错误：</p>
+<h2 id="etc-sudoers文件"><a href="#etc-sudoers文件" class="headerlink" title="/etc/sudoers文件"></a>/etc/sudoers文件</h2><p>修改sudoers文件让用户获得sudo的使用权, 避免出现如下错误：</p>
 <blockquote>
 <p>xinger is not in the sudoers file.  This incident will be reported.</p>
 </blockquote>
-<p>比如创建了一个git用户，sudoers文件中添加<code>git ALL=(ALL) ALL</code>让git用户获得sudo使用权。</p>
-<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-comment"># User privilege specification</span>
+<p>比如创建了一个git用户，sudoers文件中添加<code>git   ALL=(ALL) ALL</code>让git用户获得sudo使用权。<br><div class="hljs"><pre><code class="hljs undefined"><span class="hljs-comment"># User privilege specification</span>
 <span class="hljs-attribute">root</span>    <span class="hljs-literal">ALL</span>=(<span class="hljs-literal">ALL</span>:<span class="hljs-literal">ALL</span>) <span class="hljs-literal">ALL</span>
 <span class="hljs-comment"># </span>
-<span class="hljs-attribute">git</span>     <span class="hljs-literal">ALL</span>=(<span class="hljs-literal">ALL</span>) <span class="hljs-literal">ALL</span></code></pre></div>
+<span class="hljs-attribute">git</span>     <span class="hljs-literal">ALL</span>=(<span class="hljs-literal">ALL</span>) <span class="hljs-literal">ALL</span></code></pre></div></p>
 <ul>
 <li>第一个ALL是指网络中的主机，我们后面把它改成了主机名，它指明jack可以在此主机上执行后面的命令。</li>
 <li>第二个括号里的ALL是指目标用户，也就是以谁的身份去执行命令。</li>
 <li>最后一个ALL当然就是指命令名了。</li>
 </ul>
-<p>修改sudoers文件需要修改文件的读写权限, 注意要在在修改后将权限改回：</p>
-<div class="hljs"><pre><code class="hljs undefined">sudo chmod +<span class="hljs-number">777</span> <span class="hljs-regexp">/etc/</span>sudoers
+<p>修改sudoers文件需要修改文件的读写权限, 注意要在在修改后将权限改回：<br><div class="hljs"><pre><code class="hljs undefined">sudo chmod +<span class="hljs-number">777</span> <span class="hljs-regexp">/etc/</span>sudoers
 
 <span class="hljs-comment"># 修改后将权限改回</span>
-sudo chmod <span class="hljs-number">440</span> <span class="hljs-regexp">/etc/</span>sudoers</code></pre></div>
-<h1 id="权限"><a class="markdownIt-Anchor" href="#权限"></a> 权限</h1>
-<ul>
+sudo chmod <span class="hljs-number">440</span> <span class="hljs-regexp">/etc/</span>sudoers</code></pre></div></p>
+<h1 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h1><ul>
 <li>Linux文件的权限类型一般包括读、写、执行，对应字母为r、w、x，对应数字为4、2、1。对于一个文件夹而言，可写就意味着可以在这个文件夹下创建文件或文件夹；</li>
 <li>Linux下权限的粒度分为拥有者、群组、其他组三种；</li>
 <li>使用<code>chmod</code>命令修改文件权限，使用<code>chown</code>修改拥有者或群组，使用<code>chgrp</code>修改群组。</li>
 <li>chown：一般来说，这个指令只有是由系统管理者(root)所使用，一般使用者没有权限可以改变别人的文件拥有者，也没有权限把自己的文件拥有者改设为别人。只有系统管理者(root)才有这样的权限。</li>
 </ul>
-<h2 id="chmod"><a class="markdownIt-Anchor" href="#chmod"></a> chmod</h2>
-<h3 id="一般使用"><a class="markdownIt-Anchor" href="#一般使用"></a> 一般使用</h3>
-<div class="hljs"><pre><code class="hljs shell">chmod [ugoa] [[+-=][rwx]]
+<h2 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h2><h3 id="一般使用"><a href="#一般使用" class="headerlink" title="一般使用"></a>一般使用</h3><div class="hljs"><pre><code class="hljs shell">chmod [ugoa] [[+-=][rwx]]
 其中：
 [ugoa]
  u表示拥有者，g表示拥有群组，o表示其他，a表示全部
@@ -286,14 +269,11 @@ sudo chmod <span class="hljs-number">440</span> <span class="hljs-regexp">/etc/<
  + 表示增加权限，- 表示取消权限，= 表示唯一设定权限。
 [rwxX]
  r 表示可读取，w 表示可写入，x 表示可执行，X 表示只有当该档案是个子目录或者该档案已经被设定过为可执行。</code></pre></div>
-<h3 id="数字权限"><a class="markdownIt-Anchor" href="#数字权限"></a> 数字权限</h3>
-<p>r = 4, w = 2, x = 1.</p>
+<h3 id="数字权限"><a href="#数字权限" class="headerlink" title="数字权限"></a>数字权限</h3><p>r = 4, w = 2, x = 1.</p>
 <ul>
-<li>
-<p>rwx则表示为：4 + 2 + 1 = 7；</p>
+<li><p>rwx则表示为：4 + 2 + 1 = 7；</p>
 </li>
-<li>
-<p>r–则表示为：4 + 0 + 0 = 4；</p>
+<li><p>r—则表示为：4 + 0 + 0 = 4；</p>
 </li>
 </ul>
 <p>如果设置所有人都有rwx权限, 则用数字表示的权限为777，使用如下命令更改权限：</p>

@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      19
+      18
        分钟
     </span>
   
@@ -210,9 +210,7 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h1 id="1-搭建hadoop分布式集群环境"><a class="markdownIt-Anchor" href="#1-搭建hadoop分布式集群环境"></a> 1. 搭建Hadoop分布式集群环境</h1>
-<h2 id="11-安装linux虚拟机"><a class="markdownIt-Anchor" href="#11-安装linux虚拟机"></a> 1.1 安装Linux虚拟机</h2>
-<p>首先下载并安装VirtualBox 6.1.8，然后准备安装Linux虚拟机，需要提前下载好镜像文件，我下载的是<code>ubuntu-16.04.6-server-amd64.iso</code>。然后新建一个虚拟机，分配1G内存，10G虚拟空间。在新建虚拟机之后，需要注意以下设置：</p>
+              <h1 id="1-搭建Hadoop分布式集群环境"><a href="#1-搭建Hadoop分布式集群环境" class="headerlink" title="1. 搭建Hadoop分布式集群环境"></a>1. 搭建Hadoop分布式集群环境</h1><h2 id="1-1-安装Linux虚拟机"><a href="#1-1-安装Linux虚拟机" class="headerlink" title="1.1 安装Linux虚拟机"></a>1.1 安装Linux虚拟机</h2><p>首先下载并安装VirtualBox 6.1.8，然后准备安装Linux虚拟机，需要提前下载好镜像文件，我下载的是<code>ubuntu-16.04.6-server-amd64.iso</code>。然后新建一个虚拟机，分配1G内存，10G虚拟空间。在新建虚拟机之后，需要注意以下设置：</p>
 <ul>
 <li>设置启动顺序：如下图所示，将光驱启动调到最前面。</li>
 </ul>
@@ -224,39 +222,26 @@
 <p><img src="http://image.ningxin.site/20200603230506.png" srcset="/img/loading.gif" alt=""></p>
 <p>完成上述操作后，点击运行进行虚拟机的安装。重复操作，安装如下四台虚拟机，其中ubuntu作为master，slave1、slave2、slave3作为slave。</p>
 <p><img src="http://image.ningxin.site/20200603231706.png" srcset="/img/loading.gif" alt=""></p>
-<h2 id="12-配置hadoop环境"><a class="markdownIt-Anchor" href="#12-配置hadoop环境"></a> 1.2 配置Hadoop环境</h2>
-<h3 id="123-前置条件"><a class="markdownIt-Anchor" href="#123-前置条件"></a> 1.2.3 前置条件</h3>
-<h4 id="1231-编辑hostname文件"><a class="markdownIt-Anchor" href="#1231-编辑hostname文件"></a> 1.2.3.1 编辑hostname文件</h4>
-<p>使用<code>hostnamectl set-hostname</code>命令设置hostname分别为master、slave1、slave2、slave3</p>
+<h2 id="1-2-配置Hadoop环境"><a href="#1-2-配置Hadoop环境" class="headerlink" title="1.2 配置Hadoop环境"></a>1.2 配置Hadoop环境</h2><h3 id="1-2-3-前置条件"><a href="#1-2-3-前置条件" class="headerlink" title="1.2.3 前置条件"></a>1.2.3 前置条件</h3><h4 id="1-2-3-1-编辑hostname文件"><a href="#1-2-3-1-编辑hostname文件" class="headerlink" title="1.2.3.1 编辑hostname文件"></a>1.2.3.1 编辑hostname文件</h4><p>使用<code>hostnamectl set-hostname</code>命令设置hostname分别为master、slave1、slave2、slave3</p>
 <p><img src="http://image.ningxin.site/20200603232421.png" srcset="/img/loading.gif" alt=""></p>
-<h4 id="1232-编辑hosts文件"><a class="markdownIt-Anchor" href="#1232-编辑hosts文件"></a> 1.2.3.2 编辑hosts文件</h4>
-<p>hosts文件用来记录IP和hostname之间的对应关系。使用<code>ifconfig</code>命令来查看IP地址，最后发现4台虚拟机的IP地址是一样的，需要修改网线连接方式，如下选择<code>桥接网卡</code>即可：<br>
-<img src="http://image.ningxin.site/20200603232752.png" srcset="/img/loading.gif" alt=""></p>
+<h4 id="1-2-3-2-编辑hosts文件"><a href="#1-2-3-2-编辑hosts文件" class="headerlink" title="1.2.3.2 编辑hosts文件"></a>1.2.3.2 编辑hosts文件</h4><p>hosts文件用来记录IP和hostname之间的对应关系。使用<code>ifconfig</code>命令来查看IP地址，最后发现4台虚拟机的IP地址是一样的，需要修改网线连接方式，如下选择<code>桥接网卡</code>即可：<br><img src="http://image.ningxin.site/20200603232752.png" srcset="/img/loading.gif" alt=""></p>
 <p>然后修改<code>/etc/hosts</code>文件，如下所示：</p>
 <p><img src="http://image.ningxin.site/20200603232949.png" srcset="/img/loading.gif" alt=""></p>
-<h4 id="1233-配置ssh免密登录"><a class="markdownIt-Anchor" href="#1233-配置ssh免密登录"></a> 1.2.3.3 配置ssh免密登录</h4>
-<p>在master上使用<code>ssh-keygen -t rsa</code>命令生成密钥（保存在<code>~/.ssh</code>目录下），然后将公钥上传到slave的<code>~/.ssh/authorized_keys</code>中即可。</p>
-<h2 id="12-安装并配置jdk"><a class="markdownIt-Anchor" href="#12-安装并配置jdk"></a> 1.2 安装并配置jdk</h2>
-<p>首先在Windows上下载<code>jdk-8u251-linux-x64.tar.gz</code>，然后使用pscp工具上传到Linux虚拟机上。</p>
+<h4 id="1-2-3-3-配置ssh免密登录"><a href="#1-2-3-3-配置ssh免密登录" class="headerlink" title="1.2.3.3 配置ssh免密登录"></a>1.2.3.3 配置ssh免密登录</h4><p>在master上使用<code>ssh-keygen -t rsa</code>命令生成密钥（保存在<code>~/.ssh</code>目录下），然后将公钥上传到slave的<code>~/.ssh/authorized_keys</code>中即可。</p>
+<h2 id="1-2-安装并配置jdk"><a href="#1-2-安装并配置jdk" class="headerlink" title="1.2 安装并配置jdk"></a>1.2 安装并配置jdk</h2><p>首先在Windows上下载<code>jdk-8u251-linux-x64.tar.gz</code>，然后使用pscp工具上传到Linux虚拟机上。</p>
 <p><img src="http://image.ningxin.site/20200602154744.png" srcset="/img/loading.gif" alt=""></p>
 <p>将jdk解压在<code>/usr/java/</code>目录下，然后配置java环境变量，在<code>/etc/profile</code>文件中添加如下内容，然后运行<code>source /etc/profile</code>命令使环境变量生效：</p>
 <div class="hljs"><pre><code class="hljs undefined">export JAVA_HOME=<span class="hljs-regexp">/usr/java</span><span class="hljs-regexp">/jdk1.8.0_251
 export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/</span><span class="hljs-symbol">LIB:</span>$JAVA_HOME/jre/<span class="hljs-class"><span class="hljs-keyword">lib</span></span>
 export PATH=$<span class="hljs-symbol">PATH:</span>$JAVA_HOME/<span class="hljs-symbol">bin:</span>$JAVA_HOME/jre/bin</code></pre></div>
-<h2 id="13-安装并配置hadoop"><a class="markdownIt-Anchor" href="#13-安装并配置hadoop"></a> 1.3 安装并配置Hadoop</h2>
-<h3 id="131-配置环境变量"><a class="markdownIt-Anchor" href="#131-配置环境变量"></a> 1.3.1 配置环境变量</h3>
-<p>先从Windows上下载Hadoop2.10.0并上传到Linux虚拟机上，解压到<code>/usr/hadoop/</code>目录下，然后添加如下环境变量：</p>
+<h2 id="1-3-安装并配置Hadoop"><a href="#1-3-安装并配置Hadoop" class="headerlink" title="1.3 安装并配置Hadoop"></a>1.3 安装并配置Hadoop</h2><h3 id="1-3-1-配置环境变量"><a href="#1-3-1-配置环境变量" class="headerlink" title="1.3.1 配置环境变量"></a>1.3.1 配置环境变量</h3><p>先从Windows上下载Hadoop2.10.0并上传到Linux虚拟机上，解压到<code>/usr/hadoop/</code>目录下，然后添加如下环境变量：</p>
 <div class="hljs"><pre><code class="hljs undefined"><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">HADOOP_HOME</span>=/usr/hadoop/hadoop-2.10.0
 <span class="hljs-builtin-name">export</span> <span class="hljs-attribute">PATH</span>=<span class="hljs-variable">$PATH</span>:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</code></pre></div>
-<h3 id="132-配置相关配置文件"><a class="markdownIt-Anchor" href="#132-配置相关配置文件"></a> 1.3.2 配置相关配置文件</h3>
-<p>以下提到的配置文件都位于<code>etc/hadoop/</code>目录下。</p>
+<h3 id="1-3-2-配置相关配置文件"><a href="#1-3-2-配置相关配置文件" class="headerlink" title="1.3.2 配置相关配置文件"></a>1.3.2 配置相关配置文件</h3><p>以下提到的配置文件都位于<code>etc/hadoop/</code>目录下。</p>
 <p><img src="http://image.ningxin.site/20200604105619.png" srcset="/img/loading.gif" alt=""></p>
 <p>注意：只需要修改master中的Hadoop配置文件，然后将配置好的Hadoop上传到slave中去即可，避免重复配置的麻烦。</p>
-<h4 id="1321-hadoop-envsh-和-yarn-envsh"><a class="markdownIt-Anchor" href="#1321-hadoop-envsh-和-yarn-envsh"></a> 1.3.2.1 <a href="http://hadoop-env.sh" target="_blank" rel="noopener">hadoop-env.sh</a> 和 <a href="http://yarn-env.sh" target="_blank" rel="noopener">yarn-env.sh</a></h4>
-<p>两个文件都是修改<code>JAVA_HOME</code>的值，需要使用实际的路径，而不是环境变量。<br>
-<img src="http://image.ningxin.site/20200602161801.png" srcset="/img/loading.gif" alt=""></p>
-<h4 id="1322-core-sitexml"><a class="markdownIt-Anchor" href="#1322-core-sitexml"></a> 1.3.2.2 core-site.xml</h4>
-<p>配置监听端口和缓存目录，缓存目录不存在则需要创建。</p>
+<h4 id="1-3-2-1-hadoop-env-sh-和-yarn-env-sh"><a href="#1-3-2-1-hadoop-env-sh-和-yarn-env-sh" class="headerlink" title="1.3.2.1 hadoop-env.sh 和 yarn-env.sh"></a>1.3.2.1 hadoop-env.sh 和 yarn-env.sh</h4><p>两个文件都是修改<code>JAVA_HOME</code>的值，需要使用实际的路径，而不是环境变量。<br><img src="http://image.ningxin.site/20200602161801.png" srcset="/img/loading.gif" alt=""></p>
+<h4 id="1-3-2-2-core-site-xml"><a href="#1-3-2-2-core-site-xml" class="headerlink" title="1.3.2.2 core-site.xml"></a>1.3.2.2 core-site.xml</h4><p>配置监听端口和缓存目录，缓存目录不存在则需要创建。</p>
 <div class="hljs"><pre><code class="hljs undefined"><span class="hljs-params">&lt;configuration&gt;</span>
 	<span class="hljs-meta"># HDFS Web UI 监听端口配置</span>
 	<span class="hljs-params">&lt;property&gt;</span>
@@ -270,27 +255,21 @@ export PATH=$<span class="hljs-symbol">PATH:</span>$JAVA_HOME/<span class="hljs-
 		<span class="hljs-params">&lt;value&gt;</span>file:<span class="hljs-meta-keyword">/root/</span>software/hadooptmp<span class="hljs-params">&lt;/value&gt;</span>
 	<span class="hljs-params">&lt;/property&gt;</span>
 <span class="hljs-params">&lt;/configuration&gt;</span></code></pre></div>
-<h4 id="1323-hdfs-sitexml"><a class="markdownIt-Anchor" href="#1323-hdfs-sitexml"></a> 1.3.2.3 hdfs-site.xml</h4>
-<p>需要创建HDFS存储目录，namenode用来存储namenode文件，data存储datanode数据，tmp存储临时文件。</p>
+<h4 id="1-3-2-3-hdfs-site-xml"><a href="#1-3-2-3-hdfs-site-xml" class="headerlink" title="1.3.2.3 hdfs-site.xml"></a>1.3.2.3 hdfs-site.xml</h4><p>需要创建HDFS存储目录，namenode用来存储namenode文件，data存储datanode数据，tmp存储临时文件。</p>
 <div class="hljs"><pre><code class="hljs undefined">usr<span class="hljs-regexp">/hadoop/</span>hadoop-<span class="hljs-number">2.10</span>.<span class="hljs-number">0</span><span class="hljs-regexp">/hdfs/</span>namenode
 usr<span class="hljs-regexp">/hadoop/</span>hadoop-<span class="hljs-number">2.10</span>.<span class="hljs-number">0</span><span class="hljs-regexp">/hdfs/</span>data
 usr<span class="hljs-regexp">/hadoop/</span>hadoop-<span class="hljs-number">2.10</span>.<span class="hljs-number">0</span><span class="hljs-regexp">/hdfs/</span>tmp</code></pre></div>
 <p><img src="http://image.ningxin.site/20200602164047.png" srcset="/img/loading.gif" alt=""></p>
-<h4 id="1324-mapred-sitexml"><a class="markdownIt-Anchor" href="#1324-mapred-sitexml"></a> 1.3.2.4 mapred-site.xml</h4>
-<p><code>mapred-site.xml</code>文件需要从<code>mapred-site.xml.template</code>使用cp命令生成：<br>
-<code>cp mapred-site.xml.template mapred-site.xml</code>。然后设置MapReduce运行于yarn上：</p>
+<h4 id="1-3-2-4-mapred-site-xml"><a href="#1-3-2-4-mapred-site-xml" class="headerlink" title="1.3.2.4 mapred-site.xml"></a>1.3.2.4 mapred-site.xml</h4><p><code>mapred-site.xml</code>文件需要从<code>mapred-site.xml.template</code>使用cp命令生成：<br><code>cp mapred-site.xml.template mapred-site.xml</code>。然后设置MapReduce运行于yarn上：</p>
 <p><img src="http://image.ningxin.site/20200602164356.png" srcset="/img/loading.gif" alt=""></p>
-<h4 id="1325-yarn-sitexml"><a class="markdownIt-Anchor" href="#1325-yarn-sitexml"></a> 1.3.2.5 yarn-site.xml</h4>
-<p><img src="http://image.ningxin.site/20200602164735.png" srcset="/img/loading.gif" alt=""></p>
+<h4 id="1-3-2-5-yarn-site-xml"><a href="#1-3-2-5-yarn-site-xml" class="headerlink" title="1.3.2.5 yarn-site.xml"></a>1.3.2.5 yarn-site.xml</h4><p><img src="http://image.ningxin.site/20200602164735.png" srcset="/img/loading.gif" alt=""></p>
 <p>上面<code>yarn-site.xml</code>文件中将<code>hostname</code>错打成<code>hostnane</code>，最后导致Hadoop运行wordcount时，不能结束，修改后如下：</p>
 <p><img src="http://image.ningxin.site/20200603095221.png" srcset="/img/loading.gif" alt=""></p>
-<h4 id="1326-slaves"><a class="markdownIt-Anchor" href="#1326-slaves"></a> 1.3.2.6 slaves</h4>
-<p>在slaves文件中添加如下内容来设置slave：</p>
+<h4 id="1-3-2-6-slaves"><a href="#1-3-2-6-slaves" class="headerlink" title="1.3.2.6 slaves"></a>1.3.2.6 slaves</h4><p>在slaves文件中添加如下内容来设置slave：</p>
 <div class="hljs"><pre><code class="hljs undefined"><span class="hljs-attribute">slave1</span>
 slave2
 slave3</code></pre></div>
-<h3 id="133-启动hadoop"><a class="markdownIt-Anchor" href="#133-启动hadoop"></a> 1.3.3 启动Hadoop</h3>
-<p>第一次启动需要使用<code>hdfs namenode -format</code>格式化文件系统，出现“Cannot create directory /usr/hadoop/hadoop-2.10.0/hdfs/namenode/current”错误，显示无法创建current文件。无法创建目录的原因是因为<code>hadoop-2.10.0</code>的文件拥有者是<code>root</code>，直接使用<code>sudo hdfs namenode -format</code>会出现找不到命令的错误，两种解决方法：1. 使用<code>sudo su</code>切换到管理员身份；2. 修改<code>hadoop-2.10.0</code>的文件拥有者为普通用户。</p>
+<h3 id="1-3-3-启动Hadoop"><a href="#1-3-3-启动Hadoop" class="headerlink" title="1.3.3 启动Hadoop"></a>1.3.3 启动Hadoop</h3><p>第一次启动需要使用<code>hdfs namenode -format</code>格式化文件系统，出现“Cannot create directory /usr/hadoop/hadoop-2.10.0/hdfs/namenode/current”错误，显示无法创建current文件。无法创建目录的原因是因为<code>hadoop-2.10.0</code>的文件拥有者是<code>root</code>，直接使用<code>sudo hdfs namenode -format</code>会出现找不到命令的错误，两种解决方法：1. 使用<code>sudo su</code>切换到管理员身份；2. 修改<code>hadoop-2.10.0</code>的文件拥有者为普通用户。</p>
 <ul>
 <li>启动: 使用<code>start-dfs.sh</code>启动分布式文件系统。</li>
 </ul>
@@ -307,45 +286,35 @@ slave3</code></pre></div>
 <li>浏览器: 在浏览器中输入<code>http:master:50070</code>查看UI界面</li>
 </ul>
 <p><img src="http://image.ningxin.site/20200602214338.png" srcset="/img/loading.gif" alt=""></p>
-<h1 id="2-hdfs文件上传"><a class="markdownIt-Anchor" href="#2-hdfs文件上传"></a> 2. HDFS文件上传</h1>
-<p>创建<code>input.txt</code>文件并输入以下内容：</p>
+<h1 id="2-HDFS文件上传"><a href="#2-HDFS文件上传" class="headerlink" title="2. HDFS文件上传"></a>2. HDFS文件上传</h1><p>创建<code>input.txt</code>文件并输入以下内容：</p>
 <p><img src="http://image.ningxin.site/20200604001324.png" srcset="/img/loading.gif" alt=""></p>
 <p>使用<code>hdfs dfs -put</code>命令将文件上传到hdfs中，然后使用<code>hdfs dfs -cat</code>命令查看文件中的具体内容。</p>
 <p><img src="http://image.ningxin.site/20200604001901.png" srcset="/img/loading.gif" alt=""></p>
-<h1 id="3-运行wordcount程序"><a class="markdownIt-Anchor" href="#3-运行wordcount程序"></a> 3. 运行wordcount程序</h1>
-<p>wordcount程序在<code>share/hadoop/hadoop-mapreduce-examples-2.10.0.jar</code>包中, 运行该程序之前需要提前创建输入文件,输出文件不需要创建， 输入输出文件如下：</p>
+<h1 id="3-运行wordcount程序"><a href="#3-运行wordcount程序" class="headerlink" title="3. 运行wordcount程序"></a>3. 运行wordcount程序</h1><p>wordcount程序在<code>share/hadoop/hadoop-mapreduce-examples-2.10.0.jar</code>包中, 运行该程序之前需要提前创建输入文件,输出文件不需要创建， 输入输出文件如下：</p>
 <div class="hljs"><pre><code class="hljs undefined">/wordcount/input/<span class="hljs-selector-tag">input</span><span class="hljs-selector-class">.txt</span>
 /wordcount/output（不要创建）</code></pre></div>
 <p>其中<code>input.txt</code>文件中的内容如下：</p>
 <p><img src="http://image.ningxin.site/20200603100517.png" srcset="/img/loading.gif" alt=""></p>
-<p>然后使用命令<code>hadoop jar hadoop-mapreduce-examples-2.10.0.jar wordcount /wordcount/input/input.txt /wordcount/output</code>运行wordcount程序，结果如下：<br>
-<img src="http://image.ningxin.site/20200603100155.png" srcset="/img/loading.gif" alt=""></p>
-<p>使用命令<code>hdfs dfs -cat /wordcount/output/part-r-00000</code>查看输出结果：<br>
-<img src="http://image.ningxin.site/20200603100430.png" srcset="/img/loading.gif" alt=""></p>
-<h1 id="4-编写wordcount程序"><a class="markdownIt-Anchor" href="#4-编写wordcount程序"></a> 4. 编写wordcount程序</h1>
-<p>wordcount程序见附件<code>WordCount.java</code>。</p>
+<p>然后使用命令<code>hadoop jar hadoop-mapreduce-examples-2.10.0.jar wordcount /wordcount/input/input.txt /wordcount/output</code>运行wordcount程序，结果如下：<br><img src="http://image.ningxin.site/20200603100155.png" srcset="/img/loading.gif" alt=""></p>
+<p>使用命令<code>hdfs dfs -cat /wordcount/output/part-r-00000</code>查看输出结果：<br><img src="http://image.ningxin.site/20200603100430.png" srcset="/img/loading.gif" alt=""></p>
+<h1 id="4-编写wordcount程序"><a href="#4-编写wordcount程序" class="headerlink" title="4. 编写wordcount程序"></a>4. 编写wordcount程序</h1><p>wordcount程序见附件<code>WordCount.java</code>。</p>
 <p>master中创建如下目录, 其中src存放java文件，classes存放class文件：</p>
 <div class="hljs"><pre><code class="hljs undefined">~<span class="hljs-regexp">/wordcount/</span>src
 ~<span class="hljs-regexp">/wordcount/</span>classes</code></pre></div>
-<h2 id="41-编译"><a class="markdownIt-Anchor" href="#41-编译"></a> 4.1 编译</h2>
-<p>编译时需要引入的包如下：</p>
+<h2 id="4-1-编译"><a href="#4-1-编译" class="headerlink" title="4.1 编译"></a>4.1 编译</h2><p>编译时需要引入的包如下：</p>
 <div class="hljs"><pre><code class="hljs undefined">share/hadoop/common/hadoop-common-<span class="hljs-number">2.10</span>.<span class="hljs-number">0</span>.jar
 share/hadoop/mapreduce/hadoop-mapreduce-client-core-<span class="hljs-number">2.10</span>.<span class="hljs-number">0</span>.jar
 share/hadoop/common/<span class="hljs-class"><span class="hljs-keyword">lib</span>/<span class="hljs-title">commons</span>-<span class="hljs-title">cli</span>.1.2.<span class="hljs-title">jar</span></span></code></pre></div>
 <p>使用javac命令进行编译，并用<code>-classpath</code>指定引入的包，<code>-d</code>指定输出目录：</p>
 <p><img src="http://image.ningxin.site/20200603213806.png" srcset="/img/loading.gif" alt=""></p>
-<h2 id="42-打包"><a class="markdownIt-Anchor" href="#42-打包"></a> 4.2 打包</h2>
-<p>使用命令<code>jar -cvf wordcount.jar classes/</code>进行打包：</p>
+<h2 id="4-2-打包"><a href="#4-2-打包" class="headerlink" title="4.2 打包"></a>4.2 打包</h2><p>使用命令<code>jar -cvf wordcount.jar classes/</code>进行打包：</p>
 <p><img src="http://image.ningxin.site/20200603213924.png" srcset="/img/loading.gif" alt=""></p>
-<h2 id="43-运行"><a class="markdownIt-Anchor" href="#43-运行"></a> 4.3 运行</h2>
-<p>使用如下命令运行wordcount.jar</p>
+<h2 id="4-3-运行"><a href="#4-3-运行" class="headerlink" title="4.3 运行"></a>4.3 运行</h2><p>使用如下命令运行wordcount.jar</p>
 <p><code>hadoop jar wordcount.jar WordCount /wordcount/input/input.txt /output</code></p>
 <p>然后出现<code>Class WordCount$Reduce not found</code>的错误，最后使用如下打包命令，解决问题：</p>
 <div class="hljs"><pre><code class="hljs undefined"><span class="hljs-selector-tag">jar</span> <span class="hljs-selector-tag">cf</span> <span class="hljs-selector-tag">wordcount</span><span class="hljs-selector-class">.jar</span> <span class="hljs-selector-tag">WordCount</span>*<span class="hljs-selector-class">.class</span></code></pre></div>
-<p>运行界面如下：<br>
-<img src="http://image.ningxin.site/20200603221301.png" srcset="/img/loading.gif" alt=""></p>
-<p>运行后的输出结果如下：<br>
-<img src="http://image.ningxin.site/20200603221509.png" srcset="/img/loading.gif" alt=""></p>
+<p>运行界面如下：<br><img src="http://image.ningxin.site/20200603221301.png" srcset="/img/loading.gif" alt=""></p>
+<p>运行后的输出结果如下：<br><img src="http://image.ningxin.site/20200603221509.png" srcset="/img/loading.gif" alt=""></p>
 
             </article>
             <hr>

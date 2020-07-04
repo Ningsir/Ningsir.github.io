@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      118 字
+      117 字
     </span>
   
 
@@ -210,31 +210,23 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h3 id="1-在邮箱设置中开启smtp"><a class="markdownIt-Anchor" href="#1-在邮箱设置中开启smtp"></a> 1. 在邮箱设置中开启SMTP</h3>
-<p>SMTP:简单文件传输协议</p>
-<h3 id="2-具体过程参考如下博客"><a class="markdownIt-Anchor" href="#2-具体过程参考如下博客"></a> 2. 具体过程参考如下博客</h3>
-<p><a href="https://yq.aliyun.com/articles/644134" target="_blank" rel="noopener">参考链接</a></p>
+              <h3 id="1-在邮箱设置中开启SMTP"><a href="#1-在邮箱设置中开启SMTP" class="headerlink" title="1. 在邮箱设置中开启SMTP"></a>1. 在邮箱设置中开启SMTP</h3><p>SMTP:简单文件传输协议</p>
+<h3 id="2-具体过程参考如下博客"><a href="#2-具体过程参考如下博客" class="headerlink" title="2. 具体过程参考如下博客"></a>2. 具体过程参考如下博客</h3><p><a href="https://yq.aliyun.com/articles/644134" target="_blank" rel="noopener">参考链接</a></p>
 <a id="more"></a>
-<h3 id="3-发送邮件"><a class="markdownIt-Anchor" href="#3-发送邮件"></a> 3. 发送邮件</h3>
-<ul>
-<li>直接输入正文</li>
-</ul>
-<blockquote>
+<h3 id="3-发送邮件"><a href="#3-发送邮件" class="headerlink" title="3. 发送邮件"></a>3. 发送邮件</h3><ul>
+<li>直接输入正文<blockquote>
 <p>echo “邮件正文” | mail -s “邮件主题(subject)” 邮箱地址</p>
 </blockquote>
-<ul>
-<li>正文在文件中</li>
-</ul>
-<blockquote>
-<p>mail -s “邮件主题(subject)” 邮箱地址 &lt; 邮件正文所在文件<br>
-cat file | mail -s “邮件主题(subject)” 邮箱地址</p>
+</li>
+<li>正文在文件中<blockquote>
+<p>mail -s “邮件主题(subject)” 邮箱地址 &lt; 邮件正文所在文件<br>cat file | mail -s “邮件主题(subject)” 邮箱地址</p>
 </blockquote>
-<ul>
-<li>发送附件</li>
-</ul>
-<blockquote>
+</li>
+<li>发送附件<blockquote>
 <p>mail -s “邮件主题(subject)” 邮箱地址 -a 附件</p>
 </blockquote>
+</li>
+</ul>
 
             </article>
             <hr>
