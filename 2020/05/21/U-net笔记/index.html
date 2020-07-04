@@ -28,7 +28,7 @@
   <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
   
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/androidstudio.min.css" />
   
 
   
@@ -228,7 +228,7 @@
 <h2 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h2><h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p>U-net使用的是带权损失函数：</p>
 <script type="math/tex; mode=display">
 E = \sum_{x\in\Omega}{\omega(x)\log(p_{l(x)}(x))}</script><p>其中 $w(x)$ 指的是权重，其实就是相当于交叉熵乘了一个权重，有点不解的是我看的代码中都是直接使用<code>CrossEntropyLoss</code>进行计算loss，如下代码所示：</p>
-<pre><code class="hljs python">unet = Unet(in_channel=<span class="hljs-number">1</span>,out_channel=<span class="hljs-number">2</span>)
+<div class="hljs"><pre><code class="hljs python">unet = Unet(in_channel=<span class="hljs-number">1</span>,out_channel=<span class="hljs-number">2</span>)
 <span class="hljs-comment">#out_channel represents number of segments desired</span>
 criterion = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(unet.parameters(), lr = <span class="hljs-number">0.01</span>, momentum=<span class="hljs-number">0.99</span>)
@@ -242,7 +242,7 @@ outputs = outputs.resize(m*width_out*height_out, <span class="hljs-number">2</sp
 labels = labels.resize(m*width_out*height_out)
 loss = criterion(outputs, labels)
 loss.backward()
-optimizer.step()</code></pre>
+optimizer.step()</code></pre></div>
 <p>U-net的输入是<code>572 x 572</code>, 而输出是<code>388 x 388</code>，两者不一致，不能直接求损失函数，有两种方法：</p>
 <ul>
 <li>对预期输出从中心crop，使其与输出大小一致;</li>

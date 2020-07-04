@@ -28,7 +28,7 @@
   <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
   
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/androidstudio.min.css" />
   
 
   
@@ -213,7 +213,7 @@
               <h1 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h1><p>如下图所示，构建了一个3层的神经网络（不包括输入层），第一个隐藏层包括128个神经元，第二个隐藏层包括64个神经元，输出层包括10个神经元。隐藏层中每个神经元进行两项运算：先进行线性运算，然后使用<code>tanh</code>激励函数；输出层也是先进行线性运算，但激励函数使用的是<code>softmax</code>。</p>
 <p><img src="http://image.ningxin.site/神经网络模型图.png" srcset="/img/loading.gif" alt="网络结构图" style="zoom: 67%;"></p>
 <h1 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h1><p>使用MNIST数据集，都是<code>28 x 28</code>大小的图片，一共有60000个训练样本和10000个测试样本。</p>
-<pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
 <span class="hljs-keyword">import</span> struct
 
 <span class="hljs-comment"># 训练集文件</span>
@@ -301,19 +301,19 @@ test_labels_idx1_ubyte_file = <span class="hljs-string">'data/MNIST/raw/t10k-lab
     test_img = test_img.reshape(test_img.shape[<span class="hljs-number">0</span>], test_img.shape[<span class="hljs-number">1</span>] * test_img.shape[<span class="hljs-number">2</span>]).T / <span class="hljs-number">255</span>
     train_label = load_train_labels()
     test_label = load_test_labels()
-    <span class="hljs-keyword">return</span> train_img, train_label, test_img, test_label</code></pre>
-<p>数据处理后训练样本和测试样本的维度：<br><pre><code class="hljs undefined"><span class="hljs-attribute">train_img</span>: (784, 60000)
+    <span class="hljs-keyword">return</span> train_img, train_label, test_img, test_label</code></pre></div>
+<p>数据处理后训练样本和测试样本的维度：<br><div class="hljs"><pre><code class="hljs undefined"><span class="hljs-attribute">train_img</span>: (784, 60000)
 <span class="hljs-attribute">train_label</span>: (60000, )
 
 <span class="avrasm"><span class="hljs-symbol">test_img:</span> (<span class="hljs-number">784</span>, <span class="hljs-number">10000</span>)
-<span class="hljs-symbol">test_label:</span> (<span class="hljs-number">10000</span>, )</span></code></pre></p>
+<span class="hljs-symbol">test_label:</span> (<span class="hljs-number">10000</span>, )</span></code></pre></div></p>
 <h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><p>在读取数据之后，为了程序能够正常运行，需要对数据进行预处理。</p>
 <ul>
 <li>对图像数据进行归一化操作，因为每个像素点的值是在0-255范围内，进行归一化可以减少运算量，同时避免运算结果溢出；</li>
 <li>对labels进行one-hot编码，这一步骤主要是为了计算交叉熵损失函数时能够正常运行。one-hot编码指的是正确解的标签为1，其余为0，比如3表示为”0010000000“。</li>
 </ul>
 <p>one-hot编码的python实现如下：</p>
-<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dense_to_one_hot</span><span class="hljs-params">(labels_dense, num_classes)</span>:</span>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dense_to_one_hot</span><span class="hljs-params">(labels_dense, num_classes)</span>:</span>
     <span class="hljs-string">"""
     Convert class labels from scalars to one-hot vectors.
     num_classes: 总共的类别数
@@ -324,9 +324,9 @@ test_labels_idx1_ubyte_file = <span class="hljs-string">'data/MNIST/raw/t10k-lab
     labels_one_hot = np.zeros((num_labels, num_classes))
     <span class="hljs-comment"># flat返回一个一维迭代器，ravel()函数将多维数组转化为一维数组</span>
     labels_one_hot.flat[index_offset + labels_dense.ravel()] = <span class="hljs-number">1</span>
-    <span class="hljs-keyword">return</span> labels_one_hot</code></pre>
+    <span class="hljs-keyword">return</span> labels_one_hot</code></pre></div>
 <h1 id="初始化参数"><a href="#初始化参数" class="headerlink" title="初始化参数"></a>初始化参数</h1><p>首先需要初始化参数，b直接全部初始化为0，W使用<code>randn</code>生成随机数，注意b和W不能全部都一样，否则任意一层中的每个神经元输出都一样，最后反向传播也一样，就没有任何意义了。</p>
-<pre><code class="hljs python"><span class="hljs-comment"># x: 784*60000, 784*1000</span>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># x: 784*60000, 784*1000</span>
 <span class="hljs-comment"># # y: 10*60000, 10*1000</span>
 <span class="hljs-comment"># # W1: 128*784</span>
 <span class="hljs-comment"># # b1: 128*1</span>
@@ -347,23 +347,23 @@ test_labels_idx1_ubyte_file = <span class="hljs-string">'data/MNIST/raw/t10k-lab
         parameters[<span class="hljs-string">'W'</span> + str(i + <span class="hljs-number">1</span>)] = np.random.randn(layers_dim[i + <span class="hljs-number">1</span>], layers_dim[i]) * <span class="hljs-number">0.001</span>
         parameters[<span class="hljs-string">'b'</span> + str(i + <span class="hljs-number">1</span>)] = np.zeros((layers_dim[i + <span class="hljs-number">1</span>], <span class="hljs-number">1</span>))
 
-    <span class="hljs-keyword">return</span> parameters</code></pre>
+    <span class="hljs-keyword">return</span> parameters</code></pre></div>
 <h1 id="前向传播"><a href="#前向传播" class="headerlink" title="前向传播"></a>前向传播</h1><p>前向传播的基本步骤是先使用一个线性函数，然后使用激励函数将结果非线性化。可以如下表示：</p>
-<pre><code class="hljs python">y = Wx + b
-a = activation(y) <span class="hljs-comment"># 使用时用具体的激励函数替换</span></code></pre>
+<div class="hljs"><pre><code class="hljs python">y = Wx + b
+a = activation(y) <span class="hljs-comment"># 使用时用具体的激励函数替换</span></code></pre></div>
 <p>实验中主要使用了<code>tanh</code>和<code>softmax</code>这两个激励函数。<code>tanh</code>函数公式及python实现如下：</p>
 <script type="math/tex; mode=display">
-y = \frac{e^x - e^{-x}}{e^x + e^{-x}} \tag{1}</script><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">tanh</span><span class="hljs-params">(x)</span>:</span>
-    <span class="hljs-keyword">return</span> (np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x))</code></pre>
+y = \frac{e^x - e^{-x}}{e^x + e^{-x}} \tag{1}</script><div class="hljs"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">tanh</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-keyword">return</span> (np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x))</code></pre></div>
 <p><code>softmax</code>函数公式及python实现如下, </p>
 <script type="math/tex; mode=display">
 \operatorname{Softmax}\left(x_{i}\right)=\frac{e^{x_i}}{\sum_{j} e^{x_{j}}} \tag{2}</script><p>需要注意的是，在python实现<code>softmax</code>时，为了避免计算溢出，可以减去一个最大值之后，再进行指数运算。</p>
-<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">softmax</span><span class="hljs-params">(z)</span>:</span>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">softmax</span><span class="hljs-params">(z)</span>:</span>
     <span class="hljs-comment"># 实现softmax分类器输出转化</span>
     c = np.max(z)
     z_exp = np.exp(z - c) <span class="hljs-comment"># 避免指数运算产生溢出</span>
     z_sum_column = z_exp.sum(axis=<span class="hljs-number">0</span>).T
-    <span class="hljs-keyword">return</span> z_exp / z_sum_column</code></pre>
+    <span class="hljs-keyword">return</span> z_exp / z_sum_column</code></pre></div>
 <h1 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h1><p>反向传播过程主要根据链式规则求解各个参数的关于损失函数的梯度，以便对参数进行优化，从而使损失值减小。实验中损失函数使用的是交叉熵损失函数，可以表示为：</p>
 <script type="math/tex; mode=display">
 L = -{\sum_{i} {y_i \log{a_i}}} \tag{3}</script><p>其中 $y_i$ 表示实际值，$a_i$ 表示预测值, 而 $a_i$ 是经过softmax函数得到的结果，即 $a_i$ 可以表示为：</p>
@@ -389,7 +389,7 @@ a_{i}\left(1-a_{i}\right), & i=j \\
 = dZX</script><p>实验中还是用了<code>tanh</code>函数，其导数为：</p>
 <script type="math/tex; mode=display">
 f(x)^{\prime}=1-(\tanh (x))^{2} \tag{6}</script><p>反向传播各个过程的偏导数都求出来之后，就可以编码实现了，具体代码如下：</p>
-<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">backward_propagation</span><span class="hljs-params">(x, y, cache, parameters)</span>:</span>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">backward_propagation</span><span class="hljs-params">(x, y, cache, parameters)</span>:</span>
     <span class="hljs-string">"""
     x: 网络中的输入数据
     y: 网络的输出数据
@@ -420,9 +420,9 @@ f(x)^{\prime}=1-(\tanh (x))^{2} \tag{6}</script><p>反向传播各个过程的�
                  <span class="hljs-string">"da2"</span>: da2, <span class="hljs-string">"dz2"</span>: dz2, <span class="hljs-string">"dW2"</span>: dW2, <span class="hljs-string">"db2"</span>: db2,
                  <span class="hljs-string">"da1"</span>: da1, <span class="hljs-string">"dz1"</span>: dz1, <span class="hljs-string">"dW1"</span>: dW1, <span class="hljs-string">"db1"</span>: db1&#125;
 
-    <span class="hljs-keyword">return</span> gradients</code></pre>
+    <span class="hljs-keyword">return</span> gradients</code></pre></div>
 <h1 id="损失函数和优化器"><a href="#损失函数和优化器" class="headerlink" title="损失函数和优化器"></a>损失函数和优化器</h1><p>损失函数使用的是交叉熵损失函数，交叉熵函数的公式见公式(3), 具体实现如下：</p>
-<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">cross_entropy_loss</span><span class="hljs-params">(a, y)</span>:</span>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">cross_entropy_loss</span><span class="hljs-params">(a, y)</span>:</span>
     <span class="hljs-string">"""
     交叉熵损失函数
     :param a: 预测值
@@ -433,12 +433,12 @@ f(x)^{\prime}=1-(\tanh (x))^{2} \tag{6}</script><p>反向传播各个过程的�
     <span class="hljs-comment"># 对数操作加1e-7防止出现0</span>
     loss = -np.multiply(np.log(a + <span class="hljs-number">1e-7</span>), y).sum(axis=<span class="hljs-number">0</span>)
     cost = loss.sum() / m
-    <span class="hljs-keyword">return</span> cost</code></pre>
+    <span class="hljs-keyword">return</span> cost</code></pre></div>
 <p>使用上述的实现需要注意两点：对实际的label值需要使用<code>one-hot</code>编码；实现中使用了对数运算，为了防止出现0，需要加上一个偏置值。</p>
 <p>梯度下降法根据计算得到的梯度更新参数，从而达到减小损失值的效果，可以表示成如下形式为：</p>
 <script type="math/tex; mode=display">
 x_{n}^{(i+1)}=x_{n}^{(i)}-\eta \cdot \frac{\partial f}{\partial x_{n}}\left(\mathbf{x}^{(i)}\right)</script><p>其中$\eta$ 指的就是学习率，python实现如下：</p>
-<pre><code class="hljs python">ef gradient_descent(parameters, grads, learning_rate):
+<div class="hljs"><pre><code class="hljs python">ef gradient_descent(parameters, grads, learning_rate):
     <span class="hljs-string">"""
     使用梯度下降法更新参数
     :param parameters:
@@ -450,12 +450,12 @@ x_{n}^{(i+1)}=x_{n}^{(i)}-\eta \cdot \frac{\partial f}{\partial x_{n}}\left(\mat
     <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(length):
         parameters[<span class="hljs-string">"W"</span> + str(i + <span class="hljs-number">1</span>)] = parameters[<span class="hljs-string">"W"</span> + str(i + <span class="hljs-number">1</span>)] - learning_rate * grads[<span class="hljs-string">"dW"</span> + str(i + <span class="hljs-number">1</span>)]
         parameters[<span class="hljs-string">"b"</span> + str(i + <span class="hljs-number">1</span>)] = parameters[<span class="hljs-string">"b"</span> + str(i + <span class="hljs-number">1</span>)] - learning_rate * grads[<span class="hljs-string">"db"</span> + str(i + <span class="hljs-number">1</span>)]
-    <span class="hljs-keyword">return</span> parameters</code></pre>
+    <span class="hljs-keyword">return</span> parameters</code></pre></div>
 <h1 id="训练及预测"><a href="#训练及预测" class="headerlink" title="训练及预测"></a>训练及预测</h1><p>训练过程：初始化参数—&gt;前向传播—&gt;反向传播—&gt;参数优化。</p>
 <p>训练过程的参数设置如下：</p>
-<pre><code class="hljs undefined"><span class="hljs-attr">epochs</span> = <span class="hljs-number">100</span>
+<div class="hljs"><pre><code class="hljs undefined"><span class="hljs-attr">epochs</span> = <span class="hljs-number">100</span>
 <span class="hljs-attr">BATCH_SIZE</span> = <span class="hljs-number">100</span>
-<span class="hljs-attr">learning_rate</span> = <span class="hljs-number">0.005</span></code></pre>
+<span class="hljs-attr">learning_rate</span> = <span class="hljs-number">0.005</span></code></pre></div>
 <p>实验时，把训练和预测两部分放到了一起运行，执行过程如下，其中正确率达到了97.83%</p>
 <p><img src="http://image.ningxin.site/20200615153942.png" srcset="/img/loading.gif" alt=""></p>
 <p>loss值下降过程如下： </p>

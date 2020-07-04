@@ -28,7 +28,7 @@
   <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
   
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/androidstudio.min.css" />
   
 
   
@@ -219,7 +219,7 @@
 <li>卷积代替池化：能够有更小的内存占用，网络性能更好</li>
 <li>element-wise sum操作：如下图所示，首先16个x执行cat操作得到x16, 得到的x16的维度与out一致，<code>element-wise sum</code>操作就是将x16和out的对应像素点执行相加操作。</li>
 </ul>
-<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span><span class="hljs-params">(self, x)</span>:</span>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span><span class="hljs-params">(self, x)</span>:</span>
     <span class="hljs-comment"># do we want a PRELU here as well?</span>
     out = self.bn1(self.conv1(x))
     <span class="hljs-comment"># split input in to 16 channels</span>
@@ -228,7 +228,7 @@
                      x, x, x, x, x, x, x, x), <span class="hljs-number">0</span>)
     <span class="hljs-comment"># 执行element-wise sum操作之后在执行relu1</span>
     out = self.relu1(torch.add(out, x16))
-    <span class="hljs-keyword">return</span> out</code></pre>
+    <span class="hljs-keyword">return</span> out</code></pre></div>
 <h2 id="2-2-解压缩路径"><a href="#2-2-解压缩路径" class="headerlink" title="2.2 解压缩路径"></a>2.2 解压缩路径</h2><p>在解压缩路径中，与<code>U-Net</code>类似，将网络左侧部分的早期阶段提取的特征转发到右侧部分，即网络结构图中的<code>Fine-grained features forwarding</code>操作。通过这种方式，可以收集在压缩路径中丢失的细粒度细节，并且可以提高最终轮廓预测的质量。每个阶段采用反卷积操作，将分辨率提高到原来的两倍，并且通道数变为原来的一半。最后使用一个<code>1 x 1 x 1</code>的卷积得到与输入大小相同的结果，并使用softmax函数得到概率分割图。</p>
 <ul>
 <li><code>Fine-grained features fowarding</code>: 左侧特征图与右侧对应特征图执行拼接操作。 </li>
@@ -252,7 +252,7 @@ s=\frac{2|X \bigcap Y|}{|X|+|Y|}</script><p> $|X \bigcap Y|$ 表示X 和 Y 之�
 <script type="math/tex; mode=display">
 D=\frac{2 \sum_{i}^{N} p_{i} g_{i}}{\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}}</script><p>其中pi为预测结果，gi为实际结果。Dice系数的梯度为：</p>
 <script type="math/tex; mode=display">
-\frac{\partial D}{\partial p_{j}}=2\left[\frac{g_{j}\left(\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}\right)-2 p_{j}\left(\sum_{i}^{N} p_{i} g_{i}\right)}{\left(\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}\right)^{2}}\right]</script><h2 id="3-3-Dice系数的Pytorch实现"><a href="#3-3-Dice系数的Pytorch实现" class="headerlink" title="3.3 Dice系数的Pytorch实现"></a>3.3 Dice系数的Pytorch实现</h2><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dice_loss</span><span class="hljs-params">(pred, target)</span>:</span>
+\frac{\partial D}{\partial p_{j}}=2\left[\frac{g_{j}\left(\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}\right)-2 p_{j}\left(\sum_{i}^{N} p_{i} g_{i}\right)}{\left(\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}\right)^{2}}\right]</script><h2 id="3-3-Dice系数的Pytorch实现"><a href="#3-3-Dice系数的Pytorch实现" class="headerlink" title="3.3 Dice系数的Pytorch实现"></a>3.3 Dice系数的Pytorch实现</h2><div class="hljs"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dice_loss</span><span class="hljs-params">(pred, target)</span>:</span>
     <span class="hljs-string">"""This definition generalize to real valued pred and target vector.
 This should be differentiable.
     pred: tensor with first dimension as batch
@@ -268,7 +268,7 @@ intersection = (iflat * tflat).sum()
 A_sum = torch.sum(iflat * iflat)
 B_sum = torch.sum(tflat * tflat)
 
-<span class="hljs-keyword">return</span> (<span class="hljs-number">2.</span> * intersection + smooth) / (A_sum + B_sum + smooth)</code></pre>
+<span class="hljs-keyword">return</span> (<span class="hljs-number">2.</span> * intersection + smooth) / (A_sum + B_sum + smooth)</code></pre></div>
 <h1 id="4-训练"><a href="#4-训练" class="headerlink" title="4. 训练"></a>4. 训练</h1><p>训练时主要采用下面的数据增强方法：</p>
 <ul>
 <li>使用<code>2 x 2 x 2</code>的网格控制点和<code>B-spline interpolation</code>(B样条插值)来获得稠密的形变场对图像进行非线性形变；</li>

@@ -28,7 +28,7 @@
   <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
   
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/androidstudio.min.css" />
   
 
   
@@ -215,46 +215,46 @@
 </blockquote>
 <h2 id="Map的遍历"><a href="#Map的遍历" class="headerlink" title="Map的遍历"></a>Map的遍历</h2><ul>
 <li><p>较为简单的遍历方法可以通过<code>keySet()</code>方法获取Map中的所有的<code>key</code>,<br>然后使用<code>get(key)</code>获取<code>key</code>对应的<code>value</code>,代码如下：</p>
-<pre><code class="hljs java"> Map&lt;String, String&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;String, String&gt;();
+<div class="hljs"><pre><code class="hljs java"> Map&lt;String, String&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;String, String&gt;();
  map.put(<span class="hljs-string">"1"</span>,<span class="hljs-string">"xinger"</span>);
  <span class="hljs-comment">//······省略部分代码</span>
 <span class="hljs-keyword">for</span>(String s : map.keySet())&#123;
 	System.out.println(<span class="hljs-string">"key:"</span>+s+<span class="hljs-string">","</span>+<span class="hljs-string">"value:"</span>+map.get(s));
-&#125;</code></pre>
+&#125;</code></pre></div>
 </li>
 </ul>
 <a id="more"></a>
 <ul>
 <li><p>通过Map.entrySet()遍历map：Map.entrySet()方法返回该地图的集合视图(<code>Set(Map.Entry&lt;K,V&gt;)</code>)</p>
-<pre><code class="hljs java"><span class="hljs-keyword">for</span>(Map.Entry&lt;String, String&gt; entry : map.entrySet())&#123;  <span class="hljs-comment">//参数类型请灵活处理</span>
+<div class="hljs"><pre><code class="hljs java"><span class="hljs-keyword">for</span>(Map.Entry&lt;String, String&gt; entry : map.entrySet())&#123;  <span class="hljs-comment">//参数类型请灵活处理</span>
 	System.out.println(<span class="hljs-string">"key:"</span>+entry.getKey()+<span class="hljs-string">","</span>+<span class="hljs-string">"value:"</span>+entry.getValue());
-&#125;</code></pre>
+&#125;</code></pre></div>
 </li>
 <li><p>通过迭代器遍历Map:</p>
-<pre><code class="hljs java">Iterator(Map.Entry&lt;String, String&gt;) ite = map.entrySet().iterator();
+<div class="hljs"><pre><code class="hljs java">Iterator(Map.Entry&lt;String, String&gt;) ite = map.entrySet().iterator();
 <span class="hljs-keyword">while</span>(ite.hasNext())&#123;
 	Map.Entry&lt;String, String&gt; entry = ite.next();
 	System.out.println(<span class="hljs-string">"key:"</span>+entry.getKey()+<span class="hljs-string">","</span>+<span class="hljs-string">"value:"</span>+entry.getValue());z
-&#125;</code></pre>
+&#125;</code></pre></div>
 </li>
 </ul>
 <h2 id="Map的排序"><a href="#Map的排序" class="headerlink" title="Map的排序"></a>Map的排序</h2><ul>
 <li><p>利用TreeMap类进行排序：<code>TreeMap</code>是默认按<code>key</code>的升序排序，若要改变排序方式，需要使用<strong>比较器</strong>：<code>Comparator</code><br>并使用构造器<code>TreeMap(Comparator&lt;? super K&gt; comparator)</code>,注意到泛型<code>? super K</code>,故本质还是进行按<code>key</code>排序。</p>
-<pre><code class="hljs java">Map&lt;String,String&gt; map = <span class="hljs-keyword">new</span> TreeMap&lt;String, String&gt;(<span class="hljs-keyword">new</span> Comparator&lt;String&gt;()&#123;
+<div class="hljs"><pre><code class="hljs java">Map&lt;String,String&gt; map = <span class="hljs-keyword">new</span> TreeMap&lt;String, String&gt;(<span class="hljs-keyword">new</span> Comparator&lt;String&gt;()&#123;
                 <span class="hljs-meta">@Override</span>
 			<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(String o1, String o2)</span> </span>&#123;
 				<span class="hljs-keyword">return</span>  o2.compareTo(p1);
-&#125;);</code></pre>
+&#125;);</code></pre></div>
 </li>
 <li><p>Map按value排序：实现Comparator接口，并重写<code>compare(Object o1, Object o2)</code>方法</p>
-<pre><code class="hljs java">List&lt;Map.Entry&lt;String, Integer&gt;&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;Map.Entry&lt;String, Integer&gt;&gt;(map.entrySet());
+<div class="hljs"><pre><code class="hljs java">List&lt;Map.Entry&lt;String, Integer&gt;&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;Map.Entry&lt;String, Integer&gt;&gt;(map.entrySet());
 	   <span class="hljs-comment">//排序</span>
 	   Collections.sort(list, <span class="hljs-keyword">new</span> Comparator&lt;Map.Entry&lt;String, Integer&gt;&gt;()&#123;<span class="hljs-comment">//内部类</span>
 		<span class="hljs-meta">@Override</span>
 		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(Entry&lt;String, Integer&gt; o1, Entry&lt;String, Integer&gt; o2)</span> </span>&#123;
 			<span class="hljs-keyword">return</span> o2.getValue() - o1.getValue();
 		&#125;		   
-	   &#125;);</code></pre>
+	   &#125;);</code></pre></div>
 </li>
 </ul>
 
