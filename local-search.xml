@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>聚类与降维</title>
+    <link href="/2020/07/05/%E8%81%9A%E7%B1%BB%E4%B8%8E%E9%99%8D%E7%BB%B4/"/>
+    <url>/2020/07/05/%E8%81%9A%E7%B1%BB%E4%B8%8E%E9%99%8D%E7%BB%B4/</url>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="聚类任务"><a href="#聚类任务" class="headerlink" title="聚类任务"></a>聚类任务</h1><p>聚类算法是一个典型的无监督学习，训练的数据没有任何标签。聚类算法将数据集中的样本划分为若干个通常是不相交的子集，每个子集成为一个“簇”（cluster）。</p><h2 id="K均值算法（K-Means-Algorithm）"><a href="#K均值算法（K-Means-Algorithm）" class="headerlink" title="K均值算法（K-Means Algorithm）"></a>K均值算法（K-Means Algorithm）</h2><p>K均值算法是最普及的聚类算法，算法接受一个未标记的数据集，然后根据数据聚类成不同的组。</p><p>K均值是一个迭代算法，假设需要将数据聚类成K个簇，其方法为：</p><ul><li><ol><li>首先随机选择K个点，称为聚类中心；</li></ol></li><li><ol><li>对于数据集中的每一个数据，分别计算其到中心点的距离，并将其与距离最近的中心点关联起来，与同一个中心点关联的所有点聚成一类；</li></ol></li><li><ol><li>计算每一个组的平均值，并将中心点移动到平均值的位置；</li></ol></li><li><ol><li>重复2-3直至中心点不再变化。</li></ol></li></ul><p>给定样本集$D=\{x_1, x_2, \ldots,x_n\}$，K均值算法所得簇划分$C=\{C_1, \ldots, C_k\}$, 最小化平方误差为：</p><script type="math/tex; mode=display">E = \sum_{i=1}^k\sum_{x \in C_i}\|x-u_i\|^2</script><p>其中$u_i$为簇$C_i$的中心点。上式其实就是求样本数据中的每一点到其中心点的距离和。</p><h2 id="随机初始化"><a href="#随机初始化" class="headerlink" title="随机初始化"></a>随机初始化</h2><p>随机初始化就是用训练集中随机选择K个数据，作为K个聚类中心。</p><p>问题在于，最后的结果可能停留在一个局部最小值处。</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200705160708.png" srcset="/img/loading.gif" alt=""></p><p>为了解决这一问题，需要多次运行K均值算法，每一次都要重新进行随机初始化，最后选择代价函数最小的结果。</p><h1 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h1><p>降维也是一种无监督学习问题，降维的动机有：数据压缩、数据可视化。</p><h2 id="主成分分析（Principal-Component-Analysis）"><a href="#主成分分析（Principal-Component-Analysis）" class="headerlink" title="主成分分析（Principal Component Analysis）"></a>主成分分析（Principal Component Analysis）</h2>]]></content>
+    
+    
+    <categories>
+      
+      <category>机器学习</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>机器学习</tag>
+      
+      <tag>无监督学习</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>支持向量机</title>
     <link href="/2020/07/04/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
     <url>/2020/07/04/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/</url>
@@ -21,6 +48,8 @@
     <tags>
       
       <tag>机器学习</tag>
+      
+      <tag>监督学习</tag>
       
     </tags>
     

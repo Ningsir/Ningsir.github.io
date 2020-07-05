@@ -19,7 +19,7 @@
   <meta name="description" content="华中科技大学17级本科生">
   <meta name="author" content="XIN">
   <meta name="keywords" content="">
-  <title>3D-UNet笔记 - XIN&#39;S BLOG</title>
+  <title>聚类与降维 - XIN&#39;S BLOG</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -150,8 +150,8 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-06-03 14:10">
-      2020年6月3日 下午
+    <time datetime="2020-07-05 15:34">
+      2020年7月5日 下午
     </time>
   </div>
 
@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      504 字
+      469 字
     </span>
   
 
@@ -210,20 +210,36 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <p><a href="https://arxiv.org/pdf/1606.06650.pdf" target="_blank" rel="noopener">论文地址</a></p>
-<h1 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h1><p>医学图像通常是由多个2D切片构成一整张图，对这样的数据进行标注比较困难,只能一张一张地标注2D图像，并将2D图像送进模型进行训练，但相邻的切片几乎一样，因此这样的做法效率很低。<br>论文的作者提出了3D U-Net模型，该模型主要有两种应用：</p>
+              <h1 id="聚类任务"><a href="#聚类任务" class="headerlink" title="聚类任务"></a>聚类任务</h1><p>聚类算法是一个典型的无监督学习，训练的数据没有任何标签。聚类算法将数据集中的样本划分为若干个通常是不相交的子集，每个子集成为一个“簇”（cluster）。</p>
+<h2 id="K均值算法（K-Means-Algorithm）"><a href="#K均值算法（K-Means-Algorithm）" class="headerlink" title="K均值算法（K-Means Algorithm）"></a>K均值算法（K-Means Algorithm）</h2><p>K均值算法是最普及的聚类算法，算法接受一个未标记的数据集，然后根据数据聚类成不同的组。</p>
+<p>K均值是一个迭代算法，假设需要将数据聚类成K个簇，其方法为：</p>
 <ul>
-<li>semi-automated setup:  可以对只进行了稀疏标注的数据集进行训练；</li>
-<li>fully-automated setup:  假设稀疏标注集存在，对该数据集进行训练。</li>
+<li><ol>
+<li>首先随机选择K个点，称为聚类中心；</li>
+</ol>
+</li>
+<li><ol>
+<li>对于数据集中的每一个数据，分别计算其到中心点的距离，并将其与距离最近的中心点关联起来，与同一个中心点关联的所有点聚成一类；</li>
+</ol>
+</li>
+<li><ol>
+<li>计算每一个组的平均值，并将中心点移动到平均值的位置；</li>
+</ol>
+</li>
+<li><ol>
+<li>重复2-3直至中心点不再变化。</li>
+</ol>
+</li>
 </ul>
-<a id="more"></a>
-<h1 id="2-网络结构"><a href="#2-网络结构" class="headerlink" title="2. 网络结构"></a>2. 网络结构</h1><p><img src="http://image.ningxin.site/20200603160416.png" srcset="/img/loading.gif" alt="网络结构"><br>该模型分为<code>analysis path</code> 和 <code>synthesis path</code>两个部分，主要结构和<code>U-Net</code>一样。</p>
-<p><code>analysis path</code> 主要包括以下操作：该部分有4层，每一层都包含两个<code>3 x 3 x 3</code>的卷积，每次卷积之后进行<code>batch normalizetion</code>(BN) 操作和<code>ReLu</code>操作，然后进行strides为2的<code>2 x 2 x 2</code>的最大池化操作。</p>
-<p><code>synthesis path</code> 主要包括以下操作：该部分有3层，每一层首先使用一个strides为2、卷积核为<code>2 x 2 x 2</code>的反卷积操作，然后与<code>analysis path</code>中对应的<code>fature map</code>进行cat操作，再然后是两个<code>3 x 3 x 3</code>的卷积操作，每次卷积之后进行<code>batch normalizetion</code>(BN) 操作和<code>ReLu</code>操作，然后进行strides为2的<code>2 x 2 x 2</code>的最大池化操作。</p>
-<p>在最后一层输出时使用<code>1 x 1 x 1</code>的卷积来减少通道数。</p>
-<p>论文中提到的一个亮点就是，3D U-Net使用了<code>weighted softmax loss function</code>将未标记的像素点设置为0以至于可以让网络可以更多地仅仅学习标注到的像素点，从而达到普适性地特点。</p>
-<h1 id="3-训练"><a href="#3-训练" class="headerlink" title="3. 训练"></a>3. 训练</h1><p>3D U-Net采用了数据增强（data augmentation），主要是rotation、scaling和将图像设置为gray，于此同时在训练数据上和真实标注的数据上运用平滑的密集变形场(smooth dense deformation field)。</p>
-
+<p>给定样本集$D=\{x_1, x_2, \ldots,x_n\}$，K均值算法所得簇划分$C=\{C_1, \ldots, C_k\}$, 最小化平方误差为：</p>
+<script type="math/tex; mode=display">
+E = \sum_{i=1}^k\sum_{x \in C_i}\|x-u_i\|^2</script><p>其中$u_i$为簇$C_i$的中心点。上式其实就是求样本数据中的每一点到其中心点的距离和。</p>
+<h2 id="随机初始化"><a href="#随机初始化" class="headerlink" title="随机初始化"></a>随机初始化</h2><p>随机初始化就是用训练集中随机选择K个数据，作为K个聚类中心。</p>
+<p>问题在于，最后的结果可能停留在一个局部最小值处。</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200705160708.png" srcset="/img/loading.gif" alt=""></p>
+<p>为了解决这一问题，需要多次运行K均值算法，每一次都要重新进行随机初始化，最后选择代价函数最小的结果。</p>
+<h1 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h1><p>降维也是一种无监督学习问题，降维的动机有：数据压缩、数据可视化。</p>
+<h2 id="主成分分析（Principal-Component-Analysis）"><a href="#主成分分析（Principal-Component-Analysis）" class="headerlink" title="主成分分析（Principal Component Analysis）"></a>主成分分析（Principal Component Analysis）</h2>
             </article>
             <hr>
             <div>
@@ -232,7 +248,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/论文阅读/">论文阅读</a>
+                      <a class="hover-with-bg" href="/categories/机器学习/">机器学习</a>
                     
                   </div>
                 
@@ -240,9 +256,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/深度学习/">深度学习</a>
+                      <a class="hover-with-bg" href="/tags/机器学习/">机器学习</a>
                     
-                      <a class="hover-with-bg" href="/tags/论文阅读/">论文阅读</a>
+                      <a class="hover-with-bg" href="/tags/无监督学习/">无监督学习</a>
                     
                   </div>
                 
@@ -255,18 +271,12 @@
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/06/07/虚拟机搭建Hadoop过程记录/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">虚拟机搭建Hadoop过程记录</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/05/24/V-Net笔记/">
-                        <span class="hidden-mobile">V-Net笔记</span>
+                      <a href="/2020/07/04/支持向量机/">
+                        <span class="hidden-mobile">支持向量机</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -483,7 +493,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "3D-UNet笔记&nbsp;",
+        "聚类与降维&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
