@@ -8,7 +8,7 @@
     <link href="/2020/07/04/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"/>
     <url>/2020/07/04/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/</url>
     
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>支持向量机（Support Vector Machine）是类按监督学习方式对数据进行二分类的分类器，对多分类任务要进行专门的推广，其决策边界是对学习样本求解的最大间距超平面。SVM可以通过使用核方法进行非线性分类。</p><h1 id="最大间隔分类器"><a href="#最大间隔分类器" class="headerlink" title="最大间隔分类器"></a>最大间隔分类器</h1><p>对一个数据点进行分类，当超平面离数据点的间隔越大，分类的确信度越大。<br>在样本空间中，划分超平面可通过如下线性方程来描述：</p><script type="math/tex; mode=display">\omega ^ {T}x + b = 0 \tag{1}</script><p>样本空间中任意点x到超平面的距离为：</p><script type="math/tex; mode=display">r = \frac {|\omega^{T}x + b|}{\| \omega \|} \tag{2}</script><p>其中$| \omega |$ 为：</p><script type="math/tex; mode=display">\| \omega \| = \sqrt[2]{\omega_1^2 + \omega_2^2+\ldots+\omega_n^2} \tag{3}</script><p>使用+1和-1来标记样本的正负类。</p><ul><li>对于$y_i$ = +1，有 $\omega^Tx+b$ &gt; 0；</li><li>对于$y_i$ = −1，有$\omega^Tx+b$ &lt; 0.</li></ul><p>令：</p><script type="math/tex; mode=display">\left\{\begin{array}{ll}\boldsymbol{w}^{\mathrm{T}} \boldsymbol{x}_{i}+b \geqslant+1, & y_{i}=+1 \\\boldsymbol{w}^{\mathrm{T}} \boldsymbol{x}_{i}+b \leqslant-1, & y_{i}=-1\end{array}\right.</script><p>下图虚线上的点使上式等号成立，它们被称作“支持向量”。</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200704221839.png" srcset="/img/loading.gif" alt=""></p><p>找到最大间隔的划分超平面，也就是下面的优化问题：</p><script type="math/tex; mode=display">\max \frac {2}{\|\omega\|}\\s.t. y_i(\omega^{T}x_i+b) \geq 1</script><p>可以转化为如下问题：</p><script type="math/tex; mode=display">\min \frac {1}{2}\|\omega\|^2 \\s.t. y_i(\omega^{T}x_i+b) \geq 1</script>]]></content>
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>支持向量机（Support Vector Machine）是类按监督学习方式对数据进行二分类的分类器，对多分类任务要进行专门的推广，其决策边界是对学习样本求解的最大间距超平面。SVM可以通过使用核方法进行非线性分类。</p><h1 id="最大间隔分类器"><a href="#最大间隔分类器" class="headerlink" title="最大间隔分类器"></a>最大间隔分类器</h1><p>对一个数据点进行分类，当超平面离数据点的间隔越大，分类的确信度越大。<br>在样本空间中，划分超平面可通过如下线性方程来描述：</p><script type="math/tex; mode=display">\omega ^ {T}x + b = 0 \tag{1}</script><p>样本空间中任意点x到超平面的距离为：</p><script type="math/tex; mode=display">r = \frac {|\omega^{T}x + b|}{\| \omega \|} \tag{2}</script><p>其中$| \omega |$ 为：</p><script type="math/tex; mode=display">\| \omega \| = \sqrt[2]{\omega_1^2 + \omega_2^2+\ldots+\omega_n^2} \tag{3}</script><p>使用+1和-1来标记样本的正负类。</p><ul><li>对于$y_i$ = +1，有 $\omega^Tx+b$ &gt; 0；</li><li>对于$y_i$ = −1，有$\omega^Tx+b$ &lt; 0.</li></ul><p>令：</p><script type="math/tex; mode=display">\left\{\begin{array}{ll}\boldsymbol{w}^{\mathrm{T}} \boldsymbol{x}_{i}+b \geqslant+1, & y_{i}=+1 \\\boldsymbol{w}^{\mathrm{T}} \boldsymbol{x}_{i}+b \leqslant-1, & y_{i}=-1\end{array}\right. \tag{4}</script><p>下图虚线上的点使上式等号成立，它们被称作“支持向量”。</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200704221839.png" srcset="/img/loading.gif" alt=""></p><p>找到最大间隔的划分超平面，也就是下面的优化问题：</p><script type="math/tex; mode=display">\max \frac {2}{\|\omega\|},s.t. y_i(\omega^{T}x_i+b) \geq 1 \tag{5}</script><p>可以转化为如下问题：</p><script type="math/tex; mode=display">\min \frac {1}{2}\|\omega\|^2,s.t. y_i(\omega^{T}x_i+b) \geq 1 \tag{6}</script><h1 id="软间隔与正则化"><a href="#软间隔与正则化" class="headerlink" title="软间隔与正则化"></a>软间隔与正则化</h1><p>硬间隔是指所有样本都必须划分正确；软间隔则是允许某些样本不满足约束条件。优化目标改写为：</p><script type="math/tex; mode=display">\min_{\omega, b} \frac{1}{2}\|\omega\|^2 + C\sum_{i = 1}^{m}\ell_{0/1}(y_i(\omega^Tx_i + b) - 1) \tag{7}</script><p>其中C &gt; 0是一个常数，$\ell_{0/1}$ 是一个“0/1 损失函数”：</p><script type="math/tex; mode=display">\ell_{0/1} = \left\{\begin{array}{ll}1,if\ z < 0 \\0, otherwise\end{array}\right. \tag{8}</script><p>但该函数非凸、不连续，数学性质不好。常用以下三种替代损失函数：</p><ul><li>hinge损失：$\max(0, 1-z)$；</li><li>指数损失：$e^{-z}$;</li><li>对率损失：$\log(1 + e^{-z})$</li></ul><p>但C不是很大的时候，它可以忽略一些异常点的影响，得到更好的决策边界。</p><ul><li>C较大时，可能会导致过拟合；</li><li>C较小时，可能会导致欠拟合。</li></ul><h1 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h1><p>如果原始样本空间内并不存在一个能正确划分两类样本的超平面，可以将原始样本空间映射到一个更高维的特征空间，使得样本在这个空间线性可分。使用核函数解决非线性分类问题，可以利用核函数计算新的特征，从而映射到更高维的特征空间。常用的核函数用：</p><p>线性核 ：$k(x_i, x_j) = x_i^Tx_j$ ；</p><p>高斯核 ：$k(x_i, x_j)=exp(-\frac{|x_i-x_j|^2}{2\sigma^2})$，其中$\sigma &gt;0$为高斯核的带宽；</p><p>拉普拉斯核：$k(x_i, x_j) = exp(-\frac{|x_i - x_j|}{\sigma})$，其中$\sigma &gt; 0$.</p><h2 id="使用范例"><a href="#使用范例" class="headerlink" title="使用范例"></a>使用范例</h2><p>从x的各个特征中预先选定三个landmarks $l^{(1)},l^{(2)},l^{(3)}$，则有：</p><script type="math/tex; mode=display">\begin{array}{l}f_1^{(1)} = k(x^{(1)}, l^{(1)})\\f_2^{(1)} = k(x^{(1)}, l^{(2)})\\ f_3^{(1)} = k(x^{(1)}, l^{(3)})\end{array} \tag{9}</script><p>其中$f_1^{(1)},f_2^{(1)},f_3^{(1)}$是利用核函数计算出来的关于$x^{(1)}$的新特征。以此类推可以计算$f^{(2)}, \ldots, f^{(n)}$.则决策边界可以表示为：</p><script type="math/tex; mode=display">\omega_0 + \omega_1 f_1 + \omega_2 f_2 + \omega_3 f_3 = 0 \tag{10}</script>]]></content>
     
     
     <categories>
@@ -170,9 +170,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -197,9 +197,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -224,9 +224,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
