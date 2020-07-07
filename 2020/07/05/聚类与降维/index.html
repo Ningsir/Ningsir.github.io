@@ -239,7 +239,7 @@ E = \sum_{i=1}^k\sum_{x \in C_i}\|x-u_i\|^2</script><p>其中$u_i$为簇$C_i$的
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200705160708.png" srcset="/img/loading.gif" alt=""></p>
 <p>为了解决这一问题，需要多次运行K均值算法，每一次都要重新进行随机初始化，最后选择代价函数最小的结果。</p>
 <h1 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h1><p>降维也是一种无监督学习问题，降维的动机有：数据压缩、数据可视化。</p>
-<h2 id="主成分分析（Principal-Component-Analysis）"><a href="#主成分分析（Principal-Component-Analysis）" class="headerlink" title="主成分分析（Principal Component Analysis）"></a>主成分分析（Principal Component Analysis）</h2><p>主成分分析法是最常用的一种降维方法。在PCA中，要做的是找到一个方向向量，当把所有的数据都投射到该向量是，希望平均均方误差尽可能小。投射误差是指数据点到方向向量的垂直距离。</p>
+<h2 id="主成分分析（Principal-Component-Analysis）"><a href="#主成分分析（Principal-Component-Analysis）" class="headerlink" title="主成分分析（Principal Component Analysis）"></a>主成分分析（Principal Component Analysis）</h2><p>主成分分析法是最常用的一种降维方法。在PCA中，要做的是找到一个方向向量，当把所有的数据都投射到该向量上，希望平均均方误差尽可能小。投射误差是指数据点到方向向量的垂直距离。</p>
 <p>主成分分析与线性回归对比：</p>
 <ul>
 <li>主成分分析最小化的是投射误差；</li>
@@ -247,10 +247,14 @@ E = \sum_{i=1}^k\sum_{x \in C_i}\|x-u_i\|^2</script><p>其中$u_i$为簇$C_i$的
 </ul>
 <p>将n维数据降到k维数据，样本集$D = \{x^{(1)},\ldots, x^{(m)}\}$，处理过程如下：</p>
 <ol>
-<li>对所有样本进行中心化：$x^{(i)} \leftarrow x^{(i)} - \frac {1}{m}\sum_{i = 1}^{m}x^{(i)}$;</li>
-<li>计算协方差：$\Sigma = \frac{1}{m} \sum_{i = 1}^{m}x^{(i)}(x^{(i)})^T$, 所得结果为<code>n x n</code>大小；</li>
-<li>计算协方差的特征向量, 记为$U = \begin{array}{1}[u^1, u^2, \ldots, u^n]\end{array}$；</li>
-<li>选取前k个向量，获得一个<code>n x k</code>矩阵，记为$U_{reduce}$，然后获得降维的数据：$z^{(i)} = U_{reduce}^T \ast x^{(i)}$.</li>
+<li><p>对所有样本进行中心化：$x^{(i)} \leftarrow x^{(i)} - \frac {1}{m}\sum_{i = 1}^{m}x^{(i)}$;</p>
+</li>
+<li><p>计算协方差：$\Sigma = \frac{1}{m} \sum_{i = 1}^{m}x^{(i)}(x^{(i)})^T$, 所得结果为<code>n x n</code>大小；</p>
+</li>
+<li><p>计算协方差的特征向量, 记为$U = \begin{array}{1}[u^1, u^2, \ldots, u^n]\end{array}$；</p>
+</li>
+<li><p>选取前k个向量，获得一个<code>n x k</code>矩阵，记为$U_{reduce}$，然后获得降维的数据：$z^{(i)} = U_{reduce}^T \ast x^{(i)}$.</p>
+</li>
 </ol>
 
             </article>
@@ -283,6 +287,12 @@ E = \sum_{i=1}^k\sum_{x \in C_i}\|x-u_i\|^2</script><p>其中$u_i$为簇$C_i$的
                 <div class="post-prevnext row">
                   <div class="post-prev col-6">
                     
+                    
+                      <a href="/2020/07/07/神经网络/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">神经网络</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </div>
                   <div class="post-next col-6">

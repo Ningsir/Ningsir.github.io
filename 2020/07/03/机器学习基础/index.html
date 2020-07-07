@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.4k 字
+      2.5k 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      27
+      28
        分钟
     </span>
   
@@ -269,9 +269,10 @@ J(y, a) = - \frac{1}{m} \sum_{i=1}^{m}y^{(i)}\log(a^{(i)})</script><p>手写数�
 <h1 id="应用机器学习的建议"><a href="#应用机器学习的建议" class="headerlink" title="应用机器学习的建议"></a>应用机器学习的建议</h1><h2 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h2><p>使用<strong>验证集</strong>来选择模型，验证集并不参与学习参数的确定，而是用来选择超参数，比如多项式次数、网络层数、网络节点数、迭代次数、学习率等。</p>
 <ul>
 <li>训练集：用来训练模型内的参数的数据集；</li>
-<li>验证集：用来选择模型；</li>
+<li>验证集：验证集集是从训练集中取出来的一部分，用来选择模型，超参数调优；</li>
 <li>测试集：用来评价模型泛化能力。训练过程不能使用测试集。</li>
 </ul>
+<p><strong>注意</strong>：绝对不能使用测试集用来调优，测试集只能在训练完成后评价最终模型时使用。如果使用测试集进行调优，测试结果可能不错，可实际性能会远低于预期，这种情况称之为对测试集过拟合。</p>
 <h3 id="交叉验证（cross-validation）"><a href="#交叉验证（cross-validation）" class="headerlink" title="交叉验证（cross validation）"></a>交叉验证（cross validation）</h3><p>交叉验证的做法就是先将数据集分出一个测试集，然后将剩下的数据分为比较均等不相交的k份，然后选择其中一份验证，另外的k-1份进行训练，最后求得error的平均值作为最终的评价。</p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200703174015.png" srcset="/img/loading.gif" alt=""></p>
 <h1 id="过拟合与欠拟合"><a href="#过拟合与欠拟合" class="headerlink" title="过拟合与欠拟合"></a>过拟合与欠拟合</h1><p><strong>过拟合（Over-Fitting）</strong></p>

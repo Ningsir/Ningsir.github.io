@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      844 字
+      877 字
     </span>
   
 
@@ -244,9 +244,11 @@ s.t. y_i(\omega^{T}x_i+b) \geq 1 \tag{6}</script><h1 id="软间隔与正则化">
 <ul>
 <li>hinge损失：$\max(0, 1-z)$；</li>
 <li>指数损失：$e^{-z}$;</li>
-<li>对率损失：$\log(1 + e^{-z})$</li>
+<li>对率损失：$\log(1 + e^{-z})$。</li>
 </ul>
-<p>但C不是很大的时候，它可以忽略一些异常点的影响，得到更好的决策边界。</p>
+<p>若使用hinge损失，则式（7）变成：</p>
+<script type="math/tex; mode=display">
+\min_{\omega, b} \frac{1}{2}\|\omega\|^2 + C\sum_{i = 1}^{m}\max(0, 1-y_i(\omega^Tx_i + b)) \tag{9}</script><p>但C不是很大的时候，它可以忽略一些异常点的影响，得到更好的决策边界。</p>
 <ul>
 <li>C较大时，可能会导致过拟合；</li>
 <li>C较小时，可能会导致欠拟合。</li>
@@ -259,9 +261,9 @@ s.t. y_i(\omega^{T}x_i+b) \geq 1 \tag{6}</script><h1 id="软间隔与正则化">
 <script type="math/tex; mode=display">
 \begin{array}{l}f_1^{(1)} = k(x^{(1)}, l^{(1)})\\
 f_2^{(1)} = k(x^{(1)}, l^{(2)})\\ 
-f_3^{(1)} = k(x^{(1)}, l^{(3)})\end{array} \tag{9}</script><p>其中$f_1^{(1)},f_2^{(1)},f_3^{(1)}$是利用核函数计算出来的关于$x^{(1)}$的新特征。以此类推可以计算$f^{(2)}, \ldots, f^{(n)}$.则决策边界可以表示为：</p>
+f_3^{(1)} = k(x^{(1)}, l^{(3)})\end{array} \tag{10}</script><p>其中$f_1^{(1)},f_2^{(1)},f_3^{(1)}$是利用核函数计算出来的关于$x^{(1)}$的新特征。以此类推可以计算$f^{(2)}, \ldots, f^{(n)}$.则决策边界可以表示为：</p>
 <script type="math/tex; mode=display">
-\omega_0 + \omega_1 f_1 + \omega_2 f_2 + \omega_3 f_3 = 0 \tag{10}</script>
+\omega_0 + \omega_1 f_1 + \omega_2 f_2 + \omega_3 f_3 = 0 \tag{11}</script>
             </article>
             <hr>
             <div>
