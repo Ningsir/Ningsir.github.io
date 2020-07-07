@@ -8,7 +8,7 @@
     <link href="/2020/07/07/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
     <url>/2020/07/07/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</url>
     
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200707205913.png" srcset="/img/loading.gif" alt=""></p>]]></content>
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="神经网络结构"><a href="#神经网络结构" class="headerlink" title="神经网络结构"></a>神经网络结构</h1><p>神经网络被建模成神经元的集合，神经元之间以无环图的形式进行连接。对于普通神经网络，最普通的层的类型是全连接层。全连接层中的神经元与其前后两层的神经元是全连接的。神经网络包括输入层、隐藏层、输出层，一般说N层神经网络的时候，忽略了输入层，比如下图是一个2层神经网络。</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200707210313.png" srcset="/img/loading.gif" alt=""></p><p>一个神经元节点首先计算线性函数（$\omega x + b$），然后计算激活函数，然后将计算的结果传递到下一层。</p><h1 id="激活函数（activation-function）"><a href="#激活函数（activation-function）" class="headerlink" title="激活函数（activation function）"></a>激活函数（activation function）</h1><p>在神经元节点中线性计算后，使用激活函数，激活函数需要是一个非线性函数。使用激活函数是为了将神经元节点输出非线性化，如果只是使用线性函数，那么最后的输出将是几个线性函数的线性组合，那么设计多层的神经网络就变得没有任何意义。</p><h2 id="常用激活函数"><a href="#常用激活函数" class="headerlink" title="常用激活函数"></a>常用激活函数</h2><h3 id="sigmoid函数"><a href="#sigmoid函数" class="headerlink" title="sigmoid函数"></a>sigmoid函数</h3><p>sigmoid函数将输入压缩到 0 到 1 范围，主要用于二分类，比如logistics回归，如今sigmoid函数很少使用了。</p><script type="math/tex; mode=display">f(x) = \frac {1}{1 + e^{-x}}</script><p>sigmoid函数的导数为：</p><script type="math/tex; mode=display">\begin{array}{l}f^\prime(x) = \frac{e^{-x}}{(1 + e^{-x})^2} \\= f(x) - (f(x))^2\end{array}</script><p>sigmoid函数主要有以下两个缺点：</p><ul><li>输出不是0中心的。这一情况将影响梯度下降的运作。</li><li>sigmoid函数饱和使梯度消失。当激活函数的输入非常大或者非常小的时候，梯度几乎为0，那么最后相乘的结果也会接近0.</li></ul><h3 id="tanh函数"><a href="#tanh函数" class="headerlink" title="tanh函数"></a>tanh函数</h3><p>tanh函数将输入压缩至-1到1的范围，tanh函数是一个简单放大的sigmoid函数：$tanh(x) = 2\sigma(2x) - 1$</p><script type="math/tex; mode=display">f(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}</script><p>导数</p><script type="math/tex; mode=display">f(x)^{\prime}=1-(\tanh (x))^{2}</script><p>解决了sigmoid函数的0中心化问题，但梯度消失问题仍然存在。</p><h3 id="ReLU函数-Rectified-Linear-Unit"><a href="#ReLU函数-Rectified-Linear-Unit" class="headerlink" title="ReLU函数(Rectified Linear Unit)"></a>ReLU函数(Rectified Linear Unit)</h3><p>ReLU函数（校正线性单元），是目前最常用的激活函数：</p><script type="math/tex; mode=display">f(x) = \max(0, x)</script><p>优点：</p><ul><li>对于随机梯度下降的收敛有巨大的加速作用。</li><li>sigmoid和tanh含有指数运算等耗时操作，ReLU 运算简单，计算速度快。</li><li>在正区间解决梯度消失问题。</li></ul><p>缺点：</p><ul><li>输出不是0中心化；</li><li>某些神经元可能永远不会被激活，导致相应的参数永远不能被更新。例如，learning_rate设置得太高，容易出现这种情况。合理设置learning_rate, 这种情况发生概率会降低。</li></ul><h3 id="Leaky-ReLU函数"><a href="#Leaky-ReLU函数" class="headerlink" title="Leaky ReLU函数"></a>Leaky ReLU函数</h3><p>为了解决ReLU死亡问题。</p><script type="math/tex; mode=display">f(x) = max(\alpha x, x)</script><p>其中$\alpha$ 是一个非常小的常量。</p>]]></content>
     
     
     <categories>
@@ -226,9 +226,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -253,9 +253,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -280,9 +280,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
