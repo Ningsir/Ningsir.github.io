@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.6k 字
+      2.1k 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      17
+      23
        分钟
     </span>
   
@@ -286,10 +286,44 @@ f(x) = \max(0, x)</script><p>优点：</p>
 <h3 id="Leaky-ReLU函数"><a href="#Leaky-ReLU函数" class="headerlink" title="Leaky ReLU函数"></a>Leaky ReLU函数</h3><p>为了解决ReLU死亡问题，ReLU函数的改进版本。</p>
 <script type="math/tex; mode=display">
 f(x) = max(\alpha x, x)</script><p>其中$\alpha$ 是一个非常小的常量。</p>
-<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h2 id="随机梯度下降法"><a href="#随机梯度下降法" class="headerlink" title="随机梯度下降法"></a>随机梯度下降法</h2><p>梯度下降法的参数更新有多种方法。</p>
+<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h2 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h2><h3 id="批量梯度下降法（Batch-Gradient-Descent）"><a href="#批量梯度下降法（Batch-Gradient-Descent）" class="headerlink" title="批量梯度下降法（Batch Gradient Descent）"></a>批量梯度下降法（Batch Gradient Descent）</h3><p>更新参数时使用所有的样本进行更新，每迭代一步都需要用到训练集中的所有数据。</p>
+<ul>
+<li>缺点：样本数量很多时，训练过程很慢。</li>
+</ul>
+<h3 id="随机梯度下降法（Stochastic-Gradient-Descent）"><a href="#随机梯度下降法（Stochastic-Gradient-Descent）" class="headerlink" title="随机梯度下降法（Stochastic Gradient Descent）"></a>随机梯度下降法（Stochastic Gradient Descent）</h3><p>随机梯度下降法，每次训练一个样本，计算一个样本的梯度，然后进行参数更新。 </p>
+<ul>
+<li>优点：训练速度快；</li>
+<li>缺点：准确度下降，并不是全局最优。</li>
+</ul>
+<h3 id="小批量梯度下降法（Mini-batch-Gradient-Descent）"><a href="#小批量梯度下降法（Mini-batch-Gradient-Descent）" class="headerlink" title="小批量梯度下降法（Mini-batch Gradient Descent）"></a>小批量梯度下降法（Mini-batch Gradient Descent）</h3><p>每次更新参数时使用小批量的样本。算法训练过程比较快，准确度也比较高。</p>
+<h2 id="梯度下降优化算法"><a href="#梯度下降优化算法" class="headerlink" title="梯度下降优化算法"></a>梯度下降优化算法</h2><p>梯度下降法的参数更新有多种方法。</p>
 <h3 id="1-普通方法"><a href="#1-普通方法" class="headerlink" title="1. 普通方法"></a>1. 普通方法</h3><p>沿着负梯度方向改变参数。</p>
-<div class="hljs"><pre><code class="hljs python">W = W - learning_rate * dW</code></pre></div>
-<h2 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h2><h2 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h2>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># 普通更新</span>
+W = W - learning_rate * dW</code></pre></div>
+<h3 id="2-动量更新（Momentum）"><a href="#2-动量更新（Momentum）" class="headerlink" title="2. 动量更新（Momentum）"></a>2. 动量更新（Momentum）</h3><div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># 动量更新</span>
+v = mu * v - learning_rate * dW
+W += v</code></pre></div>
+<p>其中v初始化为0，mu被看作动量，一般设为0.9，通产还可以是[0.5, 0.9, 0.95, 0.99]中的一个。</p>
+<h3 id="3-Nesterov动量"><a href="#3-Nesterov动量" class="headerlink" title="3. Nesterov动量"></a>3. Nesterov动量</h3><div class="hljs"><pre><code class="hljs python">v_pre = v <span class="hljs-comment"># 存储备份</span>
+v = mu * v - learning_rate * dW
+W += -mu * v_pre + (<span class="hljs-number">1</span> + mu) * v</code></pre></div>
+<h3 id="4-Adagrad"><a href="#4-Adagrad" class="headerlink" title="4. Adagrad"></a>4. Adagrad</h3><p>Adagrad是一个适应性学习率算法，自适用的为不同参数分配不同的学习率。</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># cache存储梯度的平方和</span>
+cache += dW**<span class="hljs-number">2</span>
+<span class="hljs-comment"># eps是一个很小的常量，防止出现0, 一般1e-4到1e-8之间</span>
+W += -learning_rate * dW / (np.sqrt(cache) + eps)</code></pre></div>
+<p>随着迭代的增加，cache增大，学习率变小。因为随着训练的进行，越来越接近最优解，学习率相应变小。</p>
+<h3 id="5-Adam"><a href="#5-Adam" class="headerlink" title="5. Adam"></a>5. Adam</h3><div class="hljs"><pre><code class="hljs python">m = beta1*m + (<span class="hljs-number">1</span>‐beta1)*dx
+v = beta2*v + (<span class="hljs-number">1</span>‐beta2)*(dx**<span class="hljs-number">2</span>)
+x += ‐ learning_rate * m / (np.sqrt(v) + eps)</code></pre></div>
+<p>推荐参数值：eps=1e-8, beta1=0.9, beta2=0.999。</p>
+<h2 id="学习率退火"><a href="#学习率退火" class="headerlink" title="学习率退火"></a>学习率退火</h2><p>学习率可能过大，逐步衰减学习率。</p>
+<ul>
+<li>随步数衰减：每进行几个周期就降低学习率。典型的值是每过5个周期就将学习率减少一半，或者每20个周期减少到之前的0.1；</li>
+<li>指数衰减：$\alpha = \alpha_0 e^{-kt}$, 其中t 为迭代次数，k是超参数；</li>
+<li>1/t 衰减: $ \alpha = \frac{\alpha_0}{1+ kt}$.</li>
+</ul>
+
             </article>
             <hr>
             <div>
