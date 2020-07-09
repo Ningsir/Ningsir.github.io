@@ -19,7 +19,7 @@
   <meta name="description" content="华中科技大学17级本科生">
   <meta name="author" content="XIN">
   <meta name="keywords" content="">
-  <title>神经网络 - XIN&#39;S BLOG</title>
+  <title>卷积神经网络 - XIN&#39;S BLOG</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -150,8 +150,8 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-07-07 20:56">
-      2020年7月7日 晚上
+    <time datetime="2020-07-09 22:46">
+      2020年7月9日 晚上
     </time>
   </div>
 
@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.3k 字
+      667 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      26
+      7
        分钟
     </span>
   
@@ -210,125 +210,48 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h1 id="1-神经网络基础"><a href="#1-神经网络基础" class="headerlink" title="1. 神经网络基础"></a>1. 神经网络基础</h1><p>神经网络被建模成神经元的集合，神经元之间以无环图的形式进行连接。对于普通神经网络，最普通的层的类型是全连接层。全连接层中的神经元与其前后两层的神经元是全连接的。神经网络包括输入层、隐藏层、输出层，一般说N层神经网络的时候，忽略了输入层，比如下图是一个2层神经网络。<strong>输入层神经元节点的数量就是数据feature的数量。</strong></p>
-<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200707210313.png" srcset="/img/loading.gif" alt=""></p>
-<p>一个神经元节点首先计算线性函数（$\omega x + b$），然后计算激活函数，然后将计算的结果传递到下一层。</p>
-<p>训练神经网络的过程：</p>
-<p>1） 参数的随机初始化；</p>
-<p>2） 前向传播；</p>
-<p>3） 计算代价；</p>
-<p>4）反向传播计算所有偏导数；</p>
-<p>5） 利用数值检验方法检验这些偏导数；</p>
-<p>6）使用优化来最小化代价函数。</p>
-<p>用上图的2层神经网络举例说明<strong>前向传播</strong>的过程，输入是一个<code>3 x 1</code>的向量，第一个隐藏层的权重W1是<code>4 x 3</code>的向量,偏置b1是<code>4 x 1</code>的向量，在隐藏层中的计算为：$f(W_1 x + b_1)$，其中输出数据大小为<code>4 x 1</code>；输出层的权重W2是<code>2 x 4</code>, 偏置为<code>2 x 1</code>, 输出层通常没有激活函数，则计算为：$W_2 x + b_2$, 最后输出数据为<code>2 x 1</code>的向量。</p>
-<h2 id="1-1-数据预处理"><a href="#1-1-数据预处理" class="headerlink" title="1.1 数据预处理"></a>1.1 数据预处理</h2><p>假设输入数据为X，大小为<code>n x m</code>，其中n指的特征的数量，m指的是样本的数量。</p>
-<h3 id="1-1-1-均值减法（Mean-subtraction）"><a href="#1-1-1-均值减法（Mean-subtraction）" class="headerlink" title="1.1.1 均值减法（Mean subtraction）"></a>1.1.1 均值减法（Mean subtraction）</h3><p>对数据每个独立特征减去平均值（<strong>注意：平均值指的是每个样本对应特征的平均值，而不是对单个样本的数据求平均值</strong>）, 其实就是在每个维度上将数据的中心移到原点，也就是做0中心化（zero-centered）处理。</p>
-<div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
-X -= np.mean(X, axis=<span class="hljs-number">1</span>)</code></pre></div>
-<h3 id="1-1-2-归一化-Normalization"><a href="#1-1-2-归一化-Normalization" class="headerlink" title="1.1.2 归一化 (Normalization)"></a>1.1.2 归一化 (Normalization)</h3><p>有两种方法：</p>
+              <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>计算机视觉面临一个挑战，就是数据的输入可能非常大。对于传统的全连接神经网络，数据庞大也就意味着需要训练的参数非常多，导致计算成本很大，效率很低。在这种情况下，难以获得足够的数据来防止过拟合，由此，出现了卷积神经网络。</p>
+<p><em>CNN 有2大特点：</em></p>
 <ul>
-<li>先对数据做0中心化，然后每个维度都除以其标准差。</li>
+<li>能够有效的将大数据量的图片降维成小数据量；</li>
+<li>能够有效的保留图片特征，符合图片处理的原则。</li>
 </ul>
-<div class="hljs"><pre><code class="hljs undefined">X <span class="hljs-string">/=</span> np.std<span class="hljs-params">(X, <span class="hljs-attr">axis</span>=1)</span></code></pre></div>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ul>
+<li>图像分类、检索</li>
+<li>目标定位检测</li>
+<li>图像分割</li>
+<li>人脸识别</li>
+</ul>
+<h1 id="CNN的基本原理"><a href="#CNN的基本原理" class="headerlink" title="CNN的基本原理"></a>CNN的基本原理</h1><p>典型的卷积神经网络由3个部分组成：</p>
 <ul>
-<li>对每个维度都做归一化。</li>
+<li>卷积层：提取图像中的局部特征；</li>
+<li>池化层：降维；</li>
+<li>全连接层：类似于传统神经网络，用来输出想要的结果。</li>
 </ul>
-<p><strong>常见错误</strong>：<strong>数据预处理只能在训练集数据上进行计算</strong>。比如，先从训练集中求图片平均值，然后训练集、验证集、测试集中的图像再减去这个平均值。</p>
-<h2 id="1-2-随机初始化"><a href="#1-2-随机初始化" class="headerlink" title="1.2 随机初始化"></a>1.2 随机初始化</h2><h3 id="1-2-1-权重初始化"><a href="#1-2-1-权重初始化" class="headerlink" title="1.2.1 权重初始化"></a>1.2.1 权重初始化</h3><ul>
-<li>小随机数初始化</li>
-</ul>
-<div class="hljs"><pre><code class="hljs python">W = np.random.randn(D, H) * <span class="hljs-number">0.01</span></code></pre></div>
-<ul>
-<li>使用<code>1/sqrt(m)</code>校准方差：这样可以将神经元输出归一化到1：<code>W = np.random.randn(m) / sqrt(m)</code>， m为样本数量。针对ReLU神经元的特殊初始化：<code>w = np.random.randn(m) * sqrt(2.0 / m)</code></li>
-</ul>
-<h3 id="1-2-2-偏置初始化"><a href="#1-2-2-偏置初始化" class="headerlink" title="1.2.2 偏置初始化"></a>1.2.2 偏置初始化</h3><p>通常将偏置初始化为0，这是因为权重的随机初始化已经打破了对称性。</p>
-<h2 id="1-3-学习之前的合理性检查"><a href="#1-3-学习之前的合理性检查" class="headerlink" title="1.3 学习之前的合理性检查"></a>1.3 学习之前的合理性检查</h2><ul>
-<li>寻找特定情况下的正确损失值，比如使用一个样本，正则化强度设置为0，检查损失值是否符合预期。</li>
-<li>提高正则化强度时导致损失值变大；</li>
-<li>对小数据集过拟合。使用一个小数据集，正则化强度设置为0，确保训练后能够到达0的损失值。</li>
-</ul>
-<h2 id="1-4-检查整个学习过程"><a href="#1-4-检查整个学习过程" class="headerlink" title="1.4 检查整个学习过程"></a>1.4 检查整个学习过程</h2><ul>
-<li>跟踪损失值；</li>
-<li>跟踪训练集和验证集准确度的变化过程：判断是否过拟合。</li>
-<li>第一层可视化：下图是将神经网络第一层的权重可视化的例子。左图中的特征充满了噪音，这暗示了网络可能出现了问题：网络没有收敛，学习率设置不恰当，正则化惩罚的权重过低。右图的特征不错，平滑，干净而且种类繁多，说明训练过程进行良好。</li>
-</ul>
-<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200708160346.png" srcset="/img/loading.gif" alt=""></p>
-<h2 id="1-5-epoch、iteration、batch-size"><a href="#1-5-epoch、iteration、batch-size" class="headerlink" title="1.5 epoch、iteration、batch_size"></a>1.5 epoch、iteration、batch_size</h2><p>神经网络中epoch与iteration是不相等的</p>
-<ul>
-<li>batch_size：批大小，一次训练选取的样本大小。在深度学习中，一般采用SGD训练，即每次训练在训练集中取batch_size个样本训练；</li>
-<li>iteration：中文翻译为迭代，1个iteration等于使用batch_size个样本训练一次；一个迭代 = 一个正向传播+一个反向传播；</li>
-<li>epoch：迭代次数，1个epoch等于使用训练集中的全部样本训练一次；一个epoch = 所有训练样本的一个正向传递和一个反向传递。</li>
-</ul>
-<h1 id="2-激活函数（activation-function）"><a href="#2-激活函数（activation-function）" class="headerlink" title="2. 激活函数（activation function）"></a>2. 激活函数（activation function）</h1><p>在神经元节点中线性计算后，然后使用激活函数，激活函数需要是一个非线性函数。使用激活函数是为了将神经元节点输出非线性化，如果只是使用线性函数，那么最后的输出将是几个线性函数的线性组合，那么设计多层的神经网络就变得没有任何意义。</p>
-<h2 id="常用激活函数"><a href="#常用激活函数" class="headerlink" title="常用激活函数"></a>常用激活函数</h2><h3 id="sigmoid函数"><a href="#sigmoid函数" class="headerlink" title="sigmoid函数"></a>sigmoid函数</h3><p>sigmoid函数将输入压缩到 0 到 1 范围，主要用于二分类，比如logistics回归，如今sigmoid函数很少使用了。</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200709155732.png" srcset="/img/loading.gif" alt=""> </p>
+<h2 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h2><p>卷积层通过卷积核的过滤提取出图片中局部的特征。对于离散数据的卷积运算：首先将卷积核旋转$180^{\circ}$，然后将卷积核在图像上平滑，将卷积核与图像中对应元素相乘取和。具体的卷积操作，如下图所示（已经将卷积核旋转了$180^{\circ}$）：</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/0_sxpi42l2IIpS2vuJ.gif" srcset="/img/loading.gif" alt=""><br>其中卷积核为：</p>
 <script type="math/tex; mode=display">
-f(x) = \frac {1}{1 + e^{-x}}</script><p>sigmoid函数的导数为：</p>
-<script type="math/tex; mode=display">
-\begin{array}{l}f^\prime(x) = \frac{e^{-x}}{(1 + e^{-x})^2} \\
-= f(x) - (f(x))^2
-\end{array}</script><p>sigmoid函数主要有以下两个缺点：</p>
+kernel = \begin{bmatrix}1&0&1\\
+0&1&0\\
+1&0&1\end{bmatrix}</script><p>卷积操作后输出的图像尺寸：$(n +2p -f)/s + 1$, 其中n为输入图像尺寸，padding为p, 卷积核大小为f， 步长为s。上图的卷积操作：n=5, p=0, f=3, s=1.</p>
+<p>选择填充多少像素，将卷积分为：</p>
 <ul>
-<li>输出不是0中心的。这一情况将影响梯度下降的运作。</li>
-<li>sigmoid函数饱和使梯度消失。当激活函数的输入非常大或者非常小的时候，梯度几乎为0，那么最后相乘的结果也会接近0.</li>
+<li>Valid卷积：不填充；</li>
+<li>Same卷积：填充</li>
 </ul>
-<h3 id="tanh函数"><a href="#tanh函数" class="headerlink" title="tanh函数"></a>tanh函数</h3><p>tanh函数将输入压缩至-1到1的范围，tanh函数是一个简单放大的sigmoid函数：$tanh(x) = 2\sigma(2x) - 1$</p>
-<script type="math/tex; mode=display">
-f(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}</script><p>tanh函数的导数：</p>
-<script type="math/tex; mode=display">
-f(x)^{\prime}=1-(\tanh (x))^{2}</script><p>解决了sigmoid函数的0中心化问题，但梯度消失问题仍然存在。</p>
-<h3 id="ReLU函数-Rectified-Linear-Unit"><a href="#ReLU函数-Rectified-Linear-Unit" class="headerlink" title="ReLU函数(Rectified Linear Unit)"></a>ReLU函数(Rectified Linear Unit)</h3><p>ReLU函数（校正线性单元），是目前最常用的激活函数：</p>
-<script type="math/tex; mode=display">
-f(x) = \max(0, x)</script><p>优点：</p>
+<p>卷积核的大小一般为奇数：</p>
 <ul>
-<li>对于随机梯度下降的收敛有巨大的加速作用。</li>
-<li>sigmoid和tanh含有指数运算等耗时操作，ReLU 运算简单，计算速度快。</li>
-<li>在正区间解决梯度消失问题。</li>
+<li>有一个中心点，便于指出过滤器的位置；</li>
+<li>如果为偶数，需要使用不对称填充。</li>
 </ul>
-<p>缺点：</p>
-<ul>
-<li>输出不是0中心化；</li>
-<li>某些神经元可能永远不会被激活，导致相应的参数永远不能被更新。例如，learning_rate设置得太高，容易出现这种情况。合理设置learning_rate, 这种情况发生概率会降低。</li>
-</ul>
-<h3 id="Leaky-ReLU函数"><a href="#Leaky-ReLU函数" class="headerlink" title="Leaky ReLU函数"></a>Leaky ReLU函数</h3><p>为了解决ReLU死亡问题，ReLU函数的改进版本。</p>
-<script type="math/tex; mode=display">
-f(x) = max(\alpha x, x)</script><p>其中$\alpha$ 是一个非常小的常量。</p>
-<h1 id="3-优化"><a href="#3-优化" class="headerlink" title="3. 优化"></a>3. 优化</h1><h2 id="3-1-梯度下降法"><a href="#3-1-梯度下降法" class="headerlink" title="3.1 梯度下降法"></a>3.1 梯度下降法</h2><h3 id="批量梯度下降法（Batch-Gradient-Descent）"><a href="#批量梯度下降法（Batch-Gradient-Descent）" class="headerlink" title="批量梯度下降法（Batch Gradient Descent）"></a>批量梯度下降法（Batch Gradient Descent）</h3><p>更新参数时使用所有的样本进行更新，每迭代一步都需要用到训练集中的所有数据。</p>
-<ul>
-<li>缺点：样本数量很多时，训练过程很慢。</li>
-</ul>
-<h3 id="随机梯度下降法（Stochastic-Gradient-Descent）"><a href="#随机梯度下降法（Stochastic-Gradient-Descent）" class="headerlink" title="随机梯度下降法（Stochastic Gradient Descent）"></a>随机梯度下降法（Stochastic Gradient Descent）</h3><p>随机梯度下降法，每次训练一个样本，计算一个样本的梯度，然后进行参数更新。 </p>
-<ul>
-<li>优点：训练速度快；</li>
-<li>缺点：准确度下降，并不是全局最优。</li>
-</ul>
-<h3 id="小批量梯度下降法（Mini-batch-Gradient-Descent）"><a href="#小批量梯度下降法（Mini-batch-Gradient-Descent）" class="headerlink" title="小批量梯度下降法（Mini-batch Gradient Descent）"></a>小批量梯度下降法（Mini-batch Gradient Descent）</h3><p>每次更新参数时使用小批量的样本。算法训练过程比较快，准确度也比较高。梯度下降会有一些震荡，但整体是下降的，因为mini-batch会出现一些噪音。</p>
-<h2 id="3-2-梯度下降优化算法"><a href="#3-2-梯度下降优化算法" class="headerlink" title="3.2 梯度下降优化算法"></a>3.2 梯度下降优化算法</h2><p>梯度下降法的参数更新有多种方法。</p>
-<h3 id="1-普通方法"><a href="#1-普通方法" class="headerlink" title="1. 普通方法"></a>1. 普通方法</h3><p>沿着负梯度方向改变参数。</p>
-<div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># 普通更新</span>
-W = W - learning_rate * dW</code></pre></div>
-<h3 id="2-动量更新（Momentum）"><a href="#2-动量更新（Momentum）" class="headerlink" title="2. 动量更新（Momentum）"></a>2. 动量更新（Momentum）</h3><div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># 动量更新</span>
-v = mu * v - learning_rate * dW
-W += v</code></pre></div>
-<p>其中v初始化为0，mu被看作动量，一般设为0.9，通产还可以是[0.5, 0.9, 0.95, 0.99]中的一个。</p>
-<h3 id="3-Nesterov动量"><a href="#3-Nesterov动量" class="headerlink" title="3. Nesterov动量"></a>3. Nesterov动量</h3><div class="hljs"><pre><code class="hljs python">v_pre = v <span class="hljs-comment"># 存储备份</span>
-v = mu * v - learning_rate * dW
-W += -mu * v_pre + (<span class="hljs-number">1</span> + mu) * v</code></pre></div>
-<h3 id="4-Adagrad"><a href="#4-Adagrad" class="headerlink" title="4. Adagrad"></a>4. Adagrad</h3><p>Adagrad是一个适应性学习率算法，自适用的为不同参数分配不同的学习率。</p>
-<div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># cache存储梯度的平方和</span>
-cache += dW**<span class="hljs-number">2</span>
-<span class="hljs-comment"># eps是一个很小的常量，防止出现0, 一般1e-4到1e-8之间</span>
-W += -learning_rate * dW / (np.sqrt(cache) + eps)</code></pre></div>
-<p>随着迭代的增加，cache增大，学习率变小。因为随着训练的进行，越来越接近最优解，学习率相应变小。</p>
-<h3 id="5-Adam"><a href="#5-Adam" class="headerlink" title="5. Adam"></a>5. Adam</h3><div class="hljs"><pre><code class="hljs python">m = beta1*m + (<span class="hljs-number">1</span>‐beta1)*dx
-v = beta2*v + (<span class="hljs-number">1</span>‐beta2)*(dx**<span class="hljs-number">2</span>)
-x += ‐ learning_rate * m / (np.sqrt(v) + eps)</code></pre></div>
-<p>推荐参数值：eps=1e-8, beta1=0.9, beta2=0.999。</p>
-<h2 id="3-3-学习率退火"><a href="#3-3-学习率退火" class="headerlink" title="3.3 学习率退火"></a>3.3 学习率退火</h2><p>学习率可能过大，逐步衰减学习率。</p>
-<ul>
-<li>随步数衰减：每进行几个周期就降低学习率。典型的值是每过5个周期就将学习率减少一半，或者每20个周期减少到之前的0.1；</li>
-<li>指数衰减：$\alpha = \alpha_0 e^{-kt}$, 其中t 为迭代次数，k是超参数；</li>
-<li>1/t 衰减: $ \alpha = \frac{\alpha_0}{1+ kt}$.</li>
-</ul>
+<p><strong>注意</strong>：按照数学中的卷积运算，需要将卷积核进行翻转操作，但在深度学习中，一般不使用翻转操作。</p>
+<h3 id="padding（填充）"><a href="#padding（填充）" class="headerlink" title="padding（填充）"></a>padding（填充）</h3><p>卷积操作时，如果不填充，则每次运算完成后，图像将会缩小，而且图像边缘的大部分信息都丢失了。填充p个像素点后，图像大小变为<code>n+2p</code>。一般用0填充。</p>
+<h3 id="strides（步长）"><a href="#strides（步长）" class="headerlink" title="strides（步长）"></a>strides（步长）</h3><p>步长是指平滑移动的距离。</p>
+<h2 id="池化"><a href="#池化" class="headerlink" title="池化"></a>池化</h2><p>池化层就是下采用，降低数据的维度，提高计算速度，同时提高提取特征的鲁棒性。池化的运算过程：</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/0_JjtDg7FAhjQOrld-.gif" srcset="/img/loading.gif" alt=""></p>
+<h3 id="最大池化"><a href="#最大池化" class="headerlink" title="最大池化"></a>最大池化</h3><p>提取过滤器范围内的最大值。</p>
+<h3 id="平均池化"><a href="#平均池化" class="headerlink" title="平均池化"></a>平均池化</h3><p>过滤器范围内的数据取平均值，平均池化使用较少。</p>
 
             </article>
             <hr>
@@ -361,18 +284,12 @@ x += ‐ learning_rate * m / (np.sqrt(v) + eps)</code></pre></div>
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/07/09/卷积神经网络/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">卷积神经网络</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/07/05/聚类与降维/">
-                        <span class="hidden-mobile">聚类与降维</span>
+                      <a href="/2020/07/07/神经网络/">
+                        <span class="hidden-mobile">神经网络</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -589,7 +506,7 @@ x += ‐ learning_rate * m / (np.sqrt(v) + eps)</code></pre></div>
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "神经网络&nbsp;",
+        "卷积神经网络&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
