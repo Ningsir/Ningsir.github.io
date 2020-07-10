@@ -367,7 +367,7 @@ y = \frac{e^x - e^{-x}}{e^x + e^{-x}} \tag{1}</script><div class="hljs"><pre><co
     <span class="hljs-keyword">return</span> z_exp / z_sum_column</code></pre></div>
 <h1 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h1><p>反向传播过程主要根据链式规则求解各个参数的关于损失函数的梯度，以便对参数进行优化，从而使损失值减小。实验中损失函数使用的是交叉熵损失函数，可以表示为：</p>
 <script type="math/tex; mode=display">
-L = -{\sum_{i} {y_i \log{a_i}}} \tag{3}</script><p>其中 $y_i$ 表示实际值，$a_i$ 表示预测值, 而 $a_i$ 是经过softmax函数得到的结果，即 $a_i$ 可以表示为：</p>
+L = -\frac{1}{m}{\sum_{i} {y_i \log{a_i}}} \tag{3}</script><p>其中 为样本数量，$y_i$ 表示实际值，$a_i$ 表示预测值, 而 $a_i$ 是经过softmax函数得到的结果，即 $a_i$ 可以表示为：</p>
 <script type="math/tex; mode=display">
 a_i = \frac{e^{z_i}}{\sum_{j} e^{z_{j}}} \tag{4}</script><p>则 $a_j$ 对 $z_i$ 求偏导数，可得：</p>
 <script type="math/tex; mode=display">
@@ -403,8 +403,8 @@ f(x)^{\prime}=1-(\tanh (x))^{2} \tag{6}</script><p>反向传播各个过程的�
 
     (Z1, A1, Z2, A2, Z3, A3) = cache
 
-    dz3 = A3 - y
-    dW3 = np.dot(dz3, A2.T) / m
+    dz3 = (A3 - y) / m
+    dW3 = np.dot(dz3, A2.T)
     db3 = np.mean(dz3, axis=<span class="hljs-number">1</span>, keepdims=<span class="hljs-keyword">True</span>)
 
     da2 = np.dot(W3.T, dz3)
