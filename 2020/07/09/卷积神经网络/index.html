@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      667 字
+      1.3k 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      7
+      19
        分钟
     </span>
   
@@ -252,7 +252,47 @@ kernel = \begin{bmatrix}1&0&1\\
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/0_JjtDg7FAhjQOrld-.gif" srcset="/img/loading.gif" alt=""></p>
 <h3 id="最大池化"><a href="#最大池化" class="headerlink" title="最大池化"></a>最大池化</h3><p>提取过滤器范围内的最大值。</p>
 <h3 id="平均池化"><a href="#平均池化" class="headerlink" title="平均池化"></a>平均池化</h3><p>过滤器范围内的数据取平均值，平均池化使用较少。</p>
-
+<h1 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h1><h2 id="卷积层的反向传播"><a href="#卷积层的反向传播" class="headerlink" title="卷积层的反向传播"></a>卷积层的反向传播</h2><p>卷积层的反向传播比全连接神经网络的反向传播要复杂许多，现举例说明。假设第 $l$ 层的输入数据为X：</p>
+<script type="math/tex; mode=display">
+X = \begin{bmatrix}
+x_{11}&x_{12}&x_{13} \\
+x_{21}&x_{22}&x_{23} \\
+x_{31}&x_{32}&x_{33}
+\end{bmatrix}</script><p>卷积核F为：</p>
+<script type="math/tex; mode=display">
+F = \begin{bmatrix}
+f_{11}&f_{12} \\
+f_{21}&f_{22} 
+\end{bmatrix}</script><p>假设步长为1，padding为0，那么经过卷积运算后的结果为 A：</p>
+<script type="math/tex; mode=display">
+A = \begin{bmatrix}
+a_{11}&a_{12}\\
+a_{21}&a_{22}
+\end{bmatrix}</script><p>则有：</p>
+<script type="math/tex; mode=display">
+\begin{array}{}\frac{\partial A_{11}}{\partial F_{11}} = x_{11}, \frac{\partial A_{11}}{\partial F_{12}} = x_{12} ,\ldots\\ \\
+\frac{\partial A_{12}}{\partial F_{11}} = x_{12}, \frac{\partial A_{12}}{\partial F_{12}} = x_{13} ,\ldots \\
+\end{array}</script><p>使用链式规则有：</p>
+<script type="math/tex; mode=display">
+\frac{\partial J}{\partial F_i} = \sum_{k = 1}^{m}\frac{\partial J}{\partial A_k} \times \frac{\partial A_k}{\partial F_i}</script><p>分别对F求梯度，则有如下四个式子成立：</p>
+<script type="math/tex; mode=display">
+\begin{array}{}\frac{\partial J}{\partial F_{11}} = \frac{\partial J}{\partial A_{11}} \times \frac{\partial A_{11}}{\partial F_{11}} + \frac{\partial J}{\partial A_{12}} \times \frac{\partial A_{12}}{\partial F_{11}} + \frac{\partial J}{\partial A_{21}} \times \frac{\partial A_{21}}{\partial F_{11}} + \frac{\partial J}{\partial A_{22}} \times \frac{\partial A_{22}}{\partial F_{11}}\\
+= \frac{\partial J}{\partial A_{11}} \times x_{11} + \frac{\partial J}{\partial A_{12}} \times  x_{12} + \frac{\partial J}{\partial A_{21}} \times x_{21} + \frac{\partial J}{\partial A_{22}} \times  x_{22}
+\end{array} \tag{1}</script><script type="math/tex; mode=display">
+\begin{array}{}
+\frac{\partial J}{\partial F_{12}} = \frac{\partial J}{\partial A_{11}} \times \frac{\partial A_{11}}{\partial F_{12}} + \frac{\partial J}{\partial A_{12}} \times \frac{\partial A_{12}}{\partial F_{12}} + \frac{\partial J}{\partial A_{21}} \times \frac{\partial A_{21}}{\partial F_{12}} + \frac{\partial J}{\partial A_{22}} \times \frac{\partial A_{22}}{\partial F_{12}} \\
+= \frac{\partial J}{\partial A_{11}} \times x_{12} + \frac{\partial J}{\partial A_{12}} \times  x_{13} + \frac{\partial J}{\partial A_{21}} \times x_{22} + \frac{\partial J}{\partial A_{22}} \times  x_{23}
+\end{array} \tag{2}</script><script type="math/tex; mode=display">
+\begin{array}{}
+\frac{\partial J}{\partial F_{21}} = \frac{\partial J}{\partial A_{11}} \times \frac{\partial A_{11}}{\partial F_{21}} + \frac{\partial J}{\partial A_{12}} \times \frac{\partial A_{12}}{\partial F_{21}} + \frac{\partial J}{\partial A_{21}} \times \frac{\partial A_{21}}{\partial F_{21}} + \frac{\partial J}{\partial A_{22}} \times \frac{\partial A_{22}}{\partial F_{21}} \\
+= \frac{\partial J}{\partial A_{11}} \times x_{21} + \frac{\partial J}{\partial A_{12}} \times  x_{22} + \frac{\partial J}{\partial A_{21}} \times x_{31} + \frac{\partial J}{\partial A_{22}} \times  x_{32}
+\end{array} \tag{3}</script><script type="math/tex; mode=display">
+\begin{array}{}
+\frac{\partial J}{\partial F_{22}} = \frac{\partial J}{\partial A_{11}} \times \frac{\partial A_{11}}{\partial F_{22}} + \frac{\partial J}{\partial A_{12}} \times \frac{\partial A_{12}}{\partial F_{22}} + \frac{\partial J}{\partial A_{21}} \times \frac{\partial A_{21}}{\partial F_{22}} + \frac{\partial J}{\partial A_{22}} \times \frac{\partial A_{22}}{\partial F_{22}} \\
+= \frac{\partial J}{\partial A_{11}} \times x_{22} + \frac{\partial J}{\partial A_{12}} \times  x_{23} + \frac{\partial J}{\partial A_{21}} \times x_{32} + \frac{\partial J}{\partial A_{22}} \times  x_{33}
+\end{array} \tag{4}</script><p>不难发现，对F求梯度，实际上就是X与$\frac{\partial J}{\partial A}$进行卷积运算：</p>
+<script type="math/tex; mode=display">
+\frac{\partial J}{\partial F} = X \ast \frac{\partial J}{\partial A}</script>
             </article>
             <hr>
             <div>
