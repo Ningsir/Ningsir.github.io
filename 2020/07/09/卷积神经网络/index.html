@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.3k 字
+      1.6k 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      19
+      23
        分钟
     </span>
   
@@ -292,7 +292,34 @@ a_{21}&a_{22}
 = \frac{\partial J}{\partial A_{11}} \times x_{22} + \frac{\partial J}{\partial A_{12}} \times  x_{23} + \frac{\partial J}{\partial A_{21}} \times x_{32} + \frac{\partial J}{\partial A_{22}} \times  x_{33}
 \end{array} \tag{4}</script><p>不难发现，对F求梯度，实际上就是X与$\frac{\partial J}{\partial A}$进行卷积运算：</p>
 <script type="math/tex; mode=display">
-\frac{\partial J}{\partial F} = X \ast \frac{\partial J}{\partial A}</script>
+\frac{\partial J}{\partial F} = X \ast \frac{\partial J}{\partial A}</script><h2 id="池化层的反向传播"><a href="#池化层的反向传播" class="headerlink" title="池化层的反向传播"></a>池化层的反向传播</h2><h3 id="最大池化-1"><a href="#最大池化-1" class="headerlink" title="最大池化"></a>最大池化</h3><p>假设池化层的输入X:</p>
+<script type="math/tex; mode=display">
+X = \begin{bmatrix}
+4&3&0&1\\
+1&1&3&2\\
+5&0&1&1\\
+6&4&4&7
+\end{bmatrix}</script><p>经过<code>2 x 2</code>的最大池化层之后，结果为A: </p>
+<script type="math/tex; mode=display">
+A = \begin{bmatrix}
+4&3\\
+6&7
+\end{bmatrix}</script><p>则$\frac{\partial A}{\partial X}$：</p>
+<script type="math/tex; mode=display">
+\frac{\partial A}{\partial X} = \begin{bmatrix}
+1&0&0&0\\
+0&0&1&0\\
+0&0&0&0\\
+1&0&0&1
+\end{bmatrix}</script><p>因为使用的是最大池化，则A对X求偏导时，最大值处为1，其他为0，即在进行最大池化时需要保留最大值处的位置，才能进行反向传播。</p>
+<h3 id="平均池化-1"><a href="#平均池化-1" class="headerlink" title="平均池化"></a>平均池化</h3><p>平均池化的反向传播更加简单。如果对上述的X进行<code>2 x 2</code>的平均池化，则$\frac{\partial A}{\partial X}$为：</p>
+<script type="math/tex; mode=display">
+\frac{\partial A}{\partial X} = \begin{bmatrix}
+\frac{1}{4}&\frac{1}{4}&\frac{1}{4}&\frac{1}{4}\\
+\frac{1}{4}&\frac{1}{4}&\frac{1}{4}&\frac{1}{4}\\
+\frac{1}{4}&\frac{1}{4}&\frac{1}{4}&\frac{1}{4}\\
+\frac{1}{4}&\frac{1}{4}&\frac{1}{4}&\frac{1}{4}
+\end{bmatrix}</script>
             </article>
             <hr>
             <div>
