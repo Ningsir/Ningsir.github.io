@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      784 字
+      789 字
     </span>
   
 
@@ -215,7 +215,7 @@
 <li>上层网络需要不停调整来适应输入数据分布的变化，导致学习速率的降低；</li>
 <li>网络的训练容易陷入梯度饱和区，减缓网络收敛速度：比如对于sigmoid或者tanh激活函数，网络训练过程中，随着层数的加深，输出的结果会越来越大，此时容易陷入梯度饱和区，梯度趋近于0，参数的更新速度就会减慢。</li>
 </ul>
-<h1 id="Batch-Normalization"><a href="#Batch-Normalization" class="headerlink" title="Batch Normalization"></a>Batch Normalization</h1><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>因为在深层网络中，数据分布不同、输出数值较大对网络的训练影响较大，那么只要能解决这两个问题就能对网络有很好的优化。可以尝试将数据中的每个特征转换成符合标准正态分布的数据（即期望为0， 方差为1）。</p>
+<h1 id="Batch-Normalization-批量归一化"><a href="#Batch-Normalization-批量归一化" class="headerlink" title="Batch Normalization (批量归一化)"></a>Batch Normalization (批量归一化)</h1><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>因为在深层网络中，数据分布不同、输出数值较大对网络的训练影响较大，那么只要能解决这两个问题就能对网络有很好的优化。可以尝试将数据中的每个特征转换成符合标准正态分布的数据（即期望为0， 方差为1）。</p>
 <h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p>在一个神经网络中，对于第$l$层有如下定义：</p>
 <ul>
 <li>m: 样本数量；</li>
