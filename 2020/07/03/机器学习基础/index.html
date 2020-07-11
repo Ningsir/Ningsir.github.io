@@ -323,7 +323,9 @@ J(\omega, b) = \frac{1}{m} \sum_{i=1}^{m}L(y,a) + \frac {\lambda} {2m} \sum \ome
 <h4 id="处理方法"><a href="#处理方法" class="headerlink" title="处理方法"></a>处理方法</h4><div class="hljs"><pre><code class="hljs python">D1 = np.random.rand(A1.shape[<span class="hljs-number">0</span>],A1.shape[<span class="hljs-number">1</span>])     
 D1 = D1 &lt; keep_prob	<span class="hljs-comment"># 步骤2：将D1的值转换为0或1（使用keep_prob作为阈值）</span>
 A1 = A1 * D1        <span class="hljs-comment"># 步骤3：舍弃A1的一些节点（将它的值变为0或False）</span>
-A1 = A1 / keep_prob	<span class="hljs-comment"># 使A1的期望值没有太大变化</span></code></pre></div>
+A1 = A1 / keep_prob	<span class="hljs-comment"># 进行缩放，使A1的期望值没有太大变化</span></code></pre></div>
+<p>反向传播时：</p>
+<div class="hljs"><pre><code class="hljs python">dA1 = dA1 * D1 / keep_prob</code></pre></div>
 <h2 id="5-3-如何防止欠拟合"><a href="#5-3-如何防止欠拟合" class="headerlink" title="5.3 如何防止欠拟合"></a>5.3 如何防止欠拟合</h2><ul>
 <li>添加新特征</li>
 <li>添加多项式特征</li>

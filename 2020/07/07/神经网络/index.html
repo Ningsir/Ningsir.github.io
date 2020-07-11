@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.3k 字
+      2.4k 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      26
+      28
        分钟
     </span>
   
@@ -310,6 +310,13 @@ W = W - learning_rate * dW</code></pre></div>
 v = mu * v - learning_rate * dW
 W += v</code></pre></div>
 <p>其中v初始化为0，mu被看作动量，一般设为0.9，通产还可以是[0.5, 0.9, 0.95, 0.99]中的一个。</p>
+<ul>
+<li><p>在梯度方向改变时（比如v为负，dW为负），momentum能够降低参数更新速度，从而减少震荡；</p>
+</li>
+<li><p>在梯度方向相同时（比如v为负，dW为正），momentum可以加速参数更新， 从而加速收敛。</p>
+</li>
+</ul>
+<p>总而言之，momentum能够加速SGD收敛，抑制震荡。</p>
 <h3 id="3-Nesterov动量"><a href="#3-Nesterov动量" class="headerlink" title="3. Nesterov动量"></a>3. Nesterov动量</h3><div class="hljs"><pre><code class="hljs python">v_pre = v <span class="hljs-comment"># 存储备份</span>
 v = mu * v - learning_rate * dW
 W += -mu * v_pre + (<span class="hljs-number">1</span> + mu) * v</code></pre></div>
@@ -319,7 +326,12 @@ cache += dW**<span class="hljs-number">2</span>
 <span class="hljs-comment"># eps是一个很小的常量，防止出现0, 一般1e-4到1e-8之间</span>
 W += -learning_rate * dW / (np.sqrt(cache) + eps)</code></pre></div>
 <p>随着迭代的增加，cache增大，学习率变小。因为随着训练的进行，越来越接近最优解，学习率相应变小。</p>
-<h3 id="5-Adam"><a href="#5-Adam" class="headerlink" title="5. Adam"></a>5. Adam</h3><div class="hljs"><pre><code class="hljs python">m = beta1*m + (<span class="hljs-number">1</span>‐beta1)*dx
+<h3 id="5-RMSprop"><a href="#5-RMSprop" class="headerlink" title="5. RMSprop"></a>5. RMSprop</h3><p>适应性学习率算法，与Adagrad不同的是，不会让学习率单调变小。</p>
+<div class="hljs"><pre><code class="hljs python">cache = decay_rate * cache + (<span class="hljs-number">1</span> - decay_rate) * dx ** <span class="hljs-number">2</span>
+x += -learning_rate * dx / (np.sqrt(cache) + eps)</code></pre></div>
+<p>decay_rate常用的值[0.9, 0.99, 0.999]</p>
+<h3 id="6-Adam"><a href="#6-Adam" class="headerlink" title="6. Adam"></a>6. Adam</h3><p>看起来像RMSprop的动量版。</p>
+<div class="hljs"><pre><code class="hljs python">m = beta1*m + (<span class="hljs-number">1</span>‐beta1)*dx
 v = beta2*v + (<span class="hljs-number">1</span>‐beta2)*(dx**<span class="hljs-number">2</span>)
 x += ‐ learning_rate * m / (np.sqrt(v) + eps)</code></pre></div>
 <p>推荐参数值：eps=1e-8, beta1=0.9, beta2=0.999。</p>

@@ -19,7 +19,7 @@
   <meta name="description" content="华中科技大学17级本科生">
   <meta name="author" content="XIN">
   <meta name="keywords" content="">
-  <title>卷积神经网络 - XIN&#39;S BLOG</title>
+  <title>Batch Normalization - XIN&#39;S BLOG</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -150,8 +150,8 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-07-09 22:46">
-      2020年7月9日 晚上
+    <time datetime="2020-07-11 20:36">
+      2020年7月11日 晚上
     </time>
   </div>
 
@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.6k 字
+      784 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      23
+      8
        分钟
     </span>
   
@@ -210,116 +210,38 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>计算机视觉面临一个挑战，就是数据的输入可能非常大。对于传统的全连接神经网络，数据庞大也就意味着需要训练的参数非常多，导致计算成本很大，效率很低。在这种情况下，难以获得足够的数据来防止过拟合，由此，出现了卷积神经网络。</p>
-<p><em>CNN 有2大特点：</em></p>
+              <h1 id="提出背景"><a href="#提出背景" class="headerlink" title="提出背景"></a>提出背景</h1><p>对于深层网络的训练，调参非常困难，因为层与层之间存在高度的关联性和耦合性。当底层网络中的参数发生微弱变化时，这些微弱的变化随着网络层数的加深而被放大。对于深层网络，主要存在以下两个问题：</p>
 <ul>
-<li>能够有效的将大数据量的图片降维成小数据量；</li>
-<li>能够有效的保留图片特征，符合图片处理的原则。</li>
+<li>上层网络需要不停调整来适应输入数据分布的变化，导致学习速率的降低；</li>
+<li>网络的训练容易陷入梯度饱和区，减缓网络收敛速度：比如对于sigmoid或者tanh激活函数，网络训练过程中，随着层数的加深，输出的结果会越来越大，此时容易陷入梯度饱和区，梯度趋近于0，参数的更新速度就会减慢。</li>
 </ul>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ul>
-<li>图像分类、检索</li>
-<li>目标定位检测</li>
-<li>图像分割</li>
-<li>人脸识别</li>
-</ul>
-<h1 id="CNN的基本原理"><a href="#CNN的基本原理" class="headerlink" title="CNN的基本原理"></a>CNN的基本原理</h1><p>典型的卷积神经网络由3个部分组成：</p>
+<h1 id="Batch-Normalization"><a href="#Batch-Normalization" class="headerlink" title="Batch Normalization"></a>Batch Normalization</h1><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>因为在深层网络中，数据分布不同、输出数值较大对网络的训练影响较大，那么只要能解决这两个问题就能对网络有很好的优化。可以尝试将数据中的每个特征转换成符合标准正态分布的数据（即期望为0， 方差为1）。</p>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p>在一个神经网络中，对于第$l$层有如下定义：</p>
 <ul>
-<li>卷积层：提取图像中的局部特征；</li>
-<li>池化层：降维；</li>
-<li>全连接层：类似于传统神经网络，用来输出想要的结果。</li>
+<li>m: 样本数量；</li>
+<li>$\mu_j$：第 j 个神经元的平均值；</li>
+<li>$\sigma_j^2$：第 j 个神经元的方差；</li>
 </ul>
-<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200709155732.png" srcset="/img/loading.gif" alt=""> </p>
-<h2 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h2><p>卷积层通过卷积核的过滤提取出图片中局部的特征。对于离散数据的卷积运算：首先将卷积核旋转$180^{\circ}$，然后将卷积核在图像上平滑，将卷积核与图像中对应元素相乘取和。具体的卷积操作，如下图所示（已经将卷积核旋转了$180^{\circ}$）：</p>
-<p><img src="https://gitee.com/huster_ning/image/raw/master//image/0_sxpi42l2IIpS2vuJ.gif" srcset="/img/loading.gif" alt=""><br>其中卷积核为：</p>
+<p>对数据进行batch normalizaiton操作（对Z还是对A进行norm操作没有定论，一般对Z进行norm操作）：</p>
 <script type="math/tex; mode=display">
-kernel = \begin{bmatrix}1&0&1\\
-0&1&0\\
-1&0&1\end{bmatrix}</script><p>卷积操作后输出的图像尺寸：$(n +2p -f)/s + 1$, 其中n为输入图像尺寸，padding为p, 卷积核大小为f， 步长为s。上图的卷积操作：n=5, p=0, f=3, s=1.</p>
-<p>选择填充多少像素，将卷积分为：</p>
-<ul>
-<li>Valid卷积：不填充；</li>
-<li>Same卷积：填充</li>
+\begin{array}{l}
+\mu_{j}=\frac{1}{m} \sum_{i=1}^{m} Z_{j}^{(i)} \\
+\sigma_{j}^{2}=\frac{1}{m} \sum_{i=1}^{m}\left(Z_{j}^{(i)}-\mu_{j}\right)^{2} \\
+\hat{Z}_{j}=\frac{Z_{j}-\mu_{j}}{\sqrt{\sigma_{j}^{2}+\epsilon}}
+\end{array}</script><blockquote>
+<p>$\epsilon 防止方差为0$</p>
+</blockquote>
+<p>上述操作可以概括为：先对数据进行0中心化操作，然后除以标准差。通过上述变换，<strong>将每个特征的分布均值为0，方差为1</strong></p>
+<p>但这样会使数据的分布始终不变，导致数据表达能力的缺失。对norm后的数据进行线性变换：$\hat{Z_j} = \gamma\hat Z_j + \beta$. <strong>其中$\gamma$ 和 $\beta$ 也是需要学习的参数</strong>，所以反向传播时需要求的梯度有：$dZ$ 、$d\gamma$、$d\beta$。</p>
+<h2 id="测试阶段使用Batch-Normalization"><a href="#测试阶段使用Batch-Normalization" class="headerlink" title="测试阶段使用Batch Normalization"></a>测试阶段使用Batch Normalization</h2><p>使用norm时需要求特征的平均值和方差，这个只能对训练集使用，而不能直接求测试集的平均值和方差。比如，如果测试时，只有一个样本，求的平均值和方差就会有较大偏差。</p>
+<p>正确做法是：保留训练集的平均值和方差，然后应用在测试数据上。</p>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ul>
+<li>使得网络中每层输入数据的分布相对稳定，加速模型学习速度；</li>
+<li>使得模型对网络中的参数不那么敏感，简化调参过程，使得网络学习更加稳定，没有使用BN的深层网络底层参数发生细微变化，传递到深层后就会被放大。</li>
+<li>允许网络使用饱和性激活函数，缓解梯度消失问题。</li>
+<li>具有一定的正则化效果。</li>
 </ul>
-<p>卷积核的大小一般为奇数：</p>
-<ul>
-<li>有一个中心点，便于指出过滤器的位置；</li>
-<li>如果为偶数，需要使用不对称填充。</li>
-</ul>
-<p><strong>注意</strong>：按照数学中的卷积运算，需要将卷积核进行翻转操作，但在深度学习中，一般不使用翻转操作。</p>
-<h3 id="padding（填充）"><a href="#padding（填充）" class="headerlink" title="padding（填充）"></a>padding（填充）</h3><p>卷积操作时，如果不填充，则每次运算完成后，图像将会缩小，而且图像边缘的大部分信息都丢失了。填充p个像素点后，图像大小变为<code>n+2p</code>。一般用0填充。</p>
-<h3 id="strides（步长）"><a href="#strides（步长）" class="headerlink" title="strides（步长）"></a>strides（步长）</h3><p>步长是指平滑移动的距离。</p>
-<h2 id="池化"><a href="#池化" class="headerlink" title="池化"></a>池化</h2><p>池化层就是下采用，降低数据的维度，提高计算速度，同时提高提取特征的鲁棒性。池化的运算过程：</p>
-<p><img src="https://gitee.com/huster_ning/image/raw/master//image/0_JjtDg7FAhjQOrld-.gif" srcset="/img/loading.gif" alt=""></p>
-<h3 id="最大池化"><a href="#最大池化" class="headerlink" title="最大池化"></a>最大池化</h3><p>提取过滤器范围内的最大值。</p>
-<h3 id="平均池化"><a href="#平均池化" class="headerlink" title="平均池化"></a>平均池化</h3><p>过滤器范围内的数据取平均值，平均池化使用较少。</p>
-<h1 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h1><h2 id="卷积层的反向传播"><a href="#卷积层的反向传播" class="headerlink" title="卷积层的反向传播"></a>卷积层的反向传播</h2><p>卷积层的反向传播比全连接神经网络的反向传播要复杂许多，现举例说明。假设第 $l$ 层的输入数据为X：</p>
-<script type="math/tex; mode=display">
-X = \begin{bmatrix}
-x_{11}&x_{12}&x_{13} \\
-x_{21}&x_{22}&x_{23} \\
-x_{31}&x_{32}&x_{33}
-\end{bmatrix}</script><p>卷积核F为：</p>
-<script type="math/tex; mode=display">
-F = \begin{bmatrix}
-f_{11}&f_{12} \\
-f_{21}&f_{22} 
-\end{bmatrix}</script><p>假设步长为1，padding为0，那么经过卷积运算后的结果为 A：</p>
-<script type="math/tex; mode=display">
-A = \begin{bmatrix}
-a_{11}&a_{12}\\
-a_{21}&a_{22}
-\end{bmatrix}</script><p>则有：</p>
-<script type="math/tex; mode=display">
-\begin{array}{}\frac{\partial A_{11}}{\partial F_{11}} = x_{11}, \frac{\partial A_{11}}{\partial F_{12}} = x_{12} ,\ldots\\ \\
-\frac{\partial A_{12}}{\partial F_{11}} = x_{12}, \frac{\partial A_{12}}{\partial F_{12}} = x_{13} ,\ldots \\
-\end{array}</script><p>使用链式规则有：</p>
-<script type="math/tex; mode=display">
-\frac{\partial J}{\partial F_i} = \sum_{k = 1}^{m}\frac{\partial J}{\partial A_k} \times \frac{\partial A_k}{\partial F_i}</script><p>分别对F求梯度，则有如下四个式子成立：</p>
-<script type="math/tex; mode=display">
-\begin{array}{}\frac{\partial J}{\partial F_{11}} = \frac{\partial J}{\partial A_{11}} \times \frac{\partial A_{11}}{\partial F_{11}} + \frac{\partial J}{\partial A_{12}} \times \frac{\partial A_{12}}{\partial F_{11}} + \frac{\partial J}{\partial A_{21}} \times \frac{\partial A_{21}}{\partial F_{11}} + \frac{\partial J}{\partial A_{22}} \times \frac{\partial A_{22}}{\partial F_{11}}\\
-= \frac{\partial J}{\partial A_{11}} \times x_{11} + \frac{\partial J}{\partial A_{12}} \times  x_{12} + \frac{\partial J}{\partial A_{21}} \times x_{21} + \frac{\partial J}{\partial A_{22}} \times  x_{22}
-\end{array} \tag{1}</script><script type="math/tex; mode=display">
-\begin{array}{}
-\frac{\partial J}{\partial F_{12}} = \frac{\partial J}{\partial A_{11}} \times \frac{\partial A_{11}}{\partial F_{12}} + \frac{\partial J}{\partial A_{12}} \times \frac{\partial A_{12}}{\partial F_{12}} + \frac{\partial J}{\partial A_{21}} \times \frac{\partial A_{21}}{\partial F_{12}} + \frac{\partial J}{\partial A_{22}} \times \frac{\partial A_{22}}{\partial F_{12}} \\
-= \frac{\partial J}{\partial A_{11}} \times x_{12} + \frac{\partial J}{\partial A_{12}} \times  x_{13} + \frac{\partial J}{\partial A_{21}} \times x_{22} + \frac{\partial J}{\partial A_{22}} \times  x_{23}
-\end{array} \tag{2}</script><script type="math/tex; mode=display">
-\begin{array}{}
-\frac{\partial J}{\partial F_{21}} = \frac{\partial J}{\partial A_{11}} \times \frac{\partial A_{11}}{\partial F_{21}} + \frac{\partial J}{\partial A_{12}} \times \frac{\partial A_{12}}{\partial F_{21}} + \frac{\partial J}{\partial A_{21}} \times \frac{\partial A_{21}}{\partial F_{21}} + \frac{\partial J}{\partial A_{22}} \times \frac{\partial A_{22}}{\partial F_{21}} \\
-= \frac{\partial J}{\partial A_{11}} \times x_{21} + \frac{\partial J}{\partial A_{12}} \times  x_{22} + \frac{\partial J}{\partial A_{21}} \times x_{31} + \frac{\partial J}{\partial A_{22}} \times  x_{32}
-\end{array} \tag{3}</script><script type="math/tex; mode=display">
-\begin{array}{}
-\frac{\partial J}{\partial F_{22}} = \frac{\partial J}{\partial A_{11}} \times \frac{\partial A_{11}}{\partial F_{22}} + \frac{\partial J}{\partial A_{12}} \times \frac{\partial A_{12}}{\partial F_{22}} + \frac{\partial J}{\partial A_{21}} \times \frac{\partial A_{21}}{\partial F_{22}} + \frac{\partial J}{\partial A_{22}} \times \frac{\partial A_{22}}{\partial F_{22}} \\
-= \frac{\partial J}{\partial A_{11}} \times x_{22} + \frac{\partial J}{\partial A_{12}} \times  x_{23} + \frac{\partial J}{\partial A_{21}} \times x_{32} + \frac{\partial J}{\partial A_{22}} \times  x_{33}
-\end{array} \tag{4}</script><p>不难发现，对F求梯度，实际上就是X与$\frac{\partial J}{\partial A}$进行卷积运算：</p>
-<script type="math/tex; mode=display">
-\frac{\partial J}{\partial F} = X \ast \frac{\partial J}{\partial A}</script><h2 id="池化层的反向传播"><a href="#池化层的反向传播" class="headerlink" title="池化层的反向传播"></a>池化层的反向传播</h2><h3 id="最大池化-1"><a href="#最大池化-1" class="headerlink" title="最大池化"></a>最大池化</h3><p>假设池化层的输入X:</p>
-<script type="math/tex; mode=display">
-X = \begin{bmatrix}
-4&3&0&1\\
-1&1&3&2\\
-5&0&1&1\\
-6&4&4&7
-\end{bmatrix}</script><p>经过<code>2 x 2</code>的最大池化层之后，结果为A: </p>
-<script type="math/tex; mode=display">
-A = \begin{bmatrix}
-4&3\\
-6&7
-\end{bmatrix}</script><p>则$\frac{\partial A}{\partial X}$：</p>
-<script type="math/tex; mode=display">
-\frac{\partial A}{\partial X} = \begin{bmatrix}
-1&0&0&0\\
-0&0&1&0\\
-0&0&0&0\\
-1&0&0&1
-\end{bmatrix}</script><p>因为使用的是最大池化，则A对X求偏导时，最大值处为1，其他为0，即在进行最大池化时需要保留最大值处的位置，才能进行反向传播。</p>
-<h3 id="平均池化-1"><a href="#平均池化-1" class="headerlink" title="平均池化"></a>平均池化</h3><p>平均池化的反向传播更加简单。如果对上述的X进行<code>2 x 2</code>的平均池化，则$\frac{\partial A}{\partial X}$为：</p>
-<script type="math/tex; mode=display">
-\frac{\partial A}{\partial X} = \begin{bmatrix}
-\frac{1}{4}&\frac{1}{4}&\frac{1}{4}&\frac{1}{4}\\
-\frac{1}{4}&\frac{1}{4}&\frac{1}{4}&\frac{1}{4}\\
-\frac{1}{4}&\frac{1}{4}&\frac{1}{4}&\frac{1}{4}\\
-\frac{1}{4}&\frac{1}{4}&\frac{1}{4}&\frac{1}{4}
-\end{bmatrix}</script>
+
             </article>
             <hr>
             <div>
@@ -338,8 +260,6 @@ A = \begin{bmatrix}
                     
                       <a class="hover-with-bg" href="/tags/深度学习/">深度学习</a>
                     
-                      <a class="hover-with-bg" href="/tags/神经网络/">神经网络</a>
-                    
                   </div>
                 
               </div>
@@ -351,18 +271,12 @@ A = \begin{bmatrix}
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/07/11/Batch Normalization/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Batch Normalization</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/07/07/神经网络/">
-                        <span class="hidden-mobile">神经网络</span>
+                      <a href="/2020/07/09/卷积神经网络/">
+                        <span class="hidden-mobile">卷积神经网络</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -579,7 +493,7 @@ A = \begin{bmatrix}
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "卷积神经网络&nbsp;",
+        "Batch Normalization&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
