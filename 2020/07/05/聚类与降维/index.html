@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      725 字
+      1k 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      8
+      11
        分钟
     </span>
   
@@ -245,7 +245,7 @@ E = \sum_{i=1}^k\sum_{x \in C_i}\|x-u_i\|^2</script><p>其中$u_i$为簇$C_i$的
 <li>主成分分析最小化的是投射误差；</li>
 <li>线性回归最小化的是预测误差。</li>
 </ul>
-<p>将n维数据降到k维数据，样本集$D = \{x^{(1)},\ldots, x^{(m)}\}$，处理过程如下：</p>
+<p>将<code>n</code>维数据降到<code>k</code>维数据，样本集$D = \{x^{(1)},\ldots, x^{(m)}\}$，处理过程如下：</p>
 <ol>
 <li><p>对所有样本进行中心化：$x^{(i)} \leftarrow x^{(i)} - \frac {1}{m}\sum_{i = 1}^{m}x^{(i)}$;</p>
 </li>
@@ -256,7 +256,19 @@ E = \sum_{i=1}^k\sum_{x \in C_i}\|x-u_i\|^2</script><p>其中$u_i$为簇$C_i$的
 <li><p>选取前k个向量，获得一个<code>n x k</code>矩阵，记为$U_{reduce}$，然后获得降维的数据：$z^{(i)} = U_{reduce}^T \ast x^{(i)}$.</p>
 </li>
 </ol>
-
+<h3 id="协方差"><a href="#协方差" class="headerlink" title="协方差"></a>协方差</h3><p>协方差在某种意义上给出了两个变量线性相关性的强度以及这些变量的出度：</p>
+<script type="math/tex; mode=display">
+Cov(f(x), g(y)) = E[(f(x) - E[f(x)])\times (g(y) - E[g(y)]) ]</script><p>其中<code>E</code>表示求变量的均值。均方差的绝对值很大则意味着变量值变化很大，并且它们同时距离各自的均值很远。协方差和相关性是有联系的，如果两个变量相互独立，则协方差为0，但协方差为0，不表示一定相互独立。</p>
+<p>协方差的对角元是方差：</p>
+<script type="math/tex; mode=display">
+Cov(x_i, x_i) = Var(x_i)</script><p>在上述主成分分析中，求协方差是<strong>求不同特征之间的协方差, 而不是求不同样本之间的协方差</strong>。比如：$x^{(1)} = [x_{11},x_{21}]$, $x^{(2)} = [x_{12}, x_{22}]$, 即</p>
+<script type="math/tex; mode=display">
+D = \begin{bmatrix}
+x_{11}&x_{12}\\
+x_{21}&x_{22}
+\end{bmatrix}</script><p>那么第一维的特征$x_1 = [x_{11}, x_{12}]$, 假设其均值为$\sigma_1$；第二维的特征$x_2 = [x_{21}, x_{22}]$，假设其均值为$\sigma_2$.那么</p>
+<script type="math/tex; mode=display">
+Cov(x_1, x_2) = \frac{(x_{11} - \sigma_1)(x_{21} - \sigma_2) + (x_{12} - \sigma_1)(x_{22} - \sigma2)}{2}</script>
             </article>
             <hr>
             <div>

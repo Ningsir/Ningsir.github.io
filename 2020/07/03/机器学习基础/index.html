@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.8k 字
+      2.9k 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      31
+      32
        分钟
     </span>
   
@@ -273,7 +273,16 @@ J(y, a) = - \frac{1}{m} \sum_{i=1}^{m}y^{(i)}\log(a^{(i)})</script><p>手写数�
 <li>测试集：用来评价模型泛化能力。训练过程不能使用测试集。</li>
 </ul>
 <p><strong>注意</strong>：绝对不能使用测试集用来调优，测试集只能在训练完成后评价最终模型时使用。如果使用测试集进行调优，测试结果可能不错，可实际性能会远低于预期，这种情况称之为对测试集过拟合。</p>
-<h3 id="交叉验证（cross-validation）"><a href="#交叉验证（cross-validation）" class="headerlink" title="交叉验证（cross validation）"></a>交叉验证（cross validation）</h3><p>交叉验证的做法就是先将数据集分出一个测试集，然后将剩下的数据分为比较均等不相交的k份，然后选择其中一份验证，另外的k-1份进行训练，最后求得error的平均值作为最终的评价。</p>
+<h3 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h3><p>数据量较小（传统机器学习）</p>
+<ul>
+<li>没有验证集，训练集：测试集=7：3</li>
+<li>有验证集，训练集：验证集：测试集=6：2：2</li>
+</ul>
+<p>数据量较大，比如100万条数据：</p>
+<ul>
+<li>训练集：验证集：测试集 = 98: 1: 1<h3 id="交叉验证（cross-validation）"><a href="#交叉验证（cross-validation）" class="headerlink" title="交叉验证（cross validation）"></a>交叉验证（cross validation）</h3></li>
+</ul>
+<p>交叉验证的做法就是先将数据集分出一个测试集，然后将剩下的数据分为比较均等不相交的k份，然后选择其中一份验证，另外的k-1份进行训练，最后求得error的平均值作为最终的评价。</p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200703174015.png" srcset="/img/loading.gif" alt=""></p>
 <h1 id="5-过拟合与欠拟合"><a href="#5-过拟合与欠拟合" class="headerlink" title="5. 过拟合与欠拟合"></a>5. 过拟合与欠拟合</h1><p><strong>过拟合（Over-Fitting）</strong></p>
 <p>在训练集上误差小，但在测试集上误差大，我们将这种情况称为高方差（high variance）</p>

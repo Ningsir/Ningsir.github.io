@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.6k 字
+      1.9k 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      23
+      26
        分钟
     </span>
   
@@ -248,6 +248,13 @@ kernel = \begin{bmatrix}1&0&1\\
 <p><strong>注意</strong>：按照数学中的卷积运算，需要将卷积核进行翻转操作，但在深度学习中，一般不使用翻转操作。</p>
 <h3 id="padding（填充）"><a href="#padding（填充）" class="headerlink" title="padding（填充）"></a>padding（填充）</h3><p>卷积操作时，如果不填充，则每次运算完成后，图像将会缩小，而且图像边缘的大部分信息都丢失了。填充p个像素点后，图像大小变为<code>n+2p</code>。一般用0填充。</p>
 <h3 id="strides（步长）"><a href="#strides（步长）" class="headerlink" title="strides（步长）"></a>strides（步长）</h3><p>步长是指平滑移动的距离。</p>
+<h3 id="二维卷积与三维卷积"><a href="#二维卷积与三维卷积" class="headerlink" title="二维卷积与三维卷积"></a>二维卷积与三维卷积</h3><p><strong>在讨论卷积核的维度时，并不考虑channel维</strong>。<br>二维卷积核的大小实际是<code>(channel, k_h, k_w)</code>, 三维卷积核的大小是<code>(channel, k_d, k_h, k_w)</code>, k_d就是多出来的第三维，根据具体应用，在视屏中就是时间维，在CT图像中就是层数维。</p>
+<ul>
+<li>在二维卷积中，卷积核滑动维度是2维的；</li>
+<li>在三维卷积中，卷积核滑动维度是3维的。</li>
+</ul>
+<h4 id="二维卷积"><a href="#二维卷积" class="headerlink" title="二维卷积"></a>二维卷积</h4><p>例如，输入图像大小为<code>(3, height, weight)</code>，其中channel为3, 卷积核尺寸为<code>(3, k_h, k_w)</code>, channel与输入图像一致. 进行卷积操作时，卷积核只是在<code>(height, weight)</code>这两维上进行滑窗操作。</p>
+<h4 id="三维卷积"><a href="#三维卷积" class="headerlink" title="三维卷积"></a>三维卷积</h4><p>与2D卷积不同之处在于，输入图像多了一个 <code>depth</code> 维度，故输入大小为<code>(3, depth, height, width)</code>，卷积核也多了一个k_d维度，因此卷积核在输入3D图像的空间维度（height和width维）和depth维度上均进行滑窗操作.</p>
 <h2 id="池化"><a href="#池化" class="headerlink" title="池化"></a>池化</h2><p>池化层就是下采用，降低数据的维度，提高计算速度，同时提高提取特征的鲁棒性。池化的运算过程：</p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/0_JjtDg7FAhjQOrld-.gif" srcset="/img/loading.gif" alt=""></p>
 <h3 id="最大池化"><a href="#最大池化" class="headerlink" title="最大池化"></a>最大池化</h3><p>提取过滤器范围内的最大值。</p>
