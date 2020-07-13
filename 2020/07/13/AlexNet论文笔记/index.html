@@ -19,7 +19,7 @@
   <meta name="description" content="华中科技大学17级本科生">
   <meta name="author" content="XIN">
   <meta name="keywords" content="">
-  <title>3D-UNet笔记 - XIN&#39;S BLOG</title>
+  <title>AlexNet论文笔记 - XIN&#39;S BLOG</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -150,8 +150,8 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-06-03 14:10">
-      2020年6月3日 下午
+    <time datetime="2020-07-13 14:06">
+      2020年7月13日 下午
     </time>
   </div>
 
@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      504 字
+      752 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5
+      8
        分钟
     </span>
   
@@ -210,19 +210,28 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <p><a href="https://arxiv.org/pdf/1606.06650.pdf" target="_blank" rel="noopener">论文地址</a></p>
-<h1 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h1><p>医学图像通常是由多个2D切片构成一整张图，对这样的数据进行标注比较困难,只能一张一张地标注2D图像，并将2D图像送进模型进行训练，但相邻的切片几乎一样，因此这样的做法效率很低。<br>论文的作者提出了3D U-Net模型，该模型主要有两种应用：</p>
+              <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>AlexNet是一个大型的深层神经网络，能够对高分辨率(high resolution)的图像进行分类。AlexNet是2012年论文<a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks" target="_blank" rel="noopener">ImageNet Classification with Deep ConvolutionalNeural Networks</a>中提出的一种卷积神经网络结构，并在12年的ImageNet分类赛上以大幅优势领先第二名，从而使得深度卷积神经网络CNN在图像分类上的应用掀起一波热潮，AlexNet有许多开创性举措，比如使用ReLU激活函数加速训练，采用了Dropout防止过拟合，使用双GPU并行训练加快训练速度。</p>
+<h1 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h1><p>AlexNet由5个卷积层 + 3个全连接层构成。</p>
+<h2 id="非线性ReLU函数"><a href="#非线性ReLU函数" class="headerlink" title="非线性ReLU函数"></a>非线性ReLU函数</h2><p>使用ReLU激活函数比sigmoid或者tanh效果更好，因为sigmoid和tanh在深层神经网络的训练中容易造成梯度饱和，从而降低收敛的速度，使用ReLU函数训练速度更快。</p>
+<h2 id="Overlapping-Pooling-重叠池化"><a href="#Overlapping-Pooling-重叠池化" class="headerlink" title="Overlapping Pooling(重叠池化)"></a>Overlapping Pooling(重叠池化)</h2><p>假设池化层的 kernel_size 为 z, 步长为 s。如果<code>z = s</code>, 则池化不会发生重合；如果<code>z &gt; s</code>，则会出现重合。AlexNet使用 z = 3, s = 2的最大池化。训练模型发现使用重叠池化更难发生过拟合现象。</p>
+<h2 id="Local-Response-Normalization-局部响应归一化"><a href="#Local-Response-Normalization-局部响应归一化" class="headerlink" title="Local Response Normalization(局部响应归一化)"></a>Local Response Normalization(局部响应归一化)</h2><p>该方法未得到广泛应用，现在多用Batch Normalization进行归一化操作。</p>
+<h2 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h2><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200713140740.png" srcset="/img/loading.gif" alt=""></p>
+<p>输入<code>224 x 224 x 3</code>的三通道图像</p>
 <ul>
-<li>semi-automated setup:  可以对只进行了稀疏标注的数据集进行训练；</li>
-<li>fully-automated setup:  假设稀疏标注集存在，对该数据集进行训练。</li>
+<li>第一个卷积层：96个大小为<code>11 x 11 x 3</code>的卷积核，卷积步长 stride = 4，输出<code>55 x 55 x 96</code>大小的数据，然后经过最大池化，输出大小为<code>27 x 27 x 96</code>；</li>
+<li>第二个卷积层：256个大小为<code>5 x 5 x 96</code>的卷积核, same卷积，输出为<code>27 x 27 x 256</code>, 然后经过最大池化，输出为<code>13 x 13 x 256</code>;</li>
+<li>第三个卷积层：384个大小为<code>3 x 3 x 256</code>的卷积核，same卷积，输出为<code>13 x 13 x 384</code>;</li>
+<li>第四个卷积层：384个大小为<code>3 x 3 x 384</code>的卷积核，same卷积，输出为<code>13 x 13 x 384</code>;</li>
+<li>第五个卷积层：256个大小为<code>3 x 3 x 384</code>的卷积核，same卷积，输出为<code>13 x 13 x 256</code>, 然后经过最大池化，输出为<code>6 x 6 x 256</code>，将数据展开传到全连接层;</li>
+<li>三个全连接层：最后三个全连接层的神经元数量分别为4096、4096、1000.</li>
 </ul>
-<a id="more"></a>
-<h1 id="2-网络结构"><a href="#2-网络结构" class="headerlink" title="2. 网络结构"></a>2. 网络结构</h1><p><img src="http://image.ningxin.site/20200603160416.png" srcset="/img/loading.gif" alt="网络结构"><br>该模型分为<code>analysis path</code> 和 <code>synthesis path</code>两个部分，主要结构和<code>U-Net</code>一样。</p>
-<p><code>analysis path</code> 主要包括以下操作：该部分有4层，每一层都包含两个<code>3 x 3 x 3</code>的卷积，每次卷积之后进行<code>batch normalizetion</code>(BN) 操作和<code>ReLu</code>操作，然后进行strides为2的<code>2 x 2 x 2</code>的最大池化操作。</p>
-<p><code>synthesis path</code> 主要包括以下操作：该部分有3层，每一层首先使用一个strides为2、卷积核为<code>2 x 2 x 2</code>的反卷积操作，然后与<code>analysis path</code>中对应的<code>fature map</code>进行cat操作，再然后是两个<code>3 x 3 x 3</code>的卷积操作，每次卷积之后进行<code>batch normalizetion</code>(BN) 操作和<code>ReLu</code>操作，然后进行strides为2的<code>2 x 2 x 2</code>的最大池化操作。</p>
-<p>在最后一层输出时使用<code>1 x 1 x 1</code>的卷积来减少通道数。</p>
-<p>论文中提到的一个亮点就是，3D U-Net使用了<code>weighted softmax loss function</code>将未标记的像素点设置为0以至于可以让网络可以更多地仅仅学习标注到的像素点，从而达到普适性地特点。</p>
-<h1 id="3-训练"><a href="#3-训练" class="headerlink" title="3. 训练"></a>3. 训练</h1><p>3D U-Net采用了数据增强（data augmentation），主要是rotation、scaling和将图像设置为gray，于此同时在训练数据上和真实标注的数据上运用平滑的密集变形场(smooth dense deformation field)。</p>
+<h1 id="降低过拟合"><a href="#降低过拟合" class="headerlink" title="降低过拟合"></a>降低过拟合</h1><h2 id="数据增强"><a href="#数据增强" class="headerlink" title="数据增强"></a>数据增强</h2><ol>
+<li><p>图像平移和水平反射。通过从256×256幅图像中提取随机224×224块图像(及其水平反射)，并在这些提取的图像上训练我们的网络。这将我们的训练集的大小增加了2048倍</p>
+</li>
+<li><p>改变了训练图像中RGB通道的强度。在整个imagenet训练集中对RGB像素值集执行PCA操作。</p>
+</li>
+</ol>
+<h2 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h2><p>采用<code>keep_prob = 0.5</code>的Dropout正则化。这种技术减少神经元之间的相互适应，因为神经元不能依赖其他神经元的存在。Dropout使迭代次数加倍。</p>
 
             </article>
             <hr>
@@ -232,7 +241,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/论文阅读/">论文阅读</a>
+                      <a class="hover-with-bg" href="/categories/深度学习/">深度学习</a>
                     
                   </div>
                 
@@ -255,9 +264,9 @@
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/06/07/虚拟机搭建Hadoop过程记录/">
+                      <a href="/2020/07/13/深度学习图像通道channel/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">虚拟机搭建Hadoop过程记录</span>
+                        <span class="hidden-mobile">深度学习图像通道channel</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -265,8 +274,8 @@
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/05/24/V-Net笔记/">
-                        <span class="hidden-mobile">V-Net笔记</span>
+                      <a href="/2020/07/11/Batch Normalization/">
+                        <span class="hidden-mobile">Batch Normalization</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -483,7 +492,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "3D-UNet笔记&nbsp;",
+        "AlexNet论文笔记&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

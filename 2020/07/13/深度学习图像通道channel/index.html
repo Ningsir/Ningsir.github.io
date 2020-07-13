@@ -19,7 +19,7 @@
   <meta name="description" content="华中科技大学17级本科生">
   <meta name="author" content="XIN">
   <meta name="keywords" content="">
-  <title>3D-UNet笔记 - XIN&#39;S BLOG</title>
+  <title>深度学习图像通道channel - XIN&#39;S BLOG</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -150,8 +150,8 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-06-03 14:10">
-      2020年6月3日 下午
+    <time datetime="2020-07-13 16:41">
+      2020年7月13日 下午
     </time>
   </div>
 
@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      504 字
+      480 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5
+      7
        分钟
     </span>
   
@@ -210,19 +210,58 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <p><a href="https://arxiv.org/pdf/1606.06650.pdf" target="_blank" rel="noopener">论文地址</a></p>
-<h1 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h1><p>医学图像通常是由多个2D切片构成一整张图，对这样的数据进行标注比较困难,只能一张一张地标注2D图像，并将2D图像送进模型进行训练，但相邻的切片几乎一样，因此这样的做法效率很低。<br>论文的作者提出了3D U-Net模型，该模型主要有两种应用：</p>
+              <p>对于一般的彩色图像，有RGB三个颜色通道。使用三位数组表示彩色图像数据时，默认情况下，通道维度为最后一个维度，但出于性能调整的原因，也可能是第一个维度，这两种表示方法分别叫做<code>Channels-Last</code>和<code>Channels-First</code>。比如对于一个<code>64 x 64 x 3</code>的图像，其通道为3，保存在最后一个维度，调整到第一个维度则变成<code>3 x 64 x 64</code>。</p>
 <ul>
-<li>semi-automated setup:  可以对只进行了稀疏标注的数据集进行训练；</li>
-<li>fully-automated setup:  假设稀疏标注集存在，对该数据集进行训练。</li>
+<li><strong>Channels First</strong>: 对于图像数据而言，第一个通道为颜色通道；</li>
+<li><strong>Channels Last</strong>：最后一个通道为颜色通道。</li>
 </ul>
-<a id="more"></a>
-<h1 id="2-网络结构"><a href="#2-网络结构" class="headerlink" title="2. 网络结构"></a>2. 网络结构</h1><p><img src="http://image.ningxin.site/20200603160416.png" srcset="/img/loading.gif" alt="网络结构"><br>该模型分为<code>analysis path</code> 和 <code>synthesis path</code>两个部分，主要结构和<code>U-Net</code>一样。</p>
-<p><code>analysis path</code> 主要包括以下操作：该部分有4层，每一层都包含两个<code>3 x 3 x 3</code>的卷积，每次卷积之后进行<code>batch normalizetion</code>(BN) 操作和<code>ReLu</code>操作，然后进行strides为2的<code>2 x 2 x 2</code>的最大池化操作。</p>
-<p><code>synthesis path</code> 主要包括以下操作：该部分有3层，每一层首先使用一个strides为2、卷积核为<code>2 x 2 x 2</code>的反卷积操作，然后与<code>analysis path</code>中对应的<code>fature map</code>进行cat操作，再然后是两个<code>3 x 3 x 3</code>的卷积操作，每次卷积之后进行<code>batch normalizetion</code>(BN) 操作和<code>ReLu</code>操作，然后进行strides为2的<code>2 x 2 x 2</code>的最大池化操作。</p>
-<p>在最后一层输出时使用<code>1 x 1 x 1</code>的卷积来减少通道数。</p>
-<p>论文中提到的一个亮点就是，3D U-Net使用了<code>weighted softmax loss function</code>将未标记的像素点设置为0以至于可以让网络可以更多地仅仅学习标注到的像素点，从而达到普适性地特点。</p>
-<h1 id="3-训练"><a href="#3-训练" class="headerlink" title="3. 训练"></a>3. 训练</h1><p>3D U-Net采用了数据增强（data augmentation），主要是rotation、scaling和将图像设置为gray，于此同时在训练数据上和真实标注的数据上运用平滑的密集变形场(smooth dense deformation field)。</p>
+<h1 id="如何改变通道顺序"><a href="#如何改变通道顺序" class="headerlink" title="如何改变通道顺序"></a>如何改变通道顺序</h1><p>使用numpy的<code>moveaxis</code>函数, source轴移动到destination轴，其他轴顺序不变：</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">moveaxis</span><span class="hljs-params">(a, source, destination)</span>:</span>
+    <span class="hljs-string">"""
+    Move axes of an array to new positions.
+    Other axes remain in their original order.
+    Examples
+    --------
+
+    &gt;&gt;&gt; x = np.zeros((3, 4, 5))
+    &gt;&gt;&gt; np.moveaxis(x, 0, -1).shape
+    (4, 5, 3)
+    &gt;&gt;&gt; np.moveaxis(x, -1, 0).shape
+    (5, 3, 4)
+
+    These all achieve the same result:
+
+    &gt;&gt;&gt; np.transpose(x).shape
+    (5, 4, 3)
+    &gt;&gt;&gt; np.swapaxes(x, 0, -1).shape
+    (5, 4, 3)
+    &gt;&gt;&gt; np.moveaxis(x, [0, 1], [-1, -2]).shape
+    (5, 4, 3)
+    &gt;&gt;&gt; np.moveaxis(x, [0, 1, 2], [-1, -2, -3]).shape
+    (5, 4, 3)
+    """</span></code></pre></div>
+<p>比如将<code>64 x 64 x 3</code>的图像转换为<code>3 x 64 x 64</code>:</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+x = np.random.randn(<span class="hljs-number">64</span>, <span class="hljs-number">64</span>, <span class="hljs-number">3</span>)
+x = np.moveaxis(x, <span class="hljs-number">-1</span>, <span class="hljs-number">0</span>)</code></pre></div>
+<h1 id="各框架下通道顺序"><a href="#各框架下通道顺序" class="headerlink" title="各框架下通道顺序"></a>各框架下通道顺序</h1><ul>
+<li>Pytorch：<code>(N, C, H, W)</code>, 即Channels First；</li>
+<li>Tensorflow: <code>(N, H, W, C)</code>，即Channels Last，也支持<code>(N, C, H, W)</code></li>
+</ul>
+<p>其中：</p>
+<blockquote>
+<p>N: 样本数量；C: channel；H: 图像高度；W: 图像宽度</p>
+</blockquote>
+<h2 id="Pytorch"><a href="#Pytorch" class="headerlink" title="Pytorch"></a>Pytorch</h2><p>在使用卷积时，需要填写<code>channel</code>参数。Pytorch的Conv2d函数如下：</p>
+<div class="hljs"><pre><code class="hljs python">torch.nn.Conv2d(in_channels, out_channels, kernel_size, stride=<span class="hljs-number">1</span>, padding=<span class="hljs-number">0</span>, dilation=<span class="hljs-number">1</span>, groups=<span class="hljs-number">1</span>, bias=<span class="hljs-keyword">True</span>, padding_mode=<span class="hljs-string">'zeros'</span>)</code></pre></div>
+<p>Conv2d函数中关于channel有两个参数：in_channels表示输入图像通道数，out_channels表示输出通道数，其实就是表示<strong>卷积核的数量</strong>。</p>
+<blockquote>
+<ul>
+<li><strong>in_channels</strong> (<a href="https://docs.python.org/3/library/functions.html#int" target="_blank" rel="noopener"><em>int</em></a>) – Number of channels in the input image</li>
+<li><strong>out_channels</strong> (<a href="https://docs.python.org/3/library/functions.html#int" target="_blank" rel="noopener"><em>int</em></a>) – Number of channels produced by the convolution</li>
+</ul>
+</blockquote>
 
             </article>
             <hr>
@@ -232,7 +271,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/论文阅读/">论文阅读</a>
+                      <a class="hover-with-bg" href="/categories/深度学习/">深度学习</a>
                     
                   </div>
                 
@@ -241,8 +280,6 @@
                     <i class="iconfont icon-tags"></i>
                     
                       <a class="hover-with-bg" href="/tags/深度学习/">深度学习</a>
-                    
-                      <a class="hover-with-bg" href="/tags/论文阅读/">论文阅读</a>
                     
                   </div>
                 
@@ -255,18 +292,12 @@
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/06/07/虚拟机搭建Hadoop过程记录/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">虚拟机搭建Hadoop过程记录</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/05/24/V-Net笔记/">
-                        <span class="hidden-mobile">V-Net笔记</span>
+                      <a href="/2020/07/13/AlexNet论文笔记/">
+                        <span class="hidden-mobile">AlexNet论文笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -483,7 +514,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "3D-UNet笔记&nbsp;",
+        "深度学习图像通道channel&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

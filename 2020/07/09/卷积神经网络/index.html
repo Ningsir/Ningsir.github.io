@@ -248,7 +248,7 @@ kernel = \begin{bmatrix}1&0&1\\
 <p><strong>注意</strong>：按照数学中的卷积运算，需要将卷积核进行翻转操作，但在深度学习中，一般不使用翻转操作。</p>
 <h3 id="padding（填充）"><a href="#padding（填充）" class="headerlink" title="padding（填充）"></a>padding（填充）</h3><p>卷积操作时，如果不填充，则每次运算完成后，图像将会缩小，而且图像边缘的大部分信息都丢失了。填充p个像素点后，图像大小变为<code>n+2p</code>。一般用0填充。</p>
 <h3 id="strides（步长）"><a href="#strides（步长）" class="headerlink" title="strides（步长）"></a>strides（步长）</h3><p>步长是指平滑移动的距离。</p>
-<h3 id="二维卷积与三维卷积"><a href="#二维卷积与三维卷积" class="headerlink" title="二维卷积与三维卷积"></a>二维卷积与三维卷积</h3><p><strong>在讨论卷积核的维度时，并不考虑channel维</strong>。<br>二维卷积核的大小实际是<code>(channel, k_h, k_w)</code>, 三维卷积核的大小是<code>(channel, k_d, k_h, k_w)</code>, k_d就是多出来的第三维，根据具体应用，在视屏中就是时间维，在CT图像中就是层数维。</p>
+<h3 id="二维卷积与三维卷积"><a href="#二维卷积与三维卷积" class="headerlink" title="二维卷积与三维卷积"></a>二维卷积与三维卷积</h3><p><strong>在讨论卷积核的维度时，并不考虑channel维</strong>。<br>二维卷积核的大小实际是<code>(channel, k_h, k_w)</code>, 三维卷积核的大小是<code>(channel, k_d, k_h, k_w)</code>, k_d就是多出来的第三维，根据具体应用，在视频中就是时间维，在CT图像中就是层数维。</p>
 <ul>
 <li>在二维卷积中，卷积核滑动维度是2维的；</li>
 <li>在三维卷积中，卷积核滑动维度是3维的。</li>
