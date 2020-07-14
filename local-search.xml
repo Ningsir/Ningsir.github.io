@@ -4,11 +4,11 @@
   
   
   <entry>
-    <title>VGG论文笔记：</title>
+    <title>VGG论文笔记</title>
     <link href="/2020/07/14/VGG%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"/>
     <url>/2020/07/14/VGG%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</url>
     
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>论文主要针对卷积神经网络的深度对大规模图像集识别精度的影响，主要贡献是使用很小的卷积核(<code>3×3</code>)构建各种深度的卷积神经网络结构。</p><h1 id="VGG网络结构"><a href="#VGG网络结构" class="headerlink" title="VGG网络结构"></a>VGG网络结构</h1><p>VGG的输入是一个固定大小为<code>224 x 224 x 3</code> 的RGB图像，唯一的图像预处理是使用了均值减法。网络中大部分使用的是<code>3 x 3</code>的卷积核，其中 stride = 1， padding = 1， 即进行same卷积，只有在网络<code>C</code>中使用了<code>1 x 1</code>卷积。网络中有5个最大池化层，池化层放在几个卷积层之后，其中池化层的大小为<code>2 x 2</code>, stride = 2。卷积层之后是3个全连接层，与AlexNet网络一样，神经元的数量分别是4096、4096、1000, 其中前两个全连接层使用<code>dropout</code>正则化。最后一层是<code>softmax</code>层。</p><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>设计了如下<code>A-E</code>6个网络，网络深度从11增加到19，channel数从64增加到512，channel要么不变，要么加倍。</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200714210701.png" srcset="/img/loading.gif" alt=""></p><h2 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h2><p>AlexNet第一层使用卷积核大小为<code>7 x 7</code>， 步长为4的卷积，ZFNet第一层使用卷积核大小为<code>5 x 5</code>, 步长为2的卷积，而我们在整个网络中都是使用<code>3 x 3</code>的卷积。不难发现：2个<code>3 x 3</code>的卷积层的感受野为<code>5 x 5</code>; 3个<code>3 x 3</code>的卷积层的感受野是<code>7 x 7</code>。</p><p><strong>1. 为什么使用3个<code>3 x 3</code>的卷积层代替单个<code>7 x 7</code>的卷积层？</strong></p><ul><li>3个卷积层之后都有一个<code>ReLU</code>激活函数，增加了非线性程度，使决策函数更具可分性；</li><li>减少了参数数量。</li></ul><p><strong>2. 为什么使用<code>1 x 1</code>卷积？</strong></p><ul><li>增加决策函数的非线性程度但不影响感受野。</li></ul><h1 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h1><p>参数优化使用小批量梯度下降法，momentum = 0.9， batch_size = 256；使用$L_2$正则化， 正则化参数为5e-4；学习率初始化为0.01, 当验证集准确率不变时，学习率除以10。</p><h2 id="初始化参数"><a href="#初始化参数" class="headerlink" title="初始化参数"></a>初始化参数</h2><ol><li><p>随机初始化：均值为0，方差为1e-2的正态分布， biases初始为0.</p></li><li><p>先对Net-A进行训练，然后对后面的网络如Net-B,Net-C,Net-D训练时，将Net-A的权重赋给Net-B,Net-C,Net-D,其他不同的层，采用1中的随机初始化方式。</p></li></ol><h2 id="数据增强"><a href="#数据增强" class="headerlink" title="数据增强"></a>数据增强</h2><p>先对图像进行缩放(rescale)，然后进行随机水平翻转、随机RGB color shift，最后进行随机剪裁获得<code>224 x 224</code>的图像。</p><h3 id="训练集图像尺寸"><a href="#训练集图像尺寸" class="headerlink" title="训练集图像尺寸"></a>训练集图像尺寸</h3><p>假设图像缩放的尺寸为 S (training scale)，那么$ S \ge 224$。有两种设置S的方法：</p><ol><li><code>single-scale training</code>: 使用固定的S ；</li><li><code>multi-scale training</code>: 在 [Smin, Smax] 中随机选择一个S （实验中Smin = 256, Smax = 512）.</li></ol><h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>测试图片缩放的尺寸为Q（test scale）。测试时，将第一个全连接层转换为<code>7 x 7</code>的卷积，后面两个全连接层转换为<code>1 x 1</code>的卷积。这样进行测试时，直接将<code>Q x Q</code>的图片数据输入即可，而不需要对测试集进行剪裁。</p><h2 id="单尺度评估"><a href="#单尺度评估" class="headerlink" title="单尺度评估"></a>单尺度评估</h2><p>测试图像固定尺度。</p><p>$Q = S$ 或者 $Q = 0.5(S_{min} + S_{max})$</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200714225023.png" srcset="/img/loading.gif" alt=""></p><h2 id="多尺度评估"><a href="#多尺度评估" class="headerlink" title="多尺度评估"></a>多尺度评估</h2><p>测试图像的尺度抖动对性能的影响。</p><p>$Q = \{S - 32, S, S + 32\}$ 或者 $Q = \{S_{min}, 0.5(S_{min} + S_{max}), S_{max}\}$</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200714225126.png" srcset="/img/loading.gif" alt=""></p>]]></content>
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>论文主要针对卷积神经网络的深度对大规模图像集识别精度的影响，主要贡献是使用很小的卷积核(<code>3×3</code>)构建各种深度的卷积神经网络结构。</p><h1 id="VGG网络结构"><a href="#VGG网络结构" class="headerlink" title="VGG网络结构"></a>VGG网络结构</h1><p>VGG的输入是一个固定大小为<code>224 x 224 x 3</code> 的RGB图像，唯一的图像预处理是使用了均值减法。网络中大部分使用的是<code>3 x 3</code>的卷积核，其中 stride = 1， padding = 1， 即进行same卷积，只有在网络<code>C</code>中使用了<code>1 x 1</code>卷积。网络中有5个最大池化层，池化层放在几个卷积层之后，其中池化层的大小为<code>2 x 2</code>, stride = 2。卷积层之后是3个全连接层，与AlexNet网络一样，神经元的数量分别是4096、4096、1000, 其中前两个全连接层使用<code>dropout</code>正则化。最后一层是<code>softmax</code>层。</p><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>设计了如下<code>A-E</code>6个网络，网络深度从11增加到19，channel数从64增加到512，channel要么不变，要么加倍。</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200714210701.png" srcset="/img/loading.gif" alt=""></p><h2 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h2><p>AlexNet第一层使用卷积核大小为<code>7 x 7</code>， 步长为4的卷积，ZFNet第一层使用卷积核大小为<code>5 x 5</code>, 步长为2的卷积，而我们在整个网络中都是使用<code>3 x 3</code>的卷积。不难发现：2个<code>3 x 3</code>的卷积层的感受野为<code>5 x 5</code>; 3个<code>3 x 3</code>的卷积层的感受野是<code>7 x 7</code>。</p><p><strong>1. 为什么使用3个<code>3 x 3</code>的卷积层代替单个<code>7 x 7</code>的卷积层？</strong></p><ul><li>3个卷积层之后都有一个<code>ReLU</code>激活函数，增加了非线性程度，使决策函数更具可分性；</li><li>减少了参数数量。</li></ul><p><strong>2. 为什么使用<code>1 x 1</code>卷积？</strong></p><ul><li>增加决策函数的非线性程度但不影响感受野。</li></ul><h1 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h1><p>参数优化使用小批量梯度下降法，momentum = 0.9， batch_size = 256；使用$L_2$正则化， 正则化参数为5e-4；学习率初始化为0.01, 当验证集准确率不变时，学习率除以10。</p><h2 id="初始化参数"><a href="#初始化参数" class="headerlink" title="初始化参数"></a>初始化参数</h2><ol><li><p>随机初始化：均值为0，方差为1e-2的正态分布， biases初始为0.</p></li><li><p>先对Net-A进行训练，然后对后面的网络如Net-B,Net-C,Net-D训练时，将Net-A的权重赋给Net-B,Net-C,Net-D,其他不同的层，采用1中的随机初始化方式。</p></li></ol><h2 id="数据增强"><a href="#数据增强" class="headerlink" title="数据增强"></a>数据增强</h2><p>先对图像进行缩放(rescale)，然后进行随机水平翻转、随机RGB color shift，最后进行随机剪裁获得<code>224 x 224</code>的图像。</p><h3 id="训练集图像尺寸"><a href="#训练集图像尺寸" class="headerlink" title="训练集图像尺寸"></a>训练集图像尺寸</h3><p>假设图像缩放的尺寸为 S (training scale)，那么$ S \ge 224$。有两种设置S的方法：</p><ol><li><code>single-scale training</code>: 使用固定的S ；</li><li><code>multi-scale training</code>: 在 [Smin, Smax] 中随机选择一个S （实验中Smin = 256, Smax = 512），也能被视作<code>scale jittering</code>。</li></ol><h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>测试图片缩放的尺寸为Q（test scale）。<strong>测试时，将第一个全连接层转换为<code>7 x 7</code>的卷积，后面两个全连接层转换为<code>1 x 1</code>的卷积</strong>。这样进行测试时，直接将<code>Q x Q</code>的图片数据输入即可，而不需要对测试集进行剪裁。</p><h2 id="单尺度评估"><a href="#单尺度评估" class="headerlink" title="单尺度评估"></a>单尺度评估</h2><p><strong>测试图像固定尺度。</strong></p><p>$Q = S$ 或者 $Q = 0.5(S_{min} + S_{max})$</p><p>单尺度评估结果如下：</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200714225023.png" srcset="/img/loading.gif" alt=""></p><p>其中<code>top-5 error</code>: 预测5次，如果5次预测都错才算预测错误，以此来计算错误率。</p><ul><li>随着网络深度的加深，错误率降低，当网络层数达到19时，错误率达到饱和。</li><li>训练图像尺度抖动优于使用固定边S.</li></ul><h2 id="多尺度评估"><a href="#多尺度评估" class="headerlink" title="多尺度评估"></a>多尺度评估</h2><p><strong>测试图像的尺度抖动对性能的影响。</strong></p><p>$Q = \{S - 32, S, S + 32\}$ 或者 $Q = \{S_{min}, 0.5(S_{min} + S_{max}), S_{max}\}$</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200714225126.png" srcset="/img/loading.gif" alt=""></p><ul><li>训练图像尺度抖动优于使用固定边S；</li><li>测试阶段使用尺度抖动（scale jittering）能提高性能（与使用单尺度相比）。</li></ul>]]></content>
     
     
     <categories>
@@ -20,9 +20,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -72,9 +72,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -357,9 +357,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -384,9 +384,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -411,9 +411,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
