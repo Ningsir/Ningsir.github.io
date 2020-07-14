@@ -19,7 +19,7 @@
   <meta name="description" content="华中科技大学17级本科生">
   <meta name="author" content="XIN">
   <meta name="keywords" content="">
-  <title>V-Net笔记 - XIN&#39;S BLOG</title>
+  <title>VGG论文笔记： - XIN&#39;S BLOG</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -150,8 +150,8 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-05-24 17:22">
-      2020年5月24日 下午
+    <time datetime="2020-07-14 20:58">
+      2020年7月14日 晚上
     </time>
   </div>
 
@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      862 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      14
+      10
        分钟
     </span>
   
@@ -210,70 +210,40 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h1 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h1><p>V-Net用于3D图像分割（基于3D卷积），引入了新的目标函数（<code>Dice coefficient</code>）,采用<code>random non-linear transformation</code>和<code>histogram matching</code>的数据扩充方法。</p>
-<h1 id="2-网络结构"><a href="#2-网络结构" class="headerlink" title="2. 网络结构"></a>2. 网络结构</h1><p><img src="https://gitee.com/huster_ning/image/raw/master/image/Snipaste_2020-05-27_21-15-06.jpg" srcset="/img/loading.gif" alt="Snipaste_2020-05-27_21-15-06"></p>
-<a id="more"></a>
-<p>网络的左侧部分由压缩路径组成，而右侧部分解压缩直到达到其原始大小。</p>
-<h2 id="2-1-压缩路径"><a href="#2-1-压缩路径" class="headerlink" title="2.1 压缩路径"></a>2.1 压缩路径</h2><p>压缩路径中每个阶段中执行几次<code>5 x 5 x 5</code>大小的卷积操作，卷积之后使用<code>PReLU</code>函数进行非线性化操作，然后执行<code>element-wise sum</code>操作，再执行步幅为2的<code>2 x 2 x 2</code>的卷积（该步骤是使用卷积代替池化操作），将分辨率变为原来的一半。每个阶段执行完后，通道数变为原来的两倍。</p>
+              <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>论文主要针对卷积神经网络的深度对大规模图像集识别精度的影响，主要贡献是使用很小的卷积核(<code>3×3</code>)构建各种深度的卷积神经网络结构。</p>
+<h1 id="VGG网络结构"><a href="#VGG网络结构" class="headerlink" title="VGG网络结构"></a>VGG网络结构</h1><p>VGG的输入是一个固定大小为<code>224 x 224 x 3</code> 的RGB图像，唯一的图像预处理是使用了均值减法。网络中大部分使用的是<code>3 x 3</code>的卷积核，其中 stride = 1， padding = 1， 即进行same卷积，只有在网络<code>C</code>中使用了<code>1 x 1</code>卷积。网络中有5个最大池化层，池化层放在几个卷积层之后，其中池化层的大小为<code>2 x 2</code>, stride = 2。卷积层之后是3个全连接层，与AlexNet网络一样，神经元的数量分别是4096、4096、1000, 其中前两个全连接层使用<code>dropout</code>正则化。最后一层是<code>softmax</code>层。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>设计了如下<code>A-E</code>6个网络，网络深度从11增加到19，channel数从64增加到512，channel要么不变，要么加倍。</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200714210701.png" srcset="/img/loading.gif" alt=""></p>
+<h2 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h2><p>AlexNet第一层使用卷积核大小为<code>7 x 7</code>， 步长为4的卷积，ZFNet第一层使用卷积核大小为<code>5 x 5</code>, 步长为2的卷积，而我们在整个网络中都是使用<code>3 x 3</code>的卷积。不难发现：2个<code>3 x 3</code>的卷积层的感受野为<code>5 x 5</code>; 3个<code>3 x 3</code>的卷积层的感受野是<code>7 x 7</code>。</p>
+<p><strong>1. 为什么使用3个<code>3 x 3</code>的卷积层代替单个<code>7 x 7</code>的卷积层？</strong></p>
 <ul>
-<li>卷积代替池化：能够有更小的内存占用，网络性能更好</li>
-<li>element-wise sum操作：如下图所示，首先16个x执行cat操作得到x16, 得到的x16的维度与out一致，<code>element-wise sum</code>操作就是将x16和out的对应像素点执行相加操作。</li>
+<li>3个卷积层之后都有一个<code>ReLU</code>激活函数，增加了非线性程度，使决策函数更具可分性；</li>
+<li>减少了参数数量。</li>
 </ul>
-<div class="hljs"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span><span class="hljs-params">(self, x)</span>:</span>
-    <span class="hljs-comment"># do we want a PRELU here as well?</span>
-    out = self.bn1(self.conv1(x))
-    <span class="hljs-comment"># split input in to 16 channels</span>
-    <span class="hljs-comment"># 增加通道数与out一致</span>
-    x16 = torch.cat((x, x, x, x, x, x, x, x,
-                     x, x, x, x, x, x, x, x), <span class="hljs-number">0</span>)
-    <span class="hljs-comment"># 执行element-wise sum操作之后在执行relu1</span>
-    out = self.relu1(torch.add(out, x16))
-    <span class="hljs-keyword">return</span> out</code></pre></div>
-<h2 id="2-2-解压缩路径"><a href="#2-2-解压缩路径" class="headerlink" title="2.2 解压缩路径"></a>2.2 解压缩路径</h2><p>在解压缩路径中，与<code>U-Net</code>类似，将网络左侧部分的早期阶段提取的特征转发到右侧部分，即网络结构图中的<code>Fine-grained features forwarding</code>操作。通过这种方式，可以收集在压缩路径中丢失的细粒度细节，并且可以提高最终轮廓预测的质量。每个阶段采用反卷积操作，将分辨率提高到原来的两倍，并且通道数变为原来的一半。最后使用一个<code>1 x 1 x 1</code>的卷积得到与输入大小相同的结果，并使用softmax函数得到概率分割图。</p>
+<p><strong>2. 为什么使用<code>1 x 1</code>卷积？</strong></p>
 <ul>
-<li><code>Fine-grained features fowarding</code>: 左侧特征图与右侧对应特征图执行拼接操作。 </li>
+<li>增加决策函数的非线性程度但不影响感受野。</li>
 </ul>
-<h1 id="3-Dice-loss-layer"><a href="#3-Dice-loss-layer" class="headerlink" title="3. Dice loss layer"></a>3. Dice loss layer</h1><h2 id="3-1-Dice系数"><a href="#3-1-Dice系数" class="headerlink" title="3.1 Dice系数"></a>3.1 Dice系数</h2><p>参考博客<a href="https://www.aiuai.cn/aifarm1159.html" target="_blank" rel="noopener">医学图像分割之 Dice Loss</a></p>
-<p>Dice系数，是一种集合相似度度量函数，通常用于计算两个样本的相似度（值范围为[0, 1]）:</p>
-<script type="math/tex; mode=display">
-s=\frac{2|X \bigcap Y|}{|X|+|Y|}</script><p> $|X \bigcap Y|$ 表示X 和 Y 之间的交集；|X| 和 |Y| 分别表示 X 和 Y 的元素个数. 其中，分子中的系数 2，是因为分母存在重复计算 X 和 Y 之间的共同元素的原因.</p>
-<p>在真正计算时可以将 |X⋂Y| 近似为预测图与 GT 分割图之间的点乘，并将点乘的元素结果相加求和：</p>
-<script type="math/tex; mode=display">|X \bigcap Y|=\left[\begin{array}{cccc}
-0.01 & 0.03 & 0.02 & 0.02 \\
-0.05 & 0.12 & 0.09 & 0.07 \\
-0.89 & 0.85 & 0.88 & 0.91 \\
-0.99 & 0.97 & 0.95 & 0.97
-\end{array}\right] *\left[\begin{array}{cccc}
-0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 \\
-1 & 1 & 1 & 1 \\
-1 & 1 & 1 & 1
-\end{array}\right]</script><h2 id="3-2-Dice系数在医学图像分割中的应用"><a href="#3-2-Dice系数在医学图像分割中的应用" class="headerlink" title="3.2 Dice系数在医学图像分割中的应用"></a>3.2 Dice系数在医学图像分割中的应用</h2><p>在以前的损失函数中，前景区域在学习期间比背景区域更重要。在V-Net中提出了一个基于Dice系数的新的目标函数，目标是求最大值。</p>
-<script type="math/tex; mode=display">
-D=\frac{2 \sum_{i}^{N} p_{i} g_{i}}{\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}}</script><p>其中pi为预测结果，gi为实际结果。Dice系数的梯度为：</p>
-<script type="math/tex; mode=display">
-\frac{\partial D}{\partial p_{j}}=2\left[\frac{g_{j}\left(\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}\right)-2 p_{j}\left(\sum_{i}^{N} p_{i} g_{i}\right)}{\left(\sum_{i}^{N} p_{i}^{2}+\sum_{i}^{N} g_{i}^{2}\right)^{2}}\right]</script><h2 id="3-3-Dice系数的Pytorch实现"><a href="#3-3-Dice系数的Pytorch实现" class="headerlink" title="3.3 Dice系数的Pytorch实现"></a>3.3 Dice系数的Pytorch实现</h2><div class="hljs"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dice_loss</span><span class="hljs-params">(pred, target)</span>:</span>
-    <span class="hljs-string">"""This definition generalize to real valued pred and target vector.
-This should be differentiable.
-    pred: tensor with first dimension as batch
-    target: tensor with first dimension as batch
-    """</span>
-smooth = <span class="hljs-number">1.</span>
-
-<span class="hljs-comment"># have to use contiguous since they may from a torch.view op</span>
-iflat = pred.contiguous().view(<span class="hljs-number">-1</span>)
-tflat = target.contiguous().view(<span class="hljs-number">-1</span>)
-intersection = (iflat * tflat).sum()
-
-A_sum = torch.sum(iflat * iflat)
-B_sum = torch.sum(tflat * tflat)
-
-<span class="hljs-keyword">return</span> (<span class="hljs-number">2.</span> * intersection + smooth) / (A_sum + B_sum + smooth)</code></pre></div>
-<h1 id="4-训练"><a href="#4-训练" class="headerlink" title="4. 训练"></a>4. 训练</h1><p>训练时主要采用下面的数据增强方法：</p>
-<ul>
-<li>使用<code>2 x 2 x 2</code>的网格控制点和<code>B-spline interpolation</code>(B样条插值)来获得稠密的形变场对图像进行非线性形变；</li>
-<li>使用直方图匹配来获得不同的灰度分布的图像。 </li>
-</ul>
+<h1 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h1><p>参数优化使用小批量梯度下降法，momentum = 0.9， batch_size = 256；使用$L_2$正则化， 正则化参数为5e-4；学习率初始化为0.01, 当验证集准确率不变时，学习率除以10。</p>
+<h2 id="初始化参数"><a href="#初始化参数" class="headerlink" title="初始化参数"></a>初始化参数</h2><ol>
+<li><p>随机初始化：均值为0，方差为1e-2的正态分布， biases初始为0.</p>
+</li>
+<li><p>先对Net-A进行训练，然后对后面的网络如Net-B,Net-C,Net-D训练时，将Net-A的权重赋给Net-B,Net-C,Net-D,其他不同的层，采用1中的随机初始化方式。</p>
+</li>
+</ol>
+<h2 id="数据增强"><a href="#数据增强" class="headerlink" title="数据增强"></a>数据增强</h2><p>先对图像进行缩放(rescale)，然后进行随机水平翻转、随机RGB color shift，最后进行随机剪裁获得<code>224 x 224</code>的图像。</p>
+<h3 id="训练集图像尺寸"><a href="#训练集图像尺寸" class="headerlink" title="训练集图像尺寸"></a>训练集图像尺寸</h3><p>假设图像缩放的尺寸为 S (training scale)，那么$ S \ge 224$。有两种设置S的方法：</p>
+<ol>
+<li><code>single-scale training</code>: 使用固定的S ；</li>
+<li><code>multi-scale training</code>: 在 [Smin, Smax] 中随机选择一个S （实验中Smin = 256, Smax = 512）.</li>
+</ol>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>测试图片缩放的尺寸为Q（test scale）。测试时，将第一个全连接层转换为<code>7 x 7</code>的卷积，后面两个全连接层转换为<code>1 x 1</code>的卷积。这样进行测试时，直接将<code>Q x Q</code>的图片数据输入即可，而不需要对测试集进行剪裁。</p>
+<h2 id="单尺度评估"><a href="#单尺度评估" class="headerlink" title="单尺度评估"></a>单尺度评估</h2><p>测试图像固定尺度。</p>
+<p>$Q = S$ 或者 $Q = 0.5(S_{min} + S_{max})$</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200714225023.png" srcset="/img/loading.gif" alt=""></p>
+<h2 id="多尺度评估"><a href="#多尺度评估" class="headerlink" title="多尺度评估"></a>多尺度评估</h2><p>测试图像的尺度抖动对性能的影响。</p>
+<p>$Q = \{S - 32, S, S + 32\}$ 或者 $Q = \{S_{min}, 0.5(S_{min} + S_{max}), S_{max}\}$</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200714225126.png" srcset="/img/loading.gif" alt=""></p>
 
             </article>
             <hr>
@@ -306,18 +276,12 @@ B_sum = torch.sum(tflat * tflat)
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/06/03/3D-UNet笔记/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">3D-UNet笔记</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/05/21/U-net笔记/">
-                        <span class="hidden-mobile">U-net笔记</span>
+                      <a href="/2020/07/13/深度学习图像通道channel/">
+                        <span class="hidden-mobile">深度学习图像通道channel</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -534,7 +498,7 @@ B_sum = torch.sum(tflat * tflat)
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "V-Net笔记&nbsp;",
+        "VGG论文笔记：&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
