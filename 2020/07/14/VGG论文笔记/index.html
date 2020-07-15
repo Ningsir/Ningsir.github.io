@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.4k 字
+      1.5k 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      16
+      18
        分钟
     </span>
   
@@ -244,7 +244,7 @@
 <li><code>single-scale training</code>: 使用固定的S ；</li>
 <li><code>multi-scale training</code>: 在 $[S_{min}, S_{max}]$ 中随机选择一个S （实验中$S_{min}$ = 256, $S_{max}$ = 512），也能被视作<code>scale jittering</code>。</li>
 </ol>
-<h1 id="4-测试"><a href="#4-测试" class="headerlink" title="4. 测试"></a>4. 测试</h1><p>测试图片缩放的尺寸为Q（test scale）。<strong>测试时，将全连接层替换成卷积层，即将第一个全连接层转换为<code>7 x 7</code>的卷积，后面两个全连接层转换为<code>1 x 1</code>的卷积</strong>。这样进行测试时，直接将<code>Q x Q</code>的图片数据输入即可，而不需要对测试集进行剪裁。</p>
+<h1 id="4-测试"><a href="#4-测试" class="headerlink" title="4. 测试"></a>4. 测试</h1><p>测试图片缩放的尺寸为Q（test scale）。<strong>测试时，将全连接层替换成卷积层，即将第一个全连接层转换为<code>7 x 7</code>的卷积，后面两个全连接层转换为<code>1 x 1</code>的卷积, 这种方式称为dense evaluation</strong>。这样进行测试时，直接将<code>Q x Q</code>的图片数据输入即可，而不需要对测试集进行剪裁。</p>
 <p><strong>为什么使用<code>7 x 7</code>的卷积？</strong></p>
 <ul>
 <li>网络中使用的same卷积，总共使用了5个池化层，则全连接层的输入为<code>7 x 7 x 512</code>（因为224 / 32 = 7, channel为512），那么第一个全连接层的参数尺寸为<code>(4096, 7 x 7 x 512)</code>。转换后参数数量不变，应该使用4096个<code>7 x 7</code>卷积（channel = 512），卷积之后的输出为<code>1 x 1 x 4096</code>。</li>
@@ -254,6 +254,7 @@
 <li>第二个全连接层：参数尺寸为<code>(4096, 4096)</code>, 使用4096个<code>1 x 1</code>卷积（channel = 4096），输出为<code>1 x 1 x 4096</code>;</li>
 <li>第三个全连接层：参数尺寸为<code>(4096, 1000)</code>, 使用1000个<code>1 x 1</code>卷积（channel = 4096），输出为<code>1 x 1 x 1000</code></li>
 </ul>
+<p>对测试过程进行举例说明，假如全连接层的输入为<code>8 x 8 x 512</code>（因为测试时输入图像不一定是<code>224 x 224</code>）, 三个全连接层分别替换成4096个<code>7 x 7</code>卷积、4096个<code>1 x 1</code>卷积、1000个<code>1 x 1</code>卷积，输出分别是<code>2 x 2 x 4096</code>、<code>2 x 2 x 4096</code>、<code>2 x 2 x 1000</code>, 那么最后的feature map大小为<code>2 x 2 x 1000</code>, 但只有1000个分类，所以需要对feature map求平均值，使其大小变为<code>1 x 1 x 1000</code>。</p>
 <h2 id="4-1-单尺度评估"><a href="#4-1-单尺度评估" class="headerlink" title="4.1 单尺度评估"></a>4.1 单尺度评估</h2><p><strong>测试图像固定尺度。</strong></p>
 <p>$Q = S$ 或者 $Q = 0.5(S_{min} + S_{max})$</p>
 <p>单尺度评估结果如下：</p>
