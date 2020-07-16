@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.6k 字
+      2.7k 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      30
+      31
        分钟
     </span>
   
@@ -210,7 +210,8 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h1 id="1-神经网络基础"><a href="#1-神经网络基础" class="headerlink" title="1. 神经网络基础"></a>1. 神经网络基础</h1><p>神经网络被建模成神经元的集合，神经元之间以无环图的形式进行连接。对于普通神经网络，最普通的层的类型是全连接层。全连接层中的神经元与其前后两层的神经元是全连接的。神经网络包括输入层、隐藏层、输出层，一般说N层神经网络的时候，忽略了输入层，比如下图是一个2层神经网络。<strong>输入层神经元节点的数量就是数据feature的数量。</strong></p>
+              <p><span class="label label-info">最后更新于2020-07-16：添加梯度消失问题</span></p>
+<h1 id="1-神经网络基础"><a href="#1-神经网络基础" class="headerlink" title="1. 神经网络基础"></a>1. 神经网络基础</h1><p>神经网络被建模成神经元的集合，神经元之间以无环图的形式进行连接。对于普通神经网络，最普通的层的类型是全连接层。全连接层中的神经元与其前后两层的神经元是全连接的。神经网络包括输入层、隐藏层、输出层，一般说N层神经网络的时候，忽略了输入层，比如下图是一个2层神经网络。<strong>输入层神经元节点的数量就是数据feature的数量。</strong></p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200707210313.png" srcset="/img/loading.gif" alt=""></p>
 <p>一个神经元节点首先计算线性函数（$\omega x + b$），然后计算激活函数，然后将计算的结果传递到下一层。</p>
 <p>训练神经网络的过程：</p>
@@ -266,6 +267,13 @@ X -= np.mean(X, axis=<span class="hljs-number">1</span>)</code></pre></div>
 <p>计算公式是：</p>
 <script type="math/tex; mode=display">
 r_{n} = r_{n - 1} + (k_n - 1)\prod_{i = 1}^{n - 1}s_i</script><p>其中 $r_n$ 表示第 n 层的感受野，$k_n$ 表示第 n 层的卷积核大小， $s_i$ 表示第 i 层卷积步长。 </p>
+<h2 id="1-7-梯度消失"><a href="#1-7-梯度消失" class="headerlink" title="1.7 梯度消失"></a>1.7 梯度消失</h2><p>对于<code>sigmoid</code>和<code>tanh</code>激活函数而言，其梯度小于1，是一个比较小的数，在反向传播的过程中，不断衰减，如果网络层次比较深，梯度传递到低层网络时非常小，也就产生了梯度消失现象，导致参数更新缓慢，学习变慢。</p>
+<p><strong>解决办法</strong></p>
+<ul>
+<li>使用ReLU、LeakReLU激活函数；</li>
+<li>Batch Normalization</li>
+<li>残差网络</li>
+</ul>
 <h1 id="2-激活函数（activation-function）"><a href="#2-激活函数（activation-function）" class="headerlink" title="2. 激活函数（activation function）"></a>2. 激活函数（activation function）</h1><p>在神经元节点中线性计算后，然后使用激活函数，激活函数需要是一个非线性函数。使用激活函数是为了将神经元节点输出非线性化，如果只是使用线性函数，那么最后的输出将是几个线性函数的线性组合，那么设计多层的神经网络就变得没有任何意义。</p>
 <h2 id="常用激活函数"><a href="#常用激活函数" class="headerlink" title="常用激活函数"></a>常用激活函数</h2><h3 id="sigmoid函数"><a href="#sigmoid函数" class="headerlink" title="sigmoid函数"></a>sigmoid函数</h3><p>sigmoid函数将输入压缩到 0 到 1 范围，主要用于二分类，比如logistics回归，如今sigmoid函数很少使用了。</p>
 <script type="math/tex; mode=display">

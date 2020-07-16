@@ -19,7 +19,7 @@
   <meta name="description" content="华中科技大学17级本科生">
   <meta name="author" content="XIN">
   <meta name="keywords" content="">
-  <title>卷积神经网络 - XIN&#39;S BLOG</title>
+  <title>GoogLeNet论文笔记 - XIN&#39;S BLOG</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -150,8 +150,8 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-07-09 22:46">
-      2020年7月9日 晚上
+    <time datetime="2020-07-16 20:19">
+      2020年7月16日 晚上
     </time>
   </div>
 
@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.9k 字
+      911 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      26
+      10
        分钟
     </span>
   
@@ -210,123 +210,44 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>计算机视觉面临一个挑战，就是数据的输入可能非常大。对于传统的全连接神经网络，数据庞大也就意味着需要训练的参数非常多，导致计算成本很大，效率很低。在这种情况下，难以获得足够的数据来防止过拟合，由此，出现了卷积神经网络。</p>
-<p><em>CNN 有2大特点：</em></p>
+              <h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h1><p>论文地址：<a href="https://research.google.com/pubs/pub43022.html" target="_blank" rel="noopener">Going Deeper with Convolutions</a></p>
+<p>论文打破常规，设计了一种将<code>1 x 1</code>卷积、<code>3 x 3</code>卷积、<code>5 x 5</code>卷积并联组合在一起，然后将输出结果进行<code>concatenate</code>(拼接)操作的结构，该结构叫做<code>Inception</code>，Inception主要特点是改善了对计算资源的利用。论文后面利用<code>Inception</code>设计了一个有22层的深层神经网络——<code>GoogLeNet</code>，该网络主要用于图像分类和目标检测，网络参数比AlexNet的参数少12倍，并且在2014年的ILSVRC比赛中获得了第一名。</p>
+<h1 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2. Related Work"></a>2. Related Work</h1><ol>
+<li>GoogLeNet中多次使用Inception结构；</li>
+<li>GoogLeNet中大量使用<code>1 x 1</code>卷积，主要有两个作用：<ul>
+<li>主要用于降维以解决计算瓶颈的问题；</li>
+<li>增加网络的深度和宽度而不用使用惩罚项，网络的<strong>宽度</strong>是指每层的单元数，也就是卷积核的数量。</li>
+</ul>
+</li>
+<li>目标检测当前技术主要是R-CNN，R-CNN可以分解成两个子问题：<ul>
+<li>利用底层的颜色和纹理等特性初步获取物体的位置；</li>
+<li>使用分类器判断该位置处的物体类别。</li>
+</ul>
+</li>
+</ol>
+<h1 id="3-MOtivation-and-High-Level-Consideration"><a href="#3-MOtivation-and-High-Level-Consideration" class="headerlink" title="3. MOtivation and High Level Consideration"></a>3. MOtivation and High Level Consideration</h1><p>增加网络的深度和宽度是提高性能的最直接的方法，但有两个主要的缺点：</p>
 <ul>
-<li>能够有效的将大数据量的图片降维成小数据量；</li>
-<li>能够有效的保留图片特征，符合图片处理的原则。</li>
+<li>增加网络的尺寸意味着参数数量更多，导致网络更容易过拟合，特别是训练的数据集数量有限的时候。</li>
+<li>增加计算资源。</li>
 </ul>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ul>
-<li>图像分类、检索</li>
-<li>目标定位检测</li>
-<li>图像分割</li>
-<li>人脸识别</li>
-</ul>
-<h1 id="CNN的基本原理"><a href="#CNN的基本原理" class="headerlink" title="CNN的基本原理"></a>CNN的基本原理</h1><p>典型的卷积神经网络由3个部分组成：</p>
+<p>解决上述问题的基本方法是：将全连接换成稀疏连接（卷积就是一种稀疏连接）。传统网络通常使用随机稀疏连接，但AlexNet对全连接的使用，又改变了这一趋势。通常全连接是为了更好的进行并行计算，而稀疏连接是为了打破对称来改善学习。</p>
+<h1 id="5-Inception"><a href="#5-Inception" class="headerlink" title="5. Inception"></a>5. Inception</h1><p>Inception的主要思想是：<strong>如何使用密集成分近似最优局部稀疏结构。</strong></p>
+<h2 id="5-1-naive-version"><a href="#5-1-naive-version" class="headerlink" title="5.1 naive version"></a>5.1 naive version</h2><p>论文中Inception的初始版本如下：</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200716214820.png" srcset="/img/loading.gif" alt=""></p>
 <ul>
-<li>卷积层：提取图像中的局部特征，卷积计算后一般会使用激活函数；</li>
-<li>池化层：降维；</li>
-<li>全连接层：类似于传统神经网络，用来输出想要的结果。</li>
+<li>使用<code>1 x 1</code>、<code>3 x 3</code>、<code>5 x 5</code>的卷积是为了方便输出结果的对齐；</li>
+<li>最后的输出是将卷积、max pool结果进行concat操作（<strong>注意不是逐像素相加</strong>）；</li>
+<li>使用一个并行的池化路径有额外的好处；</li>
+<li>随着网络层数的加深，<code>3 x 3</code>和<code>5 x 5</code><strong>卷积的数量增加</strong>，因为网络越深，网络提取的特征越抽象，通过增加卷积核的数量可以将前面的特征组合起来，从而使各种特征的可能性覆盖得更全面。</li>
 </ul>
-<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200709155732.png" srcset="/img/loading.gif" alt=""> </p>
-<h2 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h2><p>卷积层通过卷积核的过滤提取出图片中局部的特征，卷积层之后一般会使用激活函数进行非线性化。对于离散数据的卷积运算：首先将卷积核旋转$180^{\circ}$，然后将卷积核在图像上平滑，将卷积核与图像中对应元素相乘取和。具体的卷积操作，如下图所示（已经将卷积核旋转了$180^{\circ}$）：</p>
-<p><img src="https://gitee.com/huster_ning/image/raw/master//image/0_sxpi42l2IIpS2vuJ.gif" srcset="/img/loading.gif" alt=""><br>其中卷积核为：</p>
-<script type="math/tex; mode=display">
-kernel = \begin{bmatrix}1&0&1\\
-0&1&0\\
-1&0&1\end{bmatrix}</script><p>卷积操作后输出的图像尺寸：$(n +2p -f)/s + 1$, 其中n为输入图像尺寸，padding为p, 卷积核大小为f， 步长为s。上图的卷积操作：n=5, p=0, f=3, s=1.</p>
-<p>选择填充多少像素，将卷积分为：</p>
-<ul>
-<li>Valid卷积：不填充；</li>
-<li>Same卷积：填充</li>
-</ul>
-<p>卷积核的大小一般为奇数：</p>
-<ul>
-<li>有一个中心点，便于指出过滤器的位置；</li>
-<li>如果为偶数，需要使用不对称填充。</li>
-</ul>
-<p><strong>注意</strong>：按照数学中的卷积运算，需要将卷积核进行翻转操作，但在深度学习中，一般不使用翻转操作。</p>
-<h3 id="padding（填充）"><a href="#padding（填充）" class="headerlink" title="padding（填充）"></a>padding（填充）</h3><p>卷积操作时，如果不填充，则每次运算完成后，图像将会缩小，而且图像边缘的大部分信息都丢失了。填充p个像素点后，图像大小变为<code>n+2p</code>。一般用0填充。</p>
-<h3 id="strides（步长）"><a href="#strides（步长）" class="headerlink" title="strides（步长）"></a>strides（步长）</h3><p>步长是指平滑移动的距离。</p>
-<h3 id="二维卷积与三维卷积"><a href="#二维卷积与三维卷积" class="headerlink" title="二维卷积与三维卷积"></a>二维卷积与三维卷积</h3><p><strong>在讨论卷积核的维度时，并不考虑channel维</strong>。<br>二维卷积核的大小实际是<code>(channel, k_h, k_w)</code>, 三维卷积核的大小是<code>(channel, k_d, k_h, k_w)</code>, k_d就是多出来的第三维，根据具体应用，在视频中就是时间维，在CT图像中就是层数维。</p>
-<ul>
-<li>在二维卷积中，卷积核滑动维度是2维的；</li>
-<li>在三维卷积中，卷积核滑动维度是3维的。</li>
-</ul>
-<h4 id="二维卷积"><a href="#二维卷积" class="headerlink" title="二维卷积"></a>二维卷积</h4><p>例如，输入图像大小为<code>(3, height, weight)</code>，其中channel为3, 卷积核尺寸为<code>(3, k_h, k_w)</code>, channel与输入图像一致. 进行卷积操作时，卷积核只是在<code>(height, weight)</code>这两维上进行滑窗操作。</p>
-<h4 id="三维卷积"><a href="#三维卷积" class="headerlink" title="三维卷积"></a>三维卷积</h4><p>与2D卷积不同之处在于，输入图像多了一个 <code>depth</code> 维度，故输入大小为<code>(3, depth, height, width)</code>，卷积核也多了一个k_d维度，因此卷积核在输入3D图像的空间维度（height和width维）和depth维度上均进行滑窗操作.</p>
-<h2 id="池化"><a href="#池化" class="headerlink" title="池化"></a>池化</h2><p>池化层就是下采用，降低数据的维度，提高计算速度，同时提高提取特征的鲁棒性。池化的运算过程：</p>
-<p><img src="https://gitee.com/huster_ning/image/raw/master//image/0_JjtDg7FAhjQOrld-.gif" srcset="/img/loading.gif" alt=""></p>
-<h3 id="最大池化"><a href="#最大池化" class="headerlink" title="最大池化"></a>最大池化</h3><p>提取过滤器范围内的最大值。</p>
-<h3 id="平均池化"><a href="#平均池化" class="headerlink" title="平均池化"></a>平均池化</h3><p>过滤器范围内的数据取平均值，平均池化使用较少。</p>
-<h1 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h1><h2 id="卷积层的反向传播"><a href="#卷积层的反向传播" class="headerlink" title="卷积层的反向传播"></a>卷积层的反向传播</h2><p>卷积层的反向传播比全连接神经网络的反向传播要复杂许多，现举例说明。假设第 $l$ 层的输入数据为X：</p>
-<script type="math/tex; mode=display">
-X = \begin{bmatrix}
-x_{11}&x_{12}&x_{13} \\
-x_{21}&x_{22}&x_{23} \\
-x_{31}&x_{32}&x_{33}
-\end{bmatrix}</script><p>卷积核F为：</p>
-<script type="math/tex; mode=display">
-F = \begin{bmatrix}
-f_{11}&f_{12} \\
-f_{21}&f_{22} 
-\end{bmatrix}</script><p>假设步长为1，padding为0，那么经过卷积运算后的结果为 A：</p>
-<script type="math/tex; mode=display">
-A = \begin{bmatrix}
-a_{11}&a_{12}\\
-a_{21}&a_{22}
-\end{bmatrix}</script><p>则有：</p>
-<script type="math/tex; mode=display">
-\begin{array}{}\frac{\partial A_{11}}{\partial F_{11}} = x_{11}, \frac{\partial A_{11}}{\partial F_{12}} = x_{12} ,\ldots\\ \\
-\frac{\partial A_{12}}{\partial F_{11}} = x_{12}, \frac{\partial A_{12}}{\partial F_{12}} = x_{13} ,\ldots \\
-\end{array}</script><p>使用链式规则有：</p>
-<script type="math/tex; mode=display">
-\frac{\partial J}{\partial F_i} = \sum_{k = 1}^{m}\frac{\partial J}{\partial A_k} \times \frac{\partial A_k}{\partial F_i}</script><p>分别对F求梯度，则有如下四个式子成立：</p>
-<script type="math/tex; mode=display">
-\begin{array}{}\frac{\partial J}{\partial F_{11}} = \frac{\partial J}{\partial A_{11}} \times \frac{\partial A_{11}}{\partial F_{11}} + \frac{\partial J}{\partial A_{12}} \times \frac{\partial A_{12}}{\partial F_{11}} + \frac{\partial J}{\partial A_{21}} \times \frac{\partial A_{21}}{\partial F_{11}} + \frac{\partial J}{\partial A_{22}} \times \frac{\partial A_{22}}{\partial F_{11}}\\
-= \frac{\partial J}{\partial A_{11}} \times x_{11} + \frac{\partial J}{\partial A_{12}} \times  x_{12} + \frac{\partial J}{\partial A_{21}} \times x_{21} + \frac{\partial J}{\partial A_{22}} \times  x_{22}
-\end{array} \tag{1}</script><script type="math/tex; mode=display">
-\begin{array}{}
-\frac{\partial J}{\partial F_{12}} = \frac{\partial J}{\partial A_{11}} \times \frac{\partial A_{11}}{\partial F_{12}} + \frac{\partial J}{\partial A_{12}} \times \frac{\partial A_{12}}{\partial F_{12}} + \frac{\partial J}{\partial A_{21}} \times \frac{\partial A_{21}}{\partial F_{12}} + \frac{\partial J}{\partial A_{22}} \times \frac{\partial A_{22}}{\partial F_{12}} \\
-= \frac{\partial J}{\partial A_{11}} \times x_{12} + \frac{\partial J}{\partial A_{12}} \times  x_{13} + \frac{\partial J}{\partial A_{21}} \times x_{22} + \frac{\partial J}{\partial A_{22}} \times  x_{23}
-\end{array} \tag{2}</script><script type="math/tex; mode=display">
-\begin{array}{}
-\frac{\partial J}{\partial F_{21}} = \frac{\partial J}{\partial A_{11}} \times \frac{\partial A_{11}}{\partial F_{21}} + \frac{\partial J}{\partial A_{12}} \times \frac{\partial A_{12}}{\partial F_{21}} + \frac{\partial J}{\partial A_{21}} \times \frac{\partial A_{21}}{\partial F_{21}} + \frac{\partial J}{\partial A_{22}} \times \frac{\partial A_{22}}{\partial F_{21}} \\
-= \frac{\partial J}{\partial A_{11}} \times x_{21} + \frac{\partial J}{\partial A_{12}} \times  x_{22} + \frac{\partial J}{\partial A_{21}} \times x_{31} + \frac{\partial J}{\partial A_{22}} \times  x_{32}
-\end{array} \tag{3}</script><script type="math/tex; mode=display">
-\begin{array}{}
-\frac{\partial J}{\partial F_{22}} = \frac{\partial J}{\partial A_{11}} \times \frac{\partial A_{11}}{\partial F_{22}} + \frac{\partial J}{\partial A_{12}} \times \frac{\partial A_{12}}{\partial F_{22}} + \frac{\partial J}{\partial A_{21}} \times \frac{\partial A_{21}}{\partial F_{22}} + \frac{\partial J}{\partial A_{22}} \times \frac{\partial A_{22}}{\partial F_{22}} \\
-= \frac{\partial J}{\partial A_{11}} \times x_{22} + \frac{\partial J}{\partial A_{12}} \times  x_{23} + \frac{\partial J}{\partial A_{21}} \times x_{32} + \frac{\partial J}{\partial A_{22}} \times  x_{33}
-\end{array} \tag{4}</script><p>不难发现，对F求梯度，实际上就是X与$\frac{\partial J}{\partial A}$进行卷积运算：</p>
-<script type="math/tex; mode=display">
-\frac{\partial J}{\partial F} = X \ast \frac{\partial J}{\partial A}</script><h2 id="池化层的反向传播"><a href="#池化层的反向传播" class="headerlink" title="池化层的反向传播"></a>池化层的反向传播</h2><h3 id="最大池化-1"><a href="#最大池化-1" class="headerlink" title="最大池化"></a>最大池化</h3><p>假设池化层的输入X:</p>
-<script type="math/tex; mode=display">
-X = \begin{bmatrix}
-4&3&0&1\\
-1&1&3&2\\
-5&0&1&1\\
-6&4&4&7
-\end{bmatrix}</script><p>经过<code>2 x 2</code>的最大池化层之后，结果为A: </p>
-<script type="math/tex; mode=display">
-A = \begin{bmatrix}
-4&3\\
-6&7
-\end{bmatrix}</script><p>则$\frac{\partial A}{\partial X}$：</p>
-<script type="math/tex; mode=display">
-\frac{\partial A}{\partial X} = \begin{bmatrix}
-1&0&0&0\\
-0&0&1&0\\
-0&0&0&0\\
-1&0&0&1
-\end{bmatrix}</script><p>因为使用的是最大池化，则A对X求偏导时，最大值处为1，其他为0，即在进行最大池化时需要保留最大值处的位置，才能进行反向传播。</p>
-<h3 id="平均池化-1"><a href="#平均池化-1" class="headerlink" title="平均池化"></a>平均池化</h3><p>平均池化的反向传播更加简单。如果对上述的X进行<code>2 x 2</code>的平均池化，则$\frac{\partial A}{\partial X}$为：</p>
-<script type="math/tex; mode=display">
-\frac{\partial A}{\partial X} = \begin{bmatrix}
-\frac{1}{4}&\frac{1}{4}&\frac{1}{4}&\frac{1}{4}\\
-\frac{1}{4}&\frac{1}{4}&\frac{1}{4}&\frac{1}{4}\\
-\frac{1}{4}&\frac{1}{4}&\frac{1}{4}&\frac{1}{4}\\
-\frac{1}{4}&\frac{1}{4}&\frac{1}{4}&\frac{1}{4}
-\end{bmatrix}</script>
+<h2 id="5-2-dimension-reduction"><a href="#5-2-dimension-reduction" class="headerlink" title="5.2 dimension reduction"></a>5.2 dimension reduction</h2><p>第一个版本的Inception结构有一个明显的问题，随着网络层数加深，Inception中<code>5 x 5</code>卷积核数量增加，这将非常消耗计算资源。可以在<code>3 x 3</code>和<code>5 x 5</code>卷积之前使用一个<code>1 x 1</code>卷积用来<strong>降低数据维度</strong>，从而减少计算量，另外需要在<code>1 x 1</code>卷积之后接一个<code>ReLU</code>激活函数。</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200716214948.png" srcset="/img/loading.gif" alt=""></p>
+<h1 id="6-GoogLeNet"><a href="#6-GoogLeNet" class="headerlink" title="6. GoogLeNet"></a>6. GoogLeNet</h1><p>模型输入是一个经过0均值处理之后的<code>224 x 224</code>的RGB图像数据。</p>
+<p>下图是GoogLeNet的一些细节，所有的卷积操作之后都有一个<code>ReLU</code>单元，<code>#3 x 3 reduce</code>表示Inception中<code>3 x 3</code>卷积之前的<code>1 x 1</code>卷积核的数量</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200716222813.png" srcset="/img/loading.gif" alt=""></p>
+<p>下图是GoogLeNet的网络结构。网络中通过使用<strong>辅助分类器缓解梯度消失问题</strong>，辅助分类器在训练过程中，需要将其loss值添加到总的loss中（乘以权重0.3），在测试时，将辅助分类器抛弃不用。</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200716222859.png" srcset="/img/loading.gif" alt=""></p>
+
             </article>
             <hr>
             <div>
@@ -335,7 +256,7 @@ A = \begin{bmatrix}
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/深度学习/">深度学习</a>
+                      <a class="hover-with-bg" href="/categories/论文阅读/">论文阅读</a>
                     
                   </div>
                 
@@ -343,9 +264,9 @@ A = \begin{bmatrix}
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/深度学习/">深度学习</a>
+                      <a class="hover-with-bg" href="/tags/论文阅读/">论文阅读</a>
                     
-                      <a class="hover-with-bg" href="/tags/神经网络/">神经网络</a>
+                      <a class="hover-with-bg" href="/tags/深度学习/">深度学习</a>
                     
                   </div>
                 
@@ -358,18 +279,12 @@ A = \begin{bmatrix}
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/07/11/Batch Normalization/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Batch Normalization</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/07/07/神经网络/">
-                        <span class="hidden-mobile">神经网络</span>
+                      <a href="/2020/07/14/VGG论文笔记/">
+                        <span class="hidden-mobile">VGG论文笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -586,7 +501,7 @@ A = \begin{bmatrix}
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "卷积神经网络&nbsp;",
+        "GoogLeNet论文笔记&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
