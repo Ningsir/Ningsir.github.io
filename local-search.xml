@@ -8,7 +8,7 @@
     <link href="/2020/07/18/Residual-Net%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"/>
     <url>/2020/07/18/Residual-Net%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</url>
     
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h1><h1 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2. Related Work"></a>2. Related Work</h1><h1 id="3-Deep-Residual-Learning"><a href="#3-Deep-Residual-Learning" class="headerlink" title="3. Deep Residual Learning"></a>3. Deep Residual Learning</h1>]]></content>
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h1><p>论文地址：<a href="https://arxiv.org/abs/1512.03385" target="_blank" rel="noopener">Deep Residual Learning for Image Recognition</a></p><p>深层神经网络在图像分类方面带来了一系列突破，有许多证据表明网络的深度是非常重要的。但是不断增加网络深度会带来许多问题。</p><ul><li><p>梯度消失和梯度爆炸问题。这个问题可以通过使用<code>Batch Normalization</code>来解决。</p></li><li><p><code>degradation problem</code>（退化问题）：随着网络深度增加，精确度饱和，然后快速下降。也就是添加更多层到一个合适的网络中，会导致产生更高的<code>training error</code>，如下图所示：</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200719104137.png" srcset="/img/loading.gif" alt=""></p></li></ul><p>论文中，为了解决退化问题，提出了<code>residual learning framework</code>.</p><p>这种方法，主要有两个优点：</p><ul><li>深层残差网络更容易优化；</li><li>增加深度后能够提高精确度。</li></ul><h1 id="2-残差块"><a href="#2-残差块" class="headerlink" title="2. 残差块"></a>2. 残差块</h1><p>如下图，是一个残差块的基本结构。</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200719105203.png" srcset="/img/loading.gif" alt=""><br>使用<code>shortcut connection</code>来完成残差块的计算，输入为x, 则输出为：</p><script type="math/tex; mode=display">y = F(x, W_i) + x \tag{1}</script><p>在上图两层的残差块中，$F(x, W_i)$ 可以表示为 $W_2 \sigma(W_1x)$，其中$\sigma$ 是<code>ReLU</code>激活函数。运算<code>F + x</code>通过<code>shortcut connection</code>完成<code>element-wise addition</code>操作（<strong>对应元素相加</strong>），执行该运算时，<code>F</code>和<code>x</code>的维度需要一致，如果不一致，有以下两种解决办法：</p><ul><li>填充0来增加数据维度，该方式不会增加额外的参数；</li><li>使用该公式来进行计算：$y = F(x, W_i) + W_sx$，即增加了额外的参数$W_s$。一般是使用<code>1 x 1</code>卷积来修改x的维度。</li></ul><h1 id="3-网络架构"><a href="#3-网络架构" class="headerlink" title="3. 网络架构"></a>3. 网络架构</h1><p>设计了plain nets 和 residual nets 两种模型，进行对比。</p><h2 id="3-1-Plain-Network"><a href="#3-1-Plain-Network" class="headerlink" title="3.1 Plain Network"></a>3.1 Plain Network</h2><p>卷积层大部分使用<code>3 x 3</code>卷积，主要有以下设计规则：</p><ul><li>输入和输出尺寸相同时，卷积核的数量与上一层相同；</li><li>feature map尺寸减半时，卷积核的数量加倍。下采样是直接使用stride = 2的卷积。</li></ul><h2 id="3-2-Residual-Network"><a href="#3-2-Residual-Network" class="headerlink" title="3.2 Residual Network"></a>3.2 Residual Network</h2><p>与Plain Network基本相同，只是网络中使用了<code>shortcut connection</code>，将网络变成了残差网络。</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200719114200.png" srcset="/img/loading.gif" alt=""></p><h1 id="4-实现"><a href="#4-实现" class="headerlink" title="4. 实现"></a>4. 实现</h1><p>网络中在每个卷积层之后使用<code>Batch Normalization</code>，然后使用<code>ReLU</code>激活函数。在进行<code>shortcut connection</code>时，如果维度不相同，需要增加维度，以保证维度匹配，能够执行<code>element-wise addition</code>操作。</p><p>数据增强时，先将图像缩放，缩放尺寸为$[256, 480]$，然后执行均值减法，然后对缩放图片或水平翻转的图片进行224x224的剪裁。</p><p>训练时，使用小批量梯度下降法，mini-batch size为256，学习率为0.1，当学习率不变时对其除以10，weight_decay = 0.0001, momentum = 0.9, 没有使用Dropout正则化。</p><p>测试时，对测试数据进行<code>10-crop</code>操作，并将全连接层转换为卷积层，最后对多尺度score map 取平均值。</p>]]></content>
     
     
     <categories>
@@ -20,9 +20,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
@@ -47,9 +47,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
@@ -74,9 +74,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
@@ -114,7 +114,7 @@
     <link href="/2020/07/13/AlexNet%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"/>
     <url>/2020/07/13/AlexNet%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</url>
     
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>AlexNet是一个大型的深层神经网络，能够对高分辨率(high resolution)的图像进行分类。AlexNet是2012年论文<a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks" target="_blank" rel="noopener">ImageNet Classification with Deep ConvolutionalNeural Networks</a>中提出的一种卷积神经网络结构，并在12年的ImageNet分类赛上以大幅优势领先第二名，从而使得深度卷积神经网络CNN在图像分类上的应用掀起一波热潮，AlexNet使用了一些新的技术，比如使用ReLU激活函数加速训练，采用了Dropout防止过拟合，使用双GPU并行训练加快训练速度。</p><h1 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h1><p>AlexNet由5个卷积层 + 3个全连接层构成。</p><h2 id="非线性ReLU函数"><a href="#非线性ReLU函数" class="headerlink" title="非线性ReLU函数"></a>非线性ReLU函数</h2><p>使用ReLU激活函数比sigmoid或者tanh效果更好，因为sigmoid和tanh在深层神经网络的训练中容易造成梯度饱和，从而降低收敛的速度，使用ReLU函数训练速度更快。</p><h2 id="Overlapping-Pooling-重叠池化"><a href="#Overlapping-Pooling-重叠池化" class="headerlink" title="Overlapping Pooling(重叠池化)"></a>Overlapping Pooling(重叠池化)</h2><p>假设池化层的 kernel_size 为 z, 步长为 s。如果<code>z = s</code>, 则池化不会发生重合；如果<code>z &gt; s</code>，则会出现重合。AlexNet使用 z = 3, s = 2的最大池化。训练模型发现使用重叠池化更难发生过拟合现象。</p><h2 id="Local-Response-Normalization-局部响应归一化"><a href="#Local-Response-Normalization-局部响应归一化" class="headerlink" title="Local Response Normalization(局部响应归一化)"></a>Local Response Normalization(局部响应归一化)</h2><p>该方法未得到广泛应用，现在多用Batch Normalization进行归一化操作。</p><h2 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h2><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200713140740.png" srcset="/img/loading.gif" alt=""></p><p>输入<code>224 x 224 x 3</code>的三通道图像</p><ul><li>第一个卷积层：96个大小为<code>11 x 11 x 3</code>的卷积核，卷积步长 stride = 4，输出<code>55 x 55 x 96</code>大小的数据（注意：$(224 - 11) / 4 +1= 54.25$, 卷积运算最后一次滑动一步），然后经过最大池化，输出大小为<code>27 x 27 x 96</code>；</li><li>第二个卷积层：256个大小为<code>5 x 5 x 96</code>的卷积核, same卷积，输出为<code>27 x 27 x 256</code>, 然后经过最大池化，输出为<code>13 x 13 x 256</code>;</li><li>第三个卷积层：384个大小为<code>3 x 3 x 256</code>的卷积核，same卷积，输出为<code>13 x 13 x 384</code>;</li><li>第四个卷积层：384个大小为<code>3 x 3 x 384</code>的卷积核，same卷积，输出为<code>13 x 13 x 384</code>;</li><li>第五个卷积层：256个大小为<code>3 x 3 x 384</code>的卷积核，same卷积，输出为<code>13 x 13 x 256</code>, 然后经过最大池化，输出为<code>6 x 6 x 256</code>，将数据展开传到全连接层;</li><li>三个全连接层：最后三个全连接层的神经元数量分别为4096、4096、1000.</li></ul><h1 id="降低过拟合"><a href="#降低过拟合" class="headerlink" title="降低过拟合"></a>降低过拟合</h1><h2 id="数据增强"><a href="#数据增强" class="headerlink" title="数据增强"></a>数据增强</h2><ol><li>图像平移和水平反射。通过从256×256幅图像中提取随机224×224块图像(及其水平反射的图像)，其实就是随机剪裁（crop），并在这些提取的图像上训练我们的网络。这将我们的训练集的大小增加了2048倍（因为：$(256 - 224)^2 \times 2 = 2048$）。</li></ol><ul><li><strong>测试的时候</strong>：对左上、左下、右上、右下、中间这几个位置分别剪裁，然后对图像进行水平翻转，再进行剪裁，最终进行了10次剪裁，即一张图片经过数据增强获得了10张图片，这种剪裁的方式称为<strong>10-crop</strong>。然后将这10张图片输入网络中，得到10个输出，将输出进行平均，得到最后结果。</li></ul><ol><li>改变了训练图像中RGB通道的强度。在整个imagenet训练集中对RGB像素值集执行PCA（主成分分析）操作。</li></ol><h2 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h2><p>采用<code>keep_prob = 0.5</code>的Dropout正则化，主要是在全连接层前两层使用Dropout。这种技术减少神经元之间的相互适应，因为神经元不能依赖其他神经元的存在。实验发现Dropout使迭代次数加倍。</p><h1 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h1><p>使用小批量梯度下降法进行参数更新，其中<code>momentum = 0.9</code>, <code>weight_decay = 0.0005</code>.参数更新公式如下：</p><script type="math/tex; mode=display">v_{i+1} = 0.9v_i - 0.0005·\epsilon·\omega_i - \epsilon·d\omega</script><script type="math/tex; mode=display">\omega_{i + 1} = \omega_{i} + v_{i + 1}</script>]]></content>
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>AlexNet是一个大型的深层神经网络，能够对高分辨率(high resolution)的图像进行分类。AlexNet是2012年论文<a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks" target="_blank" rel="noopener">ImageNet Classification with Deep ConvolutionalNeural Networks</a>中提出的一种卷积神经网络结构，并在12年的ImageNet分类赛上以大幅优势领先第二名，从而使得深度卷积神经网络CNN在图像分类上的应用掀起一波热潮，AlexNet使用了一些新的技术，比如使用ReLU激活函数加速训练，采用了Dropout防止过拟合，使用双GPU并行训练加快训练速度。</p><h1 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h1><p>AlexNet由5个卷积层 + 3个全连接层构成。</p><h2 id="非线性ReLU函数"><a href="#非线性ReLU函数" class="headerlink" title="非线性ReLU函数"></a>非线性ReLU函数</h2><p>使用ReLU激活函数比sigmoid或者tanh效果更好，因为sigmoid和tanh在深层神经网络的训练中容易造成梯度饱和，从而降低收敛的速度，使用ReLU函数训练速度更快。</p><h2 id="Overlapping-Pooling-重叠池化"><a href="#Overlapping-Pooling-重叠池化" class="headerlink" title="Overlapping Pooling(重叠池化)"></a>Overlapping Pooling(重叠池化)</h2><p>假设池化层的 kernel_size 为 z, 步长为 s。如果<code>z = s</code>, 则池化不会发生重合；如果<code>z &gt; s</code>，则会出现重合。AlexNet使用 z = 3, s = 2的最大池化。训练模型发现使用重叠池化更难发生过拟合现象。</p><h2 id="Local-Response-Normalization-局部响应归一化"><a href="#Local-Response-Normalization-局部响应归一化" class="headerlink" title="Local Response Normalization(局部响应归一化)"></a>Local Response Normalization(局部响应归一化)</h2><p>该方法未得到广泛应用，现在多用Batch Normalization进行归一化操作。</p><h2 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h2><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200713140740.png" srcset="/img/loading.gif" alt=""></p><p>输入<code>224 x 224 x 3</code>的三通道图像</p><ul><li>第一个卷积层：96个大小为<code>11 x 11 x 3</code>的卷积核，卷积步长 stride = 4，输出<code>55 x 55 x 96</code>大小的数据（注意：$(224 - 11) / 4 +1= 54.25$, 卷积运算最后一次滑动一步），然后经过最大池化，输出大小为<code>27 x 27 x 96</code>；</li><li>第二个卷积层：256个大小为<code>5 x 5 x 96</code>的卷积核, same卷积，输出为<code>27 x 27 x 256</code>, 然后经过最大池化，输出为<code>13 x 13 x 256</code>;</li><li>第三个卷积层：384个大小为<code>3 x 3 x 256</code>的卷积核，same卷积，输出为<code>13 x 13 x 384</code>;</li><li>第四个卷积层：384个大小为<code>3 x 3 x 384</code>的卷积核，same卷积，输出为<code>13 x 13 x 384</code>;</li><li>第五个卷积层：256个大小为<code>3 x 3 x 384</code>的卷积核，same卷积，输出为<code>13 x 13 x 256</code>, 然后经过最大池化，输出为<code>6 x 6 x 256</code>，将数据展开传到全连接层;</li><li>三个全连接层：最后三个全连接层的神经元数量分别为4096、4096、1000.</li></ul><h1 id="降低过拟合"><a href="#降低过拟合" class="headerlink" title="降低过拟合"></a>降低过拟合</h1><h2 id="数据增强"><a href="#数据增强" class="headerlink" title="数据增强"></a>数据增强</h2><ol><li>图像平移和水平反射。通过从256×256幅图像中提取随机224×224块图像(及其水平反射的图像)，其实就是随机剪裁（crop），并在这些提取的图像上训练我们的网络。这将我们的训练集的大小增加了2048倍（因为：$(256 - 224)^2 \times 2 = 2048$）。<ul><li><strong>测试的时候</strong>：对左上、左下、右上、右下、中间这几个位置分别剪裁，然后对图像进行水平翻转，再进行剪裁，最终进行了10次剪裁，即一张图片经过数据增强获得了10张图片，这种剪裁的方式称为<strong>10-crop</strong>。然后将这10张图片输入网络中，得到10个输出，将输出进行平均，得到最后结果。</li></ul></li><li>改变了训练图像中RGB通道的强度。在整个imagenet训练集中对RGB像素值集执行PCA（主成分分析）操作。</li></ol><h2 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h2><p>采用<code>keep_prob = 0.5</code>的Dropout正则化，主要是在全连接层前两层使用Dropout。这种技术减少神经元之间的相互适应，因为神经元不能依赖其他神经元的存在。实验发现Dropout使迭代次数加倍。</p><h1 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h1><p>使用小批量梯度下降法进行参数更新，其中<code>momentum = 0.9</code>, <code>weight_decay = 0.0005</code>.参数更新公式如下：</p><script type="math/tex; mode=display">v_{i+1} = 0.9v_i - 0.0005·\epsilon·\omega_i - \epsilon·d\omega</script><script type="math/tex; mode=display">\omega_{i + 1} = \omega_{i} + v_{i + 1}</script>]]></content>
     
     
     <categories>
@@ -126,9 +126,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
@@ -411,9 +411,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
@@ -438,9 +438,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
@@ -465,9 +465,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
