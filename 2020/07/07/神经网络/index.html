@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.7k 字
+      2.9k 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      31
+      33
        分钟
     </span>
   
@@ -210,7 +210,8 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <p class="note note-info">最后更新于2020-07-16：添加梯度消失问题</p>
+              <p class="note note-info">最后更新于2020-07-17：添加端到端概念</p>
+<p class="note note-info">2020-07-16：添加梯度消失问题</p>
 
 <h1 id="1-神经网络基础"><a href="#1-神经网络基础" class="headerlink" title="1. 神经网络基础"></a>1. 神经网络基础</h1><p>神经网络被建模成神经元的集合，神经元之间以无环图的形式进行连接。对于普通神经网络，最普通的层的类型是全连接层。全连接层中的神经元与其前后两层的神经元是全连接的。神经网络包括输入层、隐藏层、输出层，一般说N层神经网络的时候，忽略了输入层，比如下图是一个2层神经网络。<strong>输入层神经元节点的数量就是数据feature的数量。</strong></p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200707210313.png" srcset="/img/loading.gif" alt=""></p>
@@ -275,6 +276,8 @@ r_{n} = r_{n - 1} + (k_n - 1)\prod_{i = 1}^{n - 1}s_i</script><p>其中 $r_n$ �
 <li>Batch Normalization</li>
 <li>残差网络</li>
 </ul>
+<h2 id="1-8-端到端"><a href="#1-8-端到端" class="headerlink" title="1.8 端到端"></a>1.8 端到端</h2><p>端到端就是指输入是原始数据，输出就是最后结果。</p>
+<p>比如对于一个目标检测模型，输入原始图像，最后就能直接输出目标的位置和目标的类别，这就是<strong>端到端</strong>的。但对于R-CNN这个模型，也是进行目标检测，需要先获取可能包含目标的候选框，然后将候选框输入到CNN模型中判断是否有目标以及目标的类别，这就是<strong>非端到端</strong>的。</p>
 <h1 id="2-激活函数（activation-function）"><a href="#2-激活函数（activation-function）" class="headerlink" title="2. 激活函数（activation function）"></a>2. 激活函数（activation function）</h1><p>在神经元节点中线性计算后，然后使用激活函数，激活函数需要是一个非线性函数。使用激活函数是为了将神经元节点输出非线性化，如果只是使用线性函数，那么最后的输出将是几个线性函数的线性组合，那么设计多层的神经网络就变得没有任何意义。</p>
 <h2 id="常用激活函数"><a href="#常用激活函数" class="headerlink" title="常用激活函数"></a>常用激活函数</h2><h3 id="sigmoid函数"><a href="#sigmoid函数" class="headerlink" title="sigmoid函数"></a>sigmoid函数</h3><p>sigmoid函数将输入压缩到 0 到 1 范围，主要用于二分类，比如logistics回归，如今sigmoid函数很少使用了。</p>
 <script type="math/tex; mode=display">
