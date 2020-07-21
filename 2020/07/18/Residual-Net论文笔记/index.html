@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      711 字
+      913 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      8
+      10
        分钟
     </span>
   
@@ -225,13 +225,14 @@
 <li>深层残差网络更容易优化；</li>
 <li>增加深度后能够提高精确度。</li>
 </ul>
+<p>最后设计了一个达到152层的残差网络，在ImageNet数据集上只有3.57%的错误率，并在2015年ILSVRC图像分类比赛中获得了第一名。</p>
 <h1 id="2-残差块"><a href="#2-残差块" class="headerlink" title="2. 残差块"></a>2. 残差块</h1><p>如下图，是一个残差块的基本结构。</p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200719105203.png" srcset="/img/loading.gif" alt=""><br>使用<code>shortcut connection</code>来完成残差块的计算，输入为x, 则输出为：</p>
 <script type="math/tex; mode=display">
 y = F(x, W_i) + x \tag{1}</script><p>在上图两层的残差块中，$F(x, W_i)$ 可以表示为 $W_2 \sigma(W_1x)$，其中$\sigma$ 是<code>ReLU</code>激活函数。运算<code>F + x</code>通过<code>shortcut connection</code>完成<code>element-wise addition</code>操作（<strong>对应元素相加</strong>），执行该运算时，<code>F</code>和<code>x</code>的维度需要一致，如果不一致，有以下两种解决办法：</p>
 <ul>
-<li>填充0来增加数据维度，该方式不会增加额外的参数；</li>
-<li>使用该公式来进行计算：$y = F(x, W_i) + W_sx$，即增加了额外的参数$W_s$。一般是使用<code>1 x 1</code>卷积来修改x的维度。</li>
+<li><code>identity mapping</code>: 填充0来增加数据维度，该方式不会增加额外的参数；</li>
+<li><code>projection shortcut</code>: 使用该公式来进行计算：$y = F(x, W_i) + W_sx$，即增加了额外的参数$W_s$。一般是使用<code>1 x 1</code>卷积来修改x的维度。</li>
 </ul>
 <h1 id="3-网络架构"><a href="#3-网络架构" class="headerlink" title="3. 网络架构"></a>3. 网络架构</h1><p>设计了plain nets 和 residual nets 两种模型，进行对比。</p>
 <h2 id="3-1-Plain-Network"><a href="#3-1-Plain-Network" class="headerlink" title="3.1 Plain Network"></a>3.1 Plain Network</h2><p>卷积层大部分使用<code>3 x 3</code>卷积，主要有以下设计规则：</p>
@@ -241,10 +242,19 @@ y = F(x, W_i) + x \tag{1}</script><p>在上图两层的残差块中，$F(x, W_i)
 </ul>
 <h2 id="3-2-Residual-Network"><a href="#3-2-Residual-Network" class="headerlink" title="3.2 Residual Network"></a>3.2 Residual Network</h2><p>与Plain Network基本相同，只是网络中使用了<code>shortcut connection</code>，将网络变成了残差网络。</p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200719114200.png" srcset="/img/loading.gif" alt=""></p>
-<h1 id="4-实现"><a href="#4-实现" class="headerlink" title="4. 实现"></a>4. 实现</h1><p>网络中在每个卷积层之后使用<code>Batch Normalization</code>，然后使用<code>ReLU</code>激活函数。在进行<code>shortcut connection</code>时，如果维度不相同，需要增加维度，以保证维度匹配，能够执行<code>element-wise addition</code>操作。</p>
+<h1 id="4-实现"><a href="#4-实现" class="headerlink" title="4. 实现"></a>4. 实现</h1><p>网络中在每个卷积层之后使用<code>Batch Normalization</code>，然后使用<code>ReLU</code>激活函数，即计算顺序为<code>Conv-BN-ReLU</code>。在进行<code>shortcut connection</code>时，如果维度不相同，需要增加维度，以保证维度匹配，能够执行<code>element-wise addition</code>操作。</p>
 <p>数据增强时，先将图像缩放，缩放尺寸为$[256, 480]$，然后执行均值减法，然后对缩放图片或水平翻转的图片进行224x224的剪裁。</p>
 <p>训练时，使用小批量梯度下降法，mini-batch size为256，学习率为0.1，当学习率不变时对其除以10，weight_decay = 0.0001, momentum = 0.9, 没有使用Dropout正则化。</p>
 <p>测试时，对测试数据进行<code>10-crop</code>操作，并将全连接层转换为卷积层，最后对多尺度score map 取平均值。</p>
+<h1 id="5-实验"><a href="#5-实验" class="headerlink" title="5. 实验"></a>5. 实验</h1><h2 id="5-1-Identity-vs-Projection-Shortcuts"><a href="#5-1-Identity-vs-Projection-Shortcuts" class="headerlink" title="5.1 Identity vs. Projection Shortcuts"></a>5.1 Identity vs. Projection Shortcuts</h2><p>根据<code>shortcut</code>的不同方式，设计了三种不同类型的网络：</p>
+<ul>
+<li>A: 使用零填充的方式增加维度；</li>
+<li>B: 使用<code>peojection shortcut</code>的方式增加维度，维度相同的则使用<code>identity shortcut</code>;</li>
+<li>C: 全部使用<code>projection shortcut</code>.</li>
+</ul>
+<p>Identity shortcuts 对下面的瓶颈结构非常重要。</p>
+<h2 id="5-2-Deeper-Bottleneck-Architecture"><a href="#5-2-Deeper-Bottleneck-Architecture" class="headerlink" title="5.2 Deeper Bottleneck Architecture"></a>5.2 Deeper Bottleneck Architecture</h2><p>瓶颈结构如下右图所示，使用<code>1 x 1</code>、<code>3 x 3</code>、<code>1 x 1</code>三个卷积层，第一个<code>1 x 1</code>卷积用于减少维度，第二个<code>1 x 1</code>卷积用于增加维度。</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200718220612.png" srcset="/img/loading.gif" alt=""></p>
 
             </article>
             <hr>
