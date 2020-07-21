@@ -19,7 +19,7 @@
   <meta name="description" content="华中科技大学17级本科生">
   <meta name="author" content="XIN">
   <meta name="keywords" content="">
-  <title>VGG论文笔记 - XIN&#39;S BLOG</title>
+  <title>DenseNet论文笔记 - XIN&#39;S BLOG</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -150,8 +150,8 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-07-14 20:58">
-      2020年7月14日 晚上
+    <time datetime="2020-07-21 12:12">
+      2020年7月21日 中午
     </time>
   </div>
 
@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.5k 字
+      608 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      18
+      7
        分钟
     </span>
   
@@ -210,74 +210,25 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h1 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h1><p><a href="https://arxiv.org/pdf/1409.1556.pdf" target="_blank" rel="noopener">论文地址</a></p>
-<p>论文主要针对卷积神经网络的深度对大规模图像集识别精度的影响，主要贡献是使用很小的卷积核(<code>3×3</code>)构建各种深度的卷积神经网络结构。</p>
-<h2 id="1-1-特点"><a href="#1-1-特点" class="headerlink" title="1.1 特点"></a>1.1 特点</h2><ul>
-<li>使用小卷积核，几乎全部使用<code>3 x 3</code>的卷积核；</li>
-<li>网络层数深；</li>
-<li>小池化核，使用的都是<code>2 x 2</code>的池化核；</li>
-<li>前两个全连接层使用<code>dropout</code>正则化；</li>
-<li>测试阶段，全连接层转换成卷积层。</li>
-</ul>
-<h1 id="2-VGG网络结构"><a href="#2-VGG网络结构" class="headerlink" title="2. VGG网络结构"></a>2. VGG网络结构</h1><p>VGG的输入是一个固定大小为<code>224 x 224 x 3</code> 的RGB图像，唯一的图像预处理是使用了均值减法。网络中大部分使用的是<code>3 x 3</code>的卷积核，其中 stride = 1， padding = 1， 即使用same卷积，只有在网络<code>C</code>中使用了<code>1 x 1</code>卷积。网络中有5个最大池化层，池化层放在几个卷积层之后，其中池化层的大小为<code>2 x 2</code>, stride = 2。卷积层之后是3个全连接层，与AlexNet网络一样，神经元的数量分别是4096、4096、1000, 其中前两个全连接层使用<code>dropout</code>正则化（<code>keep_prob = 0.5</code> ）。最后一层是<code>softmax</code>层。</p>
-<h2 id="2-1-配置"><a href="#2-1-配置" class="headerlink" title="2.1 配置"></a>2.1 配置</h2><p>设计了如下<code>A-E</code>6个网络，网络深度从11增加到19，channel数从64增加到512，channel要么不变，要么加倍。</p>
-<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200714210701.png" srcset="/img/loading.gif" alt=""></p>
-<h2 id="2-2-讨论"><a href="#2-2-讨论" class="headerlink" title="2.2 讨论"></a>2.2 讨论</h2><p>AlexNet第一层使用卷积核大小为<code>7 x 7</code>， 步长为4的卷积，ZFNet第一层使用卷积核大小为<code>5 x 5</code>, 步长为2的卷积，而我们在整个网络中都是使用<code>3 x 3</code>的卷积（除了在网络C中使用了<code>1 x 1</code>卷积）。不难发现：2个<code>3 x 3</code>的卷积层的感受野为<code>5 x 5</code>; 3个<code>3 x 3</code>的卷积层的感受野是<code>7 x 7</code>。</p>
-<p><strong>1. 为什么使用3个<code>3 x 3</code>的卷积层代替单个<code>7 x 7</code>的卷积层？</strong></p>
+              <h1 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h1><p>论文地址：<a href="https://arxiv.org/abs/1608.06993" target="_blank" rel="noopener">Densely Connected Convolutional Networks</a></p>
+<p>论文中提出了Dense Convolutional Network(DenseNet), 传统的L层神经网络有L个连接，但DenseNet有$\frac{L(L + 1)}{2}$个连接。DenseNet中对于每一层而言，前面所有层的feature map作为该层的输入，该层输出的feature map又作为后面所有层的输入。DenseNet与ResNet的一个不同是：特征融合时，ResNet使用像素相加，而DenseNet使用的是concat操作。DenseNet有许多引人注目的优点：</p>
 <ul>
-<li>3个卷积层之后都有一个<code>ReLU</code>激活函数，增加了非线性程度，使决策函数更具可分性；</li>
-<li>减少了参数数量。</li>
+<li>减轻梯度消失问题；</li>
+<li>加强特征传递；</li>
+<li>促进特征的复用；</li>
+<li>大大地减少参数的数量，因此需要更少的计算。</li>
+<li>有一定的正则化效果，减轻了过拟合。</li>
 </ul>
-<p><strong>2. 为什么使用<code>1 x 1</code>卷积？</strong></p>
-<ul>
-<li>增加决策函数的非线性程度但不影响感受野。</li>
-</ul>
-<h1 id="3-训练"><a href="#3-训练" class="headerlink" title="3. 训练"></a>3. 训练</h1><p>参数优化使用小批量梯度下降法，momentum = 0.9， batch_size = 256；使用$L_2$正则化， 正则化参数为5e-4；学习率初始化为0.01, 当验证集准确率不变时，学习率除以10。</p>
-<h2 id="3-1-初始化参数"><a href="#3-1-初始化参数" class="headerlink" title="3.1 初始化参数"></a>3.1 初始化参数</h2><ol>
-<li><p>随机初始化：均值为0，方差为1e-2的正态分布， biases初始为0.</p>
-</li>
-<li><p>先对Net-A进行训练，然后对后面的网络如Net-B,Net-C,Net-D训练时，将Net-A的权重赋给Net-B,Net-C,Net-D,其他不同的层，采用1中的随机初始化方式。</p>
-</li>
-</ol>
-<h2 id="3-2-数据增强"><a href="#3-2-数据增强" class="headerlink" title="3.2 数据增强"></a>3.2 数据增强</h2><p>先对图像进行缩放(rescale)，然后进行随机水平翻转、随机RGB color shift，最后进行随机剪裁获得<code>224 x 224</code>的图像。</p>
-<h3 id="训练集图像尺寸"><a href="#训练集图像尺寸" class="headerlink" title="训练集图像尺寸"></a>训练集图像尺寸</h3><p>假设图像缩放的尺寸为 S (training scale)，那么$ S \ge 224$。有两种设置S的方法：</p>
-<ol>
-<li><code>single-scale training</code>: 使用固定的S ；</li>
-<li><code>multi-scale training</code>: 在 $[S_{min}, S_{max}]$ 中随机选择一个S （实验中$S_{min}$ = 256, $S_{max}$ = 512），也能被视作<code>scale jittering</code>。</li>
-</ol>
-<h1 id="4-测试"><a href="#4-测试" class="headerlink" title="4. 测试"></a>4. 测试</h1><p>测试图片缩放的尺寸为Q（test scale）。<strong>测试时，将全连接层替换成卷积层，即将第一个全连接层转换为<code>7 x 7</code>的卷积，后面两个全连接层转换为<code>1 x 1</code>的卷积, 这种方式称为dense evaluation</strong>。这样进行测试时，直接将<code>Q x Q</code>的图片数据输入即可，而不需要对测试集进行剪裁。</p>
-<p><strong>为什么使用<code>7 x 7</code>的卷积？</strong></p>
-<ul>
-<li>网络中使用的same卷积，总共使用了5个池化层，则全连接层的输入为<code>7 x 7 x 512</code>（因为224 / 32 = 7, channel为512），那么第一个全连接层的参数尺寸为<code>(4096, 7 x 7 x 512)</code>。转换后参数数量不变，应该使用4096个<code>7 x 7</code>卷积（channel = 512），卷积之后的输出为<code>1 x 1 x 4096</code>。</li>
-</ul>
-<p><strong><code>1 x 1</code>卷积</strong></p>
-<ul>
-<li>第二个全连接层：参数尺寸为<code>(4096, 4096)</code>, 使用4096个<code>1 x 1</code>卷积（channel = 4096），输出为<code>1 x 1 x 4096</code>;</li>
-<li>第三个全连接层：参数尺寸为<code>(4096, 1000)</code>, 使用1000个<code>1 x 1</code>卷积（channel = 4096），输出为<code>1 x 1 x 1000</code></li>
-</ul>
-<p>对测试过程进行举例说明，假如全连接层的输入为<code>8 x 8 x 512</code>（因为测试时输入图像不一定是<code>224 x 224</code>）, 三个全连接层分别替换成4096个<code>7 x 7</code>卷积、4096个<code>1 x 1</code>卷积、1000个<code>1 x 1</code>卷积，输出分别是<code>2 x 2 x 4096</code>、<code>2 x 2 x 4096</code>、<code>2 x 2 x 1000</code>, 那么最后的feature map大小为<code>2 x 2 x 1000</code>, 但只有1000个分类，所以需要对feature map求平均值，使其大小变为<code>1 x 1 x 1000</code>。</p>
-<h2 id="4-1-单尺度评估"><a href="#4-1-单尺度评估" class="headerlink" title="4.1 单尺度评估"></a>4.1 单尺度评估</h2><p><strong>测试图像固定尺度。</strong></p>
-<p>$Q = S$ 或者 $Q = 0.5(S_{min} + S_{max})$</p>
-<p>单尺度评估结果如下：</p>
-<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200714225023.png" srcset="/img/loading.gif" alt=""></p>
-<p>其中<code>top-5 error</code>: 预测5次，如果5次预测都错才算预测错误，以此来计算错误率。</p>
-<ul>
-<li>随着网络深度的加深，错误率降低，当网络层数达到19时，错误率达到饱和。</li>
-<li>训练图像尺度抖动优于使用固定边S.</li>
-</ul>
-<h2 id="4-2-多尺度评估"><a href="#4-2-多尺度评估" class="headerlink" title="4.2 多尺度评估"></a>4.2 多尺度评估</h2><p><strong>测试图像的尺度抖动对性能的影响。</strong></p>
-<p>$Q = \{S - 32, S, S + 32\}$ 或者 $Q = \{S_{min}, 0.5(S_{min} + S_{max}), S_{max}\}$</p>
-<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200714225126.png" srcset="/img/loading.gif" alt=""></p>
-<ul>
-<li>训练图像尺度抖动优于使用固定边S；</li>
-<li>测试阶段使用尺度抖动（scale jittering）能提高性能（与使用单尺度相比）。</li>
-</ul>
-<h2 id="4-3-多剪裁图像评估"><a href="#4-3-多剪裁图像评估" class="headerlink" title="4.3 多剪裁图像评估"></a>4.3 多剪裁图像评估</h2><ul>
-<li>dense evaluation：全连接层转换成卷积层进行测试；</li>
-<li>multi-crop evaluation： 与训练过程一样，对测试图像进行随机剪裁，将得到的多张剪裁图像输入到网络中，最后取平均值。</li>
-</ul>
-<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200715094536.png" srcset="/img/loading.gif" alt=""></p>
-<p>两种方式是互补的，使用两种方式的组合优于其中任何一种方法。</p>
+<p>下图所示是一个dense block：</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200721121532.png" srcset="/img/loading.gif" alt=""></p>
+<h1 id="2-DenseNet"><a href="#2-DenseNet" class="headerlink" title="2. DenseNet"></a>2. DenseNet</h1><p>DenseNet中的每一层使用一个非线性转换$H_l(·)$，其中$l$表示第$l$层，$H_l(·)$由一系列操作组成：BN，ReLU，Pooling，或者Convolution。那么第$l$层将完成如下操作：</p>
+<script type="math/tex; mode=display">
+x_l = H_l([x_0, x_1, \ldots, x_{l - 1}])</script><p>其中$[x_0, x_1, \ldots, x_{l - 1}]$表示$0, 1, \ldots,l-1$层的feature map执行concat操作之后的结果。其中$H_l(·)$函数包含以下三个连续的操作：BN，然后ReLU，然后是<code>3 x 3</code>Convolution。</p>
+<p><strong>池化层</strong>。当feature map的尺寸改变时，就无法使用concat操作，但是使用下采样改变feature map的尺寸是必要的。因此为了使用下采用，将网络划分为多个dense block，每个block中使用dense connect。在两个block之间引入一个<code>transition layer</code>，该层包含三个操作：BN，<code>1 x 1</code>卷积，<code>2 x 2</code>平均池化。</p>
+<p><strong>Growth rate</strong>。假设每个$H_l(·)$函数产生<code>k</code>个feature map（<strong>feature map的数量也就是通道数</strong>），那么第$l$层的输入有$k_0 + k (l - 1)$个feature map，其中$k_0$指最开始的输入的通道数。参数<code>k</code>就是growth rate。</p>
+<p><strong>Bottleneck layers</strong>。在<code>3 x 3</code>卷积层之前引入<code>1 x 1</code>卷积来减少feature map的数量，那么$H_l(·)$函数将完成如下操作<code>BN-ReLU-Conv(1x1)-BN-ReLU-Conv(3x3)</code>, 然后将该网络称为<code>DenseNet-B</code>.实验中，<code>1 x 1</code>卷积产生<code>4k</code>个feature map。</p>
+<p><strong>Compression</strong>。在<code>transition layer</code>减少feature map的数量。假设一个dense block有m个feature map，接下来的<code>transition layer</code>产生$\theta m$个输出feature map，其中$0&lt;\theta&lt;1$，该种网络称为<code>DenseNet-C</code>。实验中，将$\theta$设置为0.5。</p>
+<p><strong>实现细节</strong>。所有的<code>3 x 3</code>卷积padding=1，以保证feature map尺寸不变。</p>
 
             </article>
             <hr>
@@ -310,18 +261,12 @@
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/07/16/GoogLeNet论文笔记/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">GoogLeNet论文笔记</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/07/13/深度学习图像通道channel/">
-                        <span class="hidden-mobile">深度学习图像通道channel</span>
+                      <a href="/2020/07/18/Residual-Net论文笔记/">
+                        <span class="hidden-mobile">Residual Net论文笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -538,7 +483,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "VGG论文笔记&nbsp;",
+        "DenseNet论文笔记&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

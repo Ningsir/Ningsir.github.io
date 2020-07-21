@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>DenseNet论文笔记</title>
+    <link href="/2020/07/21/DenseNet%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"/>
+    <url>/2020/07/21/DenseNet%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</url>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h1><p>论文地址：<a href="https://arxiv.org/abs/1608.06993" target="_blank" rel="noopener">Densely Connected Convolutional Networks</a></p><p>论文中提出了Dense Convolutional Network(DenseNet), 传统的L层神经网络有L个连接，但DenseNet有$\frac{L(L + 1)}{2}$个连接。DenseNet中对于每一层而言，前面所有层的feature map作为该层的输入，该层输出的feature map又作为后面所有层的输入。DenseNet与ResNet的一个不同是：特征融合时，ResNet使用像素相加，而DenseNet使用的是concat操作。DenseNet有许多引人注目的优点：</p><ul><li>减轻梯度消失问题；</li><li>加强特征传递；</li><li>促进特征的复用；</li><li>大大地减少参数的数量，因此需要更少的计算。</li><li>有一定的正则化效果，减轻了过拟合。</li></ul><p>下图所示是一个dense block：</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200721121532.png" srcset="/img/loading.gif" alt=""></p><h1 id="2-DenseNet"><a href="#2-DenseNet" class="headerlink" title="2. DenseNet"></a>2. DenseNet</h1><p>DenseNet中的每一层使用一个非线性转换$H_l(·)$，其中$l$表示第$l$层，$H_l(·)$由一系列操作组成：BN，ReLU，Pooling，或者Convolution。那么第$l$层将完成如下操作：</p><script type="math/tex; mode=display">x_l = H_l([x_0, x_1, \ldots, x_{l - 1}])</script><p>其中$[x_0, x_1, \ldots, x_{l - 1}]$表示$0, 1, \ldots,l-1$层的feature map执行concat操作之后的结果。其中$H_l(·)$函数包含以下三个连续的操作：BN，然后ReLU，然后是<code>3 x 3</code>Convolution。</p><p><strong>池化层</strong>。当feature map的尺寸改变时，就无法使用concat操作，但是使用下采样改变feature map的尺寸是必要的。因此为了使用下采用，将网络划分为多个dense block，每个block中使用dense connect。在两个block之间引入一个<code>transition layer</code>，该层包含三个操作：BN，<code>1 x 1</code>卷积，<code>2 x 2</code>平均池化。</p><p><strong>Growth rate</strong>。假设每个$H_l(·)$函数产生<code>k</code>个feature map（<strong>feature map的数量也就是通道数</strong>），那么第$l$层的输入有$k_0 + k (l - 1)$个feature map，其中$k_0$指最开始的输入的通道数。参数<code>k</code>就是growth rate。</p><p><strong>Bottleneck layers</strong>。在<code>3 x 3</code>卷积层之前引入<code>1 x 1</code>卷积来减少feature map的数量，那么$H_l(·)$函数将完成如下操作<code>BN-ReLU-Conv(1x1)-BN-ReLU-Conv(3x3)</code>, 然后将该网络称为<code>DenseNet-B</code>.实验中，<code>1 x 1</code>卷积产生<code>4k</code>个feature map。</p><p><strong>Compression</strong>。在<code>transition layer</code>减少feature map的数量。假设一个dense block有m个feature map，接下来的<code>transition layer</code>产生$\theta m$个输出feature map，其中$0&lt;\theta&lt;1$，该种网络称为<code>DenseNet-C</code>。实验中，将$\theta$设置为0.5。</p><p><strong>实现细节</strong>。所有的<code>3 x 3</code>卷积padding=1，以保证feature map尺寸不变。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>论文阅读</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Residual Net论文笔记</title>
     <link href="/2020/07/18/Residual-Net%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"/>
     <url>/2020/07/18/Residual-Net%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</url>
@@ -20,9 +47,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -47,9 +74,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -74,9 +101,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -126,9 +153,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -411,9 +438,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -438,9 +465,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -465,9 +492,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>深度学习</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
