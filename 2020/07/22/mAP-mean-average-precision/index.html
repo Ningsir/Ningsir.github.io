@@ -19,7 +19,7 @@
   <meta name="description" content="华中科技大学17级本科生">
   <meta name="author" content="XIN">
   <meta name="keywords" content="">
-  <title>LaTeX数学公式 - XIN&#39;S BLOG</title>
+  <title>mAP(mean average precision) - XIN&#39;S BLOG</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -150,8 +150,8 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-07-03 09:30">
-      2020年7月3日 上午
+    <time datetime="2020-07-22 22:48">
+      2020年7月22日 晚上
     </time>
   </div>
 
@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      410 字
+      417 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      7
+      5
        分钟
     </span>
   
@@ -210,444 +210,35 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h2 id="常用符号"><a href="#常用符号" class="headerlink" title="常用符号"></a>常用符号</h2><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>符号</th>
-<th>示例</th>
-<th>显示</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>偏导</td>
-<td>\partial y</td>
-<td>$\partial y$</td>
-</tr>
-<tr>
-<td>上下标</td>
-<td>S=a_{1}^2+a_{2}^2+a_{3}^2</td>
-<td>$S=a_{1}^2+a_{2}^2+a_{3}^2$</td>
-</tr>
-<tr>
-<td>分数</td>
-<td>\frac{1}{3}</td>
-<td>$\frac{1}{3}$</td>
-</tr>
-<tr>
-<td>开方</td>
-<td>\sqrt[3]{X}</td>
-<td>$\sqrt[3]{X}$</td>
-</tr>
-<tr>
-<td></td>
-<td>\bar x</td>
-<td>$\bar x$</td>
-</tr>
-<tr>
-<td>求导</td>
-<td>\mathrm{d}y</td>
-<td>$\mathrm{d}y$</td>
-</tr>
-<tr>
-<td>向量</td>
-<td>\vec x</td>
-<td>$\vec{x}$</td>
-</tr>
-<tr>
-<td>X帽</td>
-<td>\hat X 或者\widehat X</td>
-<td>$\hat X$ 或者$\widehat X$</td>
-</tr>
-<tr>
-<td>大括号</td>
-<td><code>\left\{\begin{array}{l}1\\0\end{array}\right.</code>，用法：<code>\begin{array}[{垂直对齐}]{（列格式说明）} &lt;表项&gt; &amp; &lt;表项&gt; &amp;...&amp; \\ \end{array}</code>, 列格式说明有：l（左对齐）、r（右对齐）、c（中间对齐）三种</td>
-<td>$\left\{\begin{array}{l}1\\0\end{array}\right.$</td>
-</tr>
-<tr>
-<td>矩阵</td>
-<td>pmatrix, bmatrix</td>
-<td>$\begin{pmatrix}1&amp;1\\ 1&amp;1 \end{pmatrix}$</td>
-</tr>
-<tr>
-<td></td>
-<td>^{\circ}</td>
-<td>$45^{\circ}$</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="其他字符"><a href="#其他字符" class="headerlink" title="其他字符"></a>其他字符</h2><h3 id="箭头"><a href="#箭头" class="headerlink" title="箭头"></a>箭头</h3><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>代码</th>
-<th>符号</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>\uparrow</td>
-<td>$\uparrow$</td>
-</tr>
-<tr>
-<td>\Uparrow</td>
-<td>$\Uparrow$</td>
-</tr>
-<tr>
-<td>\leftarrow</td>
-<td>$\leftarrow$</td>
-</tr>
-<tr>
-<td>\longleftarrow</td>
-<td>$\longleftarrow$</td>
-</tr>
-<tr>
-<td>X \stackrel{F} \rightarrow Y</td>
-<td>$X \stackrel{F} \rightarrow Y$</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h3><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>代码</th>
-<th>符号</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>\pm</td>
-<td>$\pm$</td>
-</tr>
-<tr>
-<td>\times</td>
-<td>$\times$</td>
-</tr>
-<tr>
-<td>\div</td>
-<td>$\div$</td>
-</tr>
-<tr>
-<td>\mid</td>
-<td>$\mid$</td>
-</tr>
-<tr>
-<td>\nmid</td>
-<td>$\nmid$</td>
-</tr>
-<tr>
-<td>\cdot</td>
-<td>$\cdot$</td>
-</tr>
-<tr>
-<td>\ldots</td>
-<td>$\ldots$</td>
-</tr>
-<tr>
-<td>\circ</td>
-<td>$\circ$</td>
-</tr>
-<tr>
-<td>\ast</td>
-<td>$\ast$</td>
-</tr>
-<tr>
-<td>\bigodot</td>
-<td>$\bigodot$</td>
-</tr>
-<tr>
-<td>\bigotimes</td>
-<td>$\bigotimes$</td>
-</tr>
-<tr>
-<td>\bigoplus</td>
-<td>$\bigoplus$</td>
-</tr>
-<tr>
-<td>\leq</td>
-<td>$\leq$</td>
-</tr>
-<tr>
-<td>\geq</td>
-<td>$\geq$</td>
-</tr>
-<tr>
-<td>\neq</td>
-<td>$\neq$</td>
-</tr>
-<tr>
-<td>\approx</td>
-<td>$\approx$</td>
-</tr>
-<tr>
-<td>\equiv</td>
-<td>$\equiv$</td>
-</tr>
-<tr>
-<td>\sum</td>
-<td>$\sum$</td>
-</tr>
-<tr>
-<td>\prod</td>
-<td>$\prod$</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="微积分运算符"><a href="#微积分运算符" class="headerlink" title="微积分运算符"></a>微积分运算符</h3><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>代码</th>
-<th>符号</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>\prime</td>
-<td>$\prime$</td>
-</tr>
-<tr>
-<td>\int</td>
-<td>$\int$</td>
-</tr>
-<tr>
-<td>\iint</td>
-<td>$\iint$</td>
-</tr>
-<tr>
-<td>\iiint</td>
-<td>$\iiint$</td>
-</tr>
-<tr>
-<td>\oint</td>
-<td>$\oint$</td>
-</tr>
-<tr>
-<td>\lim</td>
-<td>$\lim$</td>
-</tr>
-<tr>
-<td>\infty</td>
-<td>$\infty$</td>
-</tr>
-<tr>
-<td>\nabla</td>
-<td>$\nabla$</td>
-</tr>
-<tr>
-<td>\mathrm{d}</td>
-<td>$\mathrm{d}$</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="集合运算符"><a href="#集合运算符" class="headerlink" title="集合运算符"></a>集合运算符</h3><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>代码</th>
-<th>符号</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>\emptyset</td>
-<td>$\emptyset$</td>
-</tr>
-<tr>
-<td>\in</td>
-<td>$\in$</td>
-</tr>
-<tr>
-<td>\notin</td>
-<td>$\notin$</td>
-</tr>
-<tr>
-<td>\subset</td>
-<td>$\subset$</td>
-</tr>
-<tr>
-<td>\cap</td>
-<td>$\cap$</td>
-</tr>
-<tr>
-<td>\subseteq</td>
-<td>$\subseteq$</td>
-</tr>
-<tr>
-<td>\cup</td>
-<td>$\cup$</td>
-</tr>
-<tr>
-<td>\supseteq</td>
-<td>$\supseteq$</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="希腊字母"><a href="#希腊字母" class="headerlink" title="希腊字母"></a>希腊字母</h3><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>代码</th>
-<th>大写</th>
-<th>代码</th>
-<th>小写</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A</td>
-<td>$A$</td>
-<td>\alpha</td>
-<td>$\alpha$</td>
-</tr>
-<tr>
-<td>B</td>
-<td>$B$</td>
-<td>\beta</td>
-<td>$\beta$</td>
-</tr>
-<tr>
-<td>\Gamma</td>
-<td>$\Gamma$</td>
-<td>\gamma</td>
-<td>$\gamma$</td>
-</tr>
-<tr>
-<td>\Delta</td>
-<td>$\Delta$</td>
-<td>\delta</td>
-<td>$\delta$</td>
-</tr>
-<tr>
-<td>E</td>
-<td>$E$</td>
-<td>\epsilon</td>
-<td>$\epsilon$</td>
-</tr>
-<tr>
-<td>Z</td>
-<td>$Z$</td>
-<td>\zeta</td>
-<td>$\zeta$</td>
-</tr>
-<tr>
-<td>H</td>
-<td>$H$</td>
-<td>\eta</td>
-<td>$\eta$</td>
-</tr>
-<tr>
-<td>\Theta</td>
-<td>$\Theta$</td>
-<td>\theta</td>
-<td>$\theta$</td>
-</tr>
-<tr>
-<td>I</td>
-<td>$I$</td>
-<td>\iota</td>
-<td>$\iota$</td>
-</tr>
-<tr>
-<td>K</td>
-<td>$K$</td>
-<td>\kappa</td>
-<td>$\kappa$</td>
-</tr>
-<tr>
-<td>Lambda</td>
-<td>$\Lambda$</td>
-<td>\lambda</td>
-<td>$\lambda$</td>
-</tr>
-<tr>
-<td>M</td>
-<td>$M$</td>
-<td>\mu</td>
-<td>$\mu$</td>
-</tr>
-<tr>
-<td>N</td>
-<td>$N$</td>
-<td>\nu</td>
-<td>$\nu$</td>
-</tr>
-<tr>
-<td>Xi</td>
-<td>$Xi$</td>
-<td>\xi</td>
-<td>$\xi$</td>
-</tr>
-<tr>
-<td>O</td>
-<td>$O$</td>
-<td>\omicron</td>
-<td>$\omicron$</td>
-</tr>
-<tr>
-<td>\Pi</td>
-<td>$\Pi$</td>
-<td>\pi</td>
-<td>$\pi$</td>
-</tr>
-<tr>
-<td>P</td>
-<td>$P$</td>
-<td>\rho</td>
-<td>$\rho$</td>
-</tr>
-<tr>
-<td>\Sigma</td>
-<td>$\Sigma$</td>
-<td>\sigma</td>
-<td>$\sigma$</td>
-</tr>
-<tr>
-<td>T</td>
-<td>$T$</td>
-<td>\tau</td>
-<td>$\tau$</td>
-</tr>
-<tr>
-<td>\Upsilon</td>
-<td>$\Upsilon$</td>
-<td>\upsilon</td>
-<td>$\upsilon$</td>
-</tr>
-<tr>
-<td>\Phi</td>
-<td>$\Phi$</td>
-<td>\phi</td>
-<td>$\phi$</td>
-</tr>
-<tr>
-<td>X</td>
-<td>$X$</td>
-<td>\chi</td>
-<td>$\chi$</td>
-</tr>
-<tr>
-<td>\Psi</td>
-<td>$\Psi$</td>
-<td>\psi</td>
-<td>$\psi$</td>
-</tr>
-<tr>
-<td>\Omega</td>
-<td>$\Omega$</td>
-<td>\omega</td>
-<td>$\omega$</td>
-</tr>
-</tbody>
-</table>
-</div>
+              <h1 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h1><p>mAP是用于目标检测的一项比较流行的评价指标。下面介绍一些比较重要的定义。</p>
+<h2 id="IoU-Intersevtion-over-Union"><a href="#IoU-Intersevtion-over-Union" class="headerlink" title="IoU(Intersevtion over Union)"></a>IoU(Intersevtion over Union)</h2><p>IoU：交并比，用于评估两个边界之间的重叠比例。记<code>ground truth</code>边界框为$B_{gt}$, 预测的边界框为$B_p$, 则IoU计算的是ground truth边界框与预测边界框相交的面积占两者相并的面积的比例，</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200722230951.png" srcset="/img/loading.gif" alt=""></p>
+<p>那么IoU的计算公式为：</p>
+<script type="math/tex; mode=display">
+IoU = \frac{B_{gt} \cap B_p }{B_{gt} \cup B_{p}}</script><h2 id="TP-TN-FP-FN"><a href="#TP-TN-FP-FN" class="headerlink" title="TP, TN, FP, FN"></a>TP, TN, FP, FN</h2><ul>
+<li>TP: True Positive, 正确划分为正例的个数，A correct detection. Detection with IOU ≥ <em>threshold</em>；</li>
+<li>TN: True Nagative, 正确划分为负例的个数；</li>
+<li>FP: False Positive, 错误划分为正例的个数，A wrong detection. Detection with IOU &lt; <em>threshold</em>；</li>
+<li>FN: False Negative, 错误划分为负例的个数，A ground truth not detected。</li>
+</ul>
+<p>其中<code>threshold</code>一般取 $[0.5, 0.75, 0.95]$</p>
+<h2 id="Precision-amp-Recall"><a href="#Precision-amp-Recall" class="headerlink" title="Precision &amp; Recall"></a>Precision &amp; Recall</h2><p><strong>precision</strong>：</p>
+<script type="math/tex; mode=display">
+precision = \frac{TP}{TP + FP} = \frac{TP}{all\ detections}</script><p><strong>recall</strong>：</p>
+<script type="math/tex; mode=display">
+racall = \frac{TP}{TP + FN} = \frac{TP}{all\ ground\ truths}</script><p>下图也可以说明precision和recall的计算：</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200722225059.png" srcset="/img/loading.gif" alt=""></p>
+<h1 id="2-计算"><a href="#2-计算" class="headerlink" title="2. 计算"></a>2. 计算</h1><h2 id="2-1-precision和recall的计算"><a href="#2-1-precision和recall的计算" class="headerlink" title="2.1 precision和recall的计算"></a>2.1 precision和recall的计算</h2><p>首先获取了多个样本置信度，按照置信度递减的顺序排序，然后分别计算其precision和recall，计算时，注意对TP等值进行累加。</p>
+<h2 id="2-2-AP的计算"><a href="#2-2-AP的计算" class="headerlink" title="2.2 AP的计算"></a>2.2 AP的计算</h2><p>通常AP（average precision）的定义为<code>precision-recall</code>曲线的面积。</p>
+<p>首先绘制precision-recall曲线，然后对其平滑变成<code>zigzag pattern</code>。</p>
+<h3 id="1-11-point-interpolation"><a href="#1-11-point-interpolation" class="headerlink" title="1. 11-point interpolation"></a>1. 11-point interpolation</h3><p>在曲线上取$[0, 0.1, 0.2, \ldots, 1.0]$这11个点，然后对其求平均值。</p>
+<h3 id="2-Interpolating-all-points"><a href="#2-Interpolating-all-points" class="headerlink" title="2. Interpolating all points"></a>2. Interpolating all points</h3><p>其实就是求曲线在recall轴上的面积。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><p><a href="https://github.com/rafaelpadilla/Object-Detection-Metrics#precision-x-recall-curve" target="_blank" rel="noopener">https://github.com/rafaelpadilla/Object-Detection-Metrics#precision-x-recall-curve</a></p>
+</li>
+<li><p><a href="https://medium.com/@jonathan_hui/map-mean-average-precision-for-object-detection-45c121a31173" target="_blank" rel="noopener">https://medium.com/@jonathan_hui/map-mean-average-precision-for-object-detection-45c121a31173</a></p>
+</li>
+</ol>
 
             </article>
             <hr>
@@ -657,7 +248,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/LaTeX/">LaTeX</a>
+                      <a class="hover-with-bg" href="/categories/计算机视觉/">计算机视觉</a>
                     
                   </div>
                 
@@ -665,7 +256,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/LaTex/">LaTex</a>
+                      <a class="hover-with-bg" href="/tags/深度学习/">深度学习</a>
+                    
+                      <a class="hover-with-bg" href="/tags/目标检测/">目标检测</a>
                     
                   </div>
                 
@@ -678,9 +271,9 @@
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/07/03/机器学习基础/">
+                      <a href="/2020/07/22/R-CNN论文笔记/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">机器学习基础</span>
+                        <span class="hidden-mobile">R-CNN论文笔记</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -688,8 +281,8 @@
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/07/02/手写数字识别/">
-                        <span class="hidden-mobile">手写数字识别</span>
+                      <a href="/2020/07/21/DenseNet论文笔记/">
+                        <span class="hidden-mobile">DenseNet论文笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -906,7 +499,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "LaTeX数学公式&nbsp;",
+        "mAP(mean average precision)&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
