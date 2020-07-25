@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      0 字
+      538 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      5
        分钟
     </span>
   
@@ -210,12 +210,43 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              
+              <h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h1><p>R-CNN主要是用于目标检测，目标检测包括两个方面：localization和recognition，即定位目标位置和识别目标。R-CNN在VOC2012数据集上mAP（mean average precision）达到了53.3%。</p>
+<p>在面临数据比较少的问题时，首先对CNN进行预训练然后进行微调以优化网络。</p>
+<p>R-CNN用于目标检测时需要经过多个步骤：首先输入图像，然后在原始图像上提取出候选区域，然后将候选区域输入到CNN中提取特征，最后将提取的特征输入到分类器中判断目标类别。其中R-CNN的整体架构如下图所示。</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200723103516.png" srcset="/img/loading.gif" alt=""></p>
+<h1 id="2-Object-detection-with-R-CNN"><a href="#2-Object-detection-with-R-CNN" class="headerlink" title="2. Object detection with R-CNN"></a>2. Object detection with R-CNN</h1><p>R-CNN主要包括三个模块：</p>
+<ol>
+<li>第一个模块用于生成与类别无关的候选区域；</li>
+<li>第二个模块是用于提取特征的大型卷积神经网络；</li>
+<li>第三个模块是多个SVM分类器，使用多个分类器是因为每个类别对应一个分类器；</li>
+</ol>
+<p><strong>Region proposals</strong>：在图像中提取候选区域，论文中采用<code>selective search</code>的方法，大约提取2000个区域。</p>
+<p><strong>Feature extraction</strong>：使用AlexNet网络（5个卷积层和2个全连接层，最后的输出层没有使用）提取一个4096维的特征，网络的输入是<code>227 x 227</code>的RGB图像。为了使候选区域与CNN的输入数据兼容，需要对候选区域进行转换。转换时，先将候选的边界框扩大p个像素点（论文中使用p=16）,然后将其转换到指定尺寸。</p>
+<p><strong>Supervised pre-training</strong>：在辅助数据集（ILSVRC 2012）上训练CNN网络。主要是为了解决用于目标检测的数据比较少的问题。</p>
+<p><strong>fine-tuning</strong>：将最后输出层的1000个神经元替换成<code>N + 1</code>个神经元，N表示目标的类别数，+1是因为多了一个类别：背景。然后使用候选区域对CNN进行训练。</p>
+<p><strong>Object category classifiers</strong>：对每个类别训练一个SVM分类器，这些分类器将CNN产生的f7特征（即第二个全连接层）作为输入。</p>
+
             </article>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/论文阅读/">论文阅读</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/论文阅读/">论文阅读</a>
+                    
+                      <a class="hover-with-bg" href="/tags/深度学习/">深度学习</a>
+                    
+                  </div>
                 
               </div>
               

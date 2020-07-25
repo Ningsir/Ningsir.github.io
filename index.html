@@ -165,7 +165,13 @@
   <div class="row mx-auto index-card">
     
     
-    <div class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/22/R-CNN论文笔记/" target="_self">
+          <img src="https://gitee.com/huster_ning/image/raw/master//image/20200723103516.png" srcset="/img/loading.gif" alt="R-CNN论文笔记">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a class="index-header" href="/2020/07/22/R-CNN论文笔记/">R-CNN论文笔记</a>
 
       <a href="/2020/07/22/R-CNN论文笔记/" class="index-excerpt">
@@ -173,7 +179,9 @@
         
           
         
-        <div></div>
+        <div>1. IntroductionR-CNN主要是用于目标检测，目标检测包括两个方面：localization和recognition，即定位目标位置和识别目标。R-CNN在VOC2012数据集上mAP（mean average precision）达到了53.3%。
+在面临数据比较少的问题时，首先对CNN进行预训练然后进行微调以优化网络。
+R-CNN用于目标检测时需要经过多个步骤：首先输入图像，然后</div>
       </a>
 
       <div class="index-btm post-metas">
@@ -183,6 +191,22 @@
           </div>
         
         
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/论文阅读/">论文阅读</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/论文阅读/">论文阅读</a>
+            
+              <a href="/tags/深度学习/">深度学习</a>
+            
+          </div>
         
       </div>
     </div>
@@ -206,7 +230,7 @@
           
         
         <div>1. 定义mAP是用于目标检测的一项比较流行的评价指标。下面介绍一些比较重要的定义。
-IoU(Intersevtion over Union)IoU：交并比，用于评估两个边界之间的重叠比例。记ground truth边界框为$B_{gt}$, 预测的边界框为$B_p$, 则IoU计算的是ground truth边界框与预测边界框相交的面积占两者相并的面积的比例，
+IoU(Intersection over Union)IoU：交并比，用于评估两个边界之间的重叠比例。记ground truth边界框为$B_{gt}$, 预测的边界框为$B_p$, 则IoU计算的是ground truth边界框与预测边界框相交的面积占两者相并的面积的比例，
 
 那么IoU的计算公式为：
 
@@ -280,9 +304,9 @@ Io</div>
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/深度学习/">深度学习</a>
-            
               <a href="/tags/论文阅读/">论文阅读</a>
+            
+              <a href="/tags/深度学习/">深度学习</a>
             
           </div>
         
@@ -333,9 +357,9 @@ degradation problem（退化问题）：随</div>
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/深度学习/">深度学习</a>
-            
               <a href="/tags/论文阅读/">论文阅读</a>
+            
+              <a href="/tags/深度学习/">深度学习</a>
             
           </div>
         
@@ -382,9 +406,9 @@ degradation problem（退化问题）：随</div>
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/深度学习/">深度学习</a>
-            
               <a href="/tags/论文阅读/">论文阅读</a>
+            
+              <a href="/tags/深度学习/">深度学习</a>
             
           </div>
         
@@ -439,9 +463,9 @@ degradation problem（退化问题）：随</div>
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/深度学习/">深度学习</a>
-            
               <a href="/tags/论文阅读/">论文阅读</a>
+            
+              <a href="/tags/深度学习/">深度学习</a>
             
           </div>
         
@@ -535,9 +559,9 @@ Channels First: 对于图像数据</div>
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/深度学习/">深度学习</a>
-            
               <a href="/tags/论文阅读/">论文阅读</a>
+            
+              <a href="/tags/深度学习/">深度学习</a>
             
           </div>
         

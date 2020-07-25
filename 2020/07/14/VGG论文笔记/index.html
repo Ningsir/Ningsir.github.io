@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.5k 字
+      1.6k 字
     </span>
   
 
@@ -219,7 +219,7 @@
 <li>前两个全连接层使用<code>dropout</code>正则化；</li>
 <li>测试阶段，全连接层转换成卷积层。</li>
 </ul>
-<h1 id="2-VGG网络结构"><a href="#2-VGG网络结构" class="headerlink" title="2. VGG网络结构"></a>2. VGG网络结构</h1><p>VGG的输入是一个固定大小为<code>224 x 224 x 3</code> 的RGB图像，唯一的图像预处理是使用了均值减法。网络中大部分使用的是<code>3 x 3</code>的卷积核，其中 stride = 1， padding = 1， 即使用same卷积，只有在网络<code>C</code>中使用了<code>1 x 1</code>卷积。网络中有5个最大池化层，池化层放在几个卷积层之后，其中池化层的大小为<code>2 x 2</code>, stride = 2。卷积层之后是3个全连接层，与AlexNet网络一样，神经元的数量分别是4096、4096、1000, 其中前两个全连接层使用<code>dropout</code>正则化（<code>keep_prob = 0.5</code> ）。最后一层是<code>softmax</code>层。</p>
+<h1 id="2-VGG网络结构"><a href="#2-VGG网络结构" class="headerlink" title="2. VGG网络结构"></a>2. VGG网络结构</h1><p>VGG的输入是一个固定大小为<code>224 x 224 x 3</code> 的RGB图像，唯一的图像预处理是使用了均值减法。网络中大部分使用的是<code>3 x 3</code>的卷积核，其中 stride = 1， padding = 1， 即使用same卷积，只有在网络<code>C</code>中使用了<code>1 x 1</code>卷积。网络中有5个最大池化层，池化层放在几个卷积层之后，其中池化层的大小为<code>2 x 2</code>, stride = 2。卷积层之后是3个全连接层，第一个全连接层的输入大小为<code>7 x 7 x 512</code>，与AlexNet网络一样，神经元的数量分别是4096、4096、1000, 其中前两个全连接层使用<code>dropout</code>正则化（<code>keep_prob = 0.5</code> ）。最后一层是<code>softmax</code>层。</p>
 <h2 id="2-1-配置"><a href="#2-1-配置" class="headerlink" title="2.1 配置"></a>2.1 配置</h2><p>设计了如下<code>A-E</code>6个网络，网络深度从11增加到19，channel数从64增加到512，channel要么不变，要么加倍。</p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200714210701.png" srcset="/img/loading.gif" alt=""></p>
 <h2 id="2-2-讨论"><a href="#2-2-讨论" class="headerlink" title="2.2 讨论"></a>2.2 讨论</h2><p>AlexNet第一层使用卷积核大小为<code>7 x 7</code>， 步长为4的卷积，ZFNet第一层使用卷积核大小为<code>5 x 5</code>, 步长为2的卷积，而我们在整个网络中都是使用<code>3 x 3</code>的卷积（除了在网络C中使用了<code>1 x 1</code>卷积）。不难发现：2个<code>3 x 3</code>的卷积层的感受野为<code>5 x 5</code>; 3个<code>3 x 3</code>的卷积层的感受野是<code>7 x 7</code>。</p>
@@ -295,9 +295,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/深度学习/">深度学习</a>
-                    
                       <a class="hover-with-bg" href="/tags/论文阅读/">论文阅读</a>
+                    
+                      <a class="hover-with-bg" href="/tags/深度学习/">深度学习</a>
                     
                   </div>
                 
