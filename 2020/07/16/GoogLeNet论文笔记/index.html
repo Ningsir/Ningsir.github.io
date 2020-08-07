@@ -211,7 +211,7 @@
             
             <article class="markdown-body">
               <h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h1><p>论文地址：<a href="https://research.google.com/pubs/pub43022.html" target="_blank" rel="noopener">Going Deeper with Convolutions</a></p>
-<p>论文打破常规，设计了一种将<code>1 x 1</code>卷积、<code>3 x 3</code>卷积、<code>5 x 5</code>卷积并联组合在一起，然后将输出结果进行<code>concatenate</code>(拼接)操作的结构，该结构叫做<code>Inception</code>，Inception主要特点是改善了对计算资源的利用。论文后面利用<code>Inception</code>设计了一个有22层的深层神经网络——<code>GoogLeNet</code>，该网络主要用于图像分类和目标检测，网络参数比AlexNet的参数少12倍，并且在2014年的ILSVRC比赛中获得了第一名。</p>
+<p>论文打破常规，设计了一种将<code>1 x 1</code>卷积、<code>3 x 3</code>卷积、<code>5 x 5</code>卷积并联组合在一起，然后将输出结果进行<code>concatenate</code>(拼接)操作的结构，该结构叫做<code>Inception</code>，Inception主要特点是改善了对计算资源的利用。论文后面利用<code>Inception</code>设计了一个有<code>22</code>层的深层神经网络——<code>GoogLeNet</code>，该网络主要用于图像分类和目标检测，网络参数比AlexNet的参数少12倍，并且在2014年的ILSVRC比赛中获得了第一名。</p>
 <h1 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2. Related Work"></a>2. Related Work</h1><ol>
 <li>GoogLeNet中多次使用Inception结构；</li>
 <li>GoogLeNet中大量使用<code>1 x 1</code>卷积，主要有两个作用：<ul>
