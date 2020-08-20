@@ -19,7 +19,7 @@
   <meta name="description" content="华中科技大学17级本科生">
   <meta name="author" content="XIN">
   <meta name="keywords" content="">
-  <title>GoogLeNet论文笔记 - XIN&#39;S BLOG</title>
+  <title>ta - XIN&#39;S BLOG</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -150,8 +150,8 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-07-16 20:19">
-      2020年7月16日 晚上
+    <time datetime="2020-08-20 16:54">
+      2020年8月20日 下午
     </time>
   </div>
 
@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      911 字
+      9 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10
+      1
        分钟
     </span>
   
@@ -210,63 +210,17 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h1><p>论文地址：<a href="https://research.google.com/pubs/pub43022.html" target="_blank" rel="noopener">Going Deeper with Convolutions</a></p>
-<p>论文打破常规，设计了一种将<code>1 x 1</code>卷积、<code>3 x 3</code>卷积、<code>5 x 5</code>卷积并联组合在一起，然后将输出结果进行<code>concatenate</code>(拼接)操作的结构，该结构叫做<code>Inception</code>，Inception主要特点是改善了对计算资源的利用。论文后面利用<code>Inception</code>设计了一个有<code>22</code>层的深层神经网络——<code>GoogLeNet</code>，该网络主要用于图像分类和目标检测，网络参数比AlexNet的参数少12倍，并且在2014年的ILSVRC比赛中获得了第一名。</p>
-<h1 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2. Related Work"></a>2. Related Work</h1><ol>
-<li>GoogLeNet中多次使用Inception结构；</li>
-<li>GoogLeNet中大量使用<code>1 x 1</code>卷积，主要有两个作用：<ul>
-<li>主要用于降维以解决计算瓶颈的问题；</li>
-<li>增加网络的深度和宽度而不用使用惩罚项，网络的<strong>宽度</strong>是指每层的单元数，也就是卷积核的数量。</li>
-</ul>
-</li>
-<li>目标检测当前技术主要是R-CNN，R-CNN可以分解成两个子问题：<ul>
-<li>利用底层的颜色和纹理等特性初步获取物体的位置；</li>
-<li>使用分类器判断该位置处的物体类别。</li>
-</ul>
-</li>
-</ol>
-<h1 id="3-MOtivation-and-High-Level-Consideration"><a href="#3-MOtivation-and-High-Level-Consideration" class="headerlink" title="3. MOtivation and High Level Consideration"></a>3. MOtivation and High Level Consideration</h1><p>增加网络的深度和宽度是提高性能的最直接的方法，但有两个主要的缺点：</p>
-<ul>
-<li>增加网络的尺寸意味着参数数量更多，导致网络更容易过拟合，特别是训练的数据集数量有限的时候。</li>
-<li>增加计算资源。</li>
-</ul>
-<p>解决上述问题的基本方法是：将全连接换成稀疏连接（卷积就是一种稀疏连接）。传统网络通常使用随机稀疏连接，但AlexNet对全连接的使用，又改变了这一趋势。通常全连接是为了更好的进行并行计算，而稀疏连接是为了打破对称来改善学习。</p>
-<h1 id="5-Inception"><a href="#5-Inception" class="headerlink" title="5. Inception"></a>5. Inception</h1><p>Inception的主要思想是：<strong>如何使用密集成分近似最优局部稀疏结构。</strong></p>
-<h2 id="5-1-naive-version"><a href="#5-1-naive-version" class="headerlink" title="5.1 naive version"></a>5.1 naive version</h2><p>论文中Inception的初始版本如下：</p>
-<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200716214820.png" srcset="/img/loading.gif" alt=""></p>
-<ul>
-<li>使用<code>1 x 1</code>、<code>3 x 3</code>、<code>5 x 5</code>的卷积是为了方便输出结果的对齐；</li>
-<li>最后的输出是将卷积、max pool结果进行concat操作（<strong>注意不是逐像素相加</strong>）；</li>
-<li>使用一个并行的池化路径有额外的好处；</li>
-<li>随着网络层数的加深，<code>3 x 3</code>和<code>5 x 5</code><strong>卷积的数量增加</strong>，因为网络越深，网络提取的特征越抽象，通过增加卷积核的数量可以将前面的特征组合起来，从而使各种特征的可能性覆盖得更全面。</li>
-</ul>
-<h2 id="5-2-dimension-reduction"><a href="#5-2-dimension-reduction" class="headerlink" title="5.2 dimension reduction"></a>5.2 dimension reduction</h2><p>第一个版本的Inception结构有一个明显的问题，随着网络层数加深，Inception中<code>5 x 5</code>卷积核数量增加，这将非常消耗计算资源。可以在<code>3 x 3</code>和<code>5 x 5</code>卷积之前使用一个<code>1 x 1</code>卷积用来<strong>降低数据维度</strong>，从而减少计算量，另外需要在<code>1 x 1</code>卷积之后接一个<code>ReLU</code>激活函数。</p>
-<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200716214948.png" srcset="/img/loading.gif" alt=""></p>
-<h1 id="6-GoogLeNet"><a href="#6-GoogLeNet" class="headerlink" title="6. GoogLeNet"></a>6. GoogLeNet</h1><p>模型输入是一个经过0均值处理之后的<code>224 x 224</code>的RGB图像数据。</p>
-<p>下图是GoogLeNet的一些细节，所有的卷积操作之后都有一个<code>ReLU</code>单元，<code>#3 x 3 reduce</code>表示Inception中<code>3 x 3</code>卷积之前的<code>1 x 1</code>卷积核的数量</p>
-<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200716222813.png" srcset="/img/loading.gif" alt=""></p>
-<p>下图是GoogLeNet的网络结构。网络中通过使用<strong>辅助分类器缓解梯度消失问题</strong>，辅助分类器在训练过程中，需要将其loss值添加到总的loss中（乘以权重0.3），在测试时，将辅助分类器抛弃不用。</p>
-<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200716222859.png" srcset="/img/loading.gif" alt=""></p>
-
+              <div id="hexo-blog-encrypt" data-wpm="抱歉, 这个密码看着不太对, 请再试试." data-whm="抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容."><div class="hbe-input-container"><input type="password" id="hbePass" placeholder="您好, 这里需要密码." /><label>您好, 这里需要密码.</label><div class="bottom-line"></div></div><script id="hbeData" type="hbeData" data-hmacdigest="69b780fccf5cbb870f2ba8eb7b0e776b99537e48f07b2c9deaed96b54711616c">295d61bc93fec3f77fdf7e9ae28409a21fa33037de71e662b01ecd879258c6a335a4231caeedbe40259f05096a5c82275e30b7591e134290e52a79ec6e170222b756e732cd5e54cf7b568205fff4e469644e4749b57b95771c0d91dd7670d412efd4cc2700c18e3d7f1cd2960e07b76aaa9f04c1f397715052d0aedb85344165ee60ce42c0537f0f5b0165ffe22390b8c22e5b6f39211b0369bfb265fe97a9514f1bc9160cf381991b1a4e7f73a9ac79e78c70b083b8a2a1d0c19b7c79afc7db825f641248c145c81655dbb2b4b55b6b8f0ee386d7c8fe9a629734c13f9baeee231251c14f373f0a44a429d57a9a40285ca0a917aac18727b0cc53ffd9634cdb390ae970049318a2a21a56998f805e87b07dc15a314503e5839317b4298768201b6ed2a39ab174514b5c63671cf06c7418d35aff6daed09c7c6e3f06c22538e5177218bbdbcaf730ca87ce06c809b516217036ba4a79221af81e8c0bc9a4b7d1b008c380ba95ff930530639b2a0b3f48e90200f4bcb9ebac1a04eaa22fa34f844e8e0f93957249ff3e8bd4bec270afedaa4021a653778baebb3d6d36d30cc1230a057349f44de3eab48e52ac36d27489c0c17419eec6941121c3f2301fc59eb8252523af5285512713470e6f091a4aabdc848ce2908a78494903bdbea9103b49bbd19c7490c58e90816109303b569587a8f916c6402cc53171723db83fcdcc40db2cafc20ebc37e2a89a2c0f2a62a59bc847a5a5cdf38a48e7047e7f7e8ce9d16652a420c11eeae0afa5b3e45a27d7b0b48e045ef14cf6cde30a503017712181a2df8a73c53a49f3c3a5b94f649a8f9aea4462cf60681d9f2117d6b58ffc470c</script></div><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
             </article>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/论文阅读/">论文阅读</a>
-                    
-                  </div>
-                
                 
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/论文阅读/">论文阅读</a>
-                    
-                      <a class="hover-with-bg" href="/tags/深度学习/">深度学习</a>
+                      <a class="hover-with-bg" href="/tags/悄悄话/">悄悄话</a>
                     
                   </div>
                 
@@ -279,18 +233,12 @@
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/07/18/Residual-Net论文笔记/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Residual Net论文笔记</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/07/14/VGG论文笔记/">
-                        <span class="hidden-mobile">VGG论文笔记</span>
+                      <a href="/2020/08/19/Faster-R-CNN论文笔记/">
+                        <span class="hidden-mobile">Faster R-CNN论文笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -507,7 +455,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "GoogLeNet论文笔记&nbsp;",
+        "ta&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

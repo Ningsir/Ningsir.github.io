@@ -4,9 +4,83 @@
   
   
   <entry>
+    <title>ta</title>
+    <link href="/2020/08/20/ta/"/>
+    <url>/2020/08/20/ta/</url>
+    
+    <content type="html"><![CDATA[<div id="hexo-blog-encrypt" data-wpm="抱歉, 这个密码看着不太对, 请再试试." data-whm="抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容."><div class="hbe-input-container"><input type="password" id="hbePass" placeholder="您好, 这里需要密码." /><label>您好, 这里需要密码.</label><div class="bottom-line"></div></div><script id="hbeData" type="hbeData" data-hmacdigest="69b780fccf5cbb870f2ba8eb7b0e776b99537e48f07b2c9deaed96b54711616c">295d61bc93fec3f77fdf7e9ae28409a21fa33037de71e662b01ecd879258c6a335a4231caeedbe40259f05096a5c82275e30b7591e134290e52a79ec6e170222b756e732cd5e54cf7b568205fff4e469644e4749b57b95771c0d91dd7670d412efd4cc2700c18e3d7f1cd2960e07b76aaa9f04c1f397715052d0aedb85344165ee60ce42c0537f0f5b0165ffe22390b8c22e5b6f39211b0369bfb265fe97a9514f1bc9160cf381991b1a4e7f73a9ac79e78c70b083b8a2a1d0c19b7c79afc7db825f641248c145c81655dbb2b4b55b6b8f0ee386d7c8fe9a629734c13f9baeee231251c14f373f0a44a429d57a9a40285ca0a917aac18727b0cc53ffd9634cdb390ae970049318a2a21a56998f805e87b07dc15a314503e5839317b4298768201b6ed2a39ab174514b5c63671cf06c7418d35aff6daed09c7c6e3f06c22538e5177218bbdbcaf730ca87ce06c809b516217036ba4a79221af81e8c0bc9a4b7d1b008c380ba95ff930530639b2a0b3f48e90200f4bcb9ebac1a04eaa22fa34f844e8e0f93957249ff3e8bd4bec270afedaa4021a653778baebb3d6d36d30cc1230a057349f44de3eab48e52ac36d27489c0c17419eec6941121c3f2301fc59eb8252523af5285512713470e6f091a4aabdc848ce2908a78494903bdbea9103b49bbd19c7490c58e90816109303b569587a8f916c6402cc53171723db83fcdcc40db2cafc20ebc37e2a89a2c0f2a62a59bc847a5a5cdf38a48e7047e7f7e8ce9d16652a420c11eeae0afa5b3e45a27d7b0b48e045ef14cf6cde30a503017712181a2df8a73c53a49f3c3a5b94f649a8f9aea4462cf60681d9f2117d6b58ffc470c</script></div><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>悄悄话</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Faster R-CNN论文笔记</title>
+    <link href="/2020/08/19/Faster-R-CNN%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"/>
+    <url>/2020/08/19/Faster-R-CNN%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</url>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Mask R-CNN论文笔记</title>
+    <link href="/2020/08/19/Mask-R-CNN%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"/>
+    <url>/2020/08/19/Mask-R-CNN%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</url>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>FCN论文笔记</title>
+    <link href="/2020/08/19/FCN%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"/>
+    <url>/2020/08/19/FCN%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</url>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="1、Introduction"><a href="#1、Introduction" class="headerlink" title="1、Introduction"></a>1、Introduction</h1><p>论文地址：<a href="https://people.eecs.berkeley.edu/~jonlong/long_shelhamer_fcn.pdf" target="_blank" rel="noopener">Fully Convolutional Networks for Semantic Segmentation</a></p><p>FCN使用全卷积神经网络用于语义分割，网络能够接受任意大小的输入数据，并产生相应大小的输出结果。FCN是对图像进行像素级的分类，即对图像中的每个像素点进行分类。FCN定义了一个创新的<code>skip architecture</code>，该结构将深层的粗糙的语义信息与浅层的细微的信息进行特征融合。</p><ul><li>全卷积神经网络，可以接受任意大小的输入；</li><li>最后输出使用上采样的方法，从而对图像每个像素点进行分类；</li><li>skip architecture进行特征融合。</li></ul><h1 id="2-Fully-convolutional-networks"><a href="#2-Fully-convolutional-networks" class="headerlink" title="2. Fully convolutional networks"></a>2. Fully convolutional networks</h1><h2 id="2-1-Adapting-classifiers-for-dense-prediction"><a href="#2-1-Adapting-classifiers-for-dense-prediction" class="headerlink" title="2.1 Adapting classifiers for dense prediction"></a>2.1 Adapting classifiers for dense prediction</h2><p>普通的神经网络采用固定大小的输入并产生固定大小的输出，因为这些神经网络在最后都使用了全连接层。所以可以将全连接层转换成全卷积层，从而可以使用任意大小的输入。</p><blockquote><p>为什么全连接层需要使用固定大小的输入？</p><p>因为全连接层的神经元数量是固定的，参数数量也是固定的，比如某一全连接层神经元数量为1000，输入数据的维度为4096，则参数的规模为<code>1000 x 4096</code>，则对于一个样本而言其大小只能为<code>4096 x 1</code>, 而卷积运算使用的是滑动窗口的方式，其输入大小不需要固定。</p></blockquote><p>将全连接层转换成全卷积层之后，再添加一个上采样层，使输出与输入大小一样，从而实现对每个像素点的预测。</p><h2 id="2-2-Upsampling-is-backwards-strided-convolution"><a href="#2-2-Upsampling-is-backwards-strided-convolution" class="headerlink" title="2.2 Upsampling is backwards strided convolution"></a>2.2 Upsampling is backwards strided convolution</h2><p>为了实现<code>dense prediction</code>，使用上采样将输出结果的大小变换成输入大小，上采样主要有插值法和反卷积（deconvolution）两种方式, 其实反卷积更加合适的叫法是<code>transposed convolution</code>(转置卷积)。</p><h3 id="2-2-1-反卷积（转置卷积）"><a href="#2-2-1-反卷积（转置卷积）" class="headerlink" title="2.2.1 反卷积（转置卷积）"></a>2.2.1 反卷积（转置卷积）</h3><p>如下是卷积的运算过程，数据大小为<code>4 x 4</code>, 卷积核大小为<code>3 x 3</code>，输出大小为<code>2 x 2</code></p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/479ce3311c7f4d12be27353ab7087f7e.gif" srcset="/img/loading.gif" alt=""></p><p>将卷积核展开成如下系数矩阵C，将输入数据展开成<code>16 x 1</code>的矩阵X，则输出Y可以表示为$Y = CX$。那么X可以表示为$X = C^TY$，所以反卷积将卷积核的转置矩阵与输入进行相乘。</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200820164326.png" srcset="/img/loading.gif" alt=""></p><h1 id="3-Segmentation-Architecture"><a href="#3-Segmentation-Architecture" class="headerlink" title="3. Segmentation Architecture"></a>3. Segmentation Architecture</h1><h2 id="3-1-Combining-what-and-where"><a href="#3-1-Combining-what-and-where" class="headerlink" title="3.1 Combining what and where"></a>3.1 Combining what and where</h2><p>使用<code>skip architecture</code>, 将低层的特征与最后的特征进行特征融合，如下图所示，最后就有三种不同类型的网络，分别为<code>FCN32s</code>、<code>FCN16</code>s、<code>FCN8s</code>。</p><ul><li>FCN32s：直接将pool5的特征进行32倍上采用得到最终结果；</li><li>FCN16s：将pool4的特征与pool5进行2倍上采用的数据进行特征融合，然后进行16倍上采样。</li></ul><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200820154634.png" srcset="/img/loading.gif" alt=""></p><p>下面是三种网络的结果对比，可见8倍上采样的结果最好，因为其融入了更多细微的特征。</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200820170828.png" srcset="/img/loading.gif" alt=""></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>论文阅读</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
+      
+      <tag>语义分割</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>舔狗日记</title>
-    <link href="/2020/08/11/%E5%A5%B9/"/>
-    <url>/2020/08/11/%E5%A5%B9/</url>
+    <link href="/2020/08/11/%E8%88%94%E7%8B%97%E6%97%A5%E8%AE%B0/"/>
+    <url>/2020/08/11/%E8%88%94%E7%8B%97%E6%97%A5%E8%AE%B0/</url>
     
     <content type="html"><![CDATA[<div id="hexo-blog-encrypt" data-wpm="抱歉, 这个密码看着不太对, 请再试试." data-whm="抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容."><div class="hbe-input-container"><input type="password" id="hbePass" placeholder="您好, 这里需要密码." /><label>您好, 这里需要密码.</label><div class="bottom-line"></div></div><script id="hbeData" type="hbeData" data-hmacdigest="2fab4177fa93702971476bdc97ab315d8a3f8063652f3b2238882615aae6dea5">0705e704499ac7bfbb526e06f1242c8c6ec744db9e5a34d0f03a772dfd4df72c59a1570cefbf9666612925bf142823771c08fcaea371cf813b2668d319769672f6ba1da9cee596d8021eba5374f9249e880f8319b049d9bc9a4e4f2171578948ef184029d945806ab32c2935ecc3fc6279ae5b2f1078ad35c4413a9dbcd7546414e043ebfe2de6d37f16ef084f4fcfb017d33f936af31ee5bebd868b7678b9fa7ec50eaa484fe820b2fefddbe2488421d232918baf8a4c66168625ddd8efee45c238252d68938403a8220aed464176d6f61b325b01b840855649f78b5f43609b4022a6255251ff23f82c74b6593f720c7cd7ae94501b2ea37d53128f48942cb6429bb15851cef11ab12767de5ed52bc97cb62417b2c800b7f098a97b6e106379960d8a2104d0dbab246fe27168b39ea78a0d23b1e561cd5ce49d02cfc985cfcfe38b41c9dfb3c811b85e7ca1ebcfc199d9d06e54b507f1f1c8f783fc572e41783949ac4c7d21303c30d1ab3b63d0b5e9e86e6574e3e07174bf32210b77fc51da591c9ca9fa75b7e27ae02f60e6d27833f7b75d1fce546c39918c52c2817064d477015cf38ffd5e12cd10b47e4726d74f105ae121b4b59545c428fd1797ad40569f551b0b94af9d029520af1e1e95eb1efe05c778ea4b67fe21e5d1df9aaee20089b27df3b76c8b308160e0273b80c0383bfc6c1192bc9f1d0cf51ef4b500154a34faf979af85db52fed2d62ed30b12d930f126186086cf5e560e4c6f65a7262423e78bd9a3c7e817b2b0781ed21c3985f335f9471dcde90386f209746541e131d68abe68ec2a9b66df9a4d1f6cca5c0a450d1c06fc40e9aa8d880ffcdfb21d17db2a41ad33f7ff53767a7fbcb18a7edbd02b2fc70c8ce1a5b8375ba4c111b0ef0e7a0792ab6a174a78fe3f354b3758e2d027a75493f7bb1cf1881d626c7d6c28a5935c42be7b1e68e79cfa4c8942947e2b9242ab7e2a8c253ae1a717bb5bcff8784866176b1a48a5ebe67acaeb3ec875a99c743865bbe267416fbfdfe14eaa493b7aecd755d5553948197953d571c5fe7649e56eedcdae87a90768a90359d3eaf6771233254fe0671c72626ba5ced6a270826e49de3f7bc2a34e287d9356fba60be8201e6603756547e618532285fae868ac5193cbb3ab9d7190523dc2279c87d55e77b861b829701dcf1416e51fb3f9ddf209e5173affa77fcce2543973fca7a2f379aa22541c7e028134dddbe3963e3b12943a627a24a86bb6540ff6637140d78d140f28ab65de4f34f625ba3dcf728c5e6497c2fed6b16db94f4d6bc36ee1287f6425c9c8e8129c8fc9af732e769b0c85fd250fe0d76c1d5953f6480082fae53f41e160245ba69814b6ac30de3a78fb233b3d7062ae9c7071dd309293cf860912087029d975323d22c6ac3495994a00e9a9f9295d9acb67c9eb58252243d2df3c0e5a6532d41ab3c4111c6343360fd4465038372bb79e4f5712a964e995c56edb0cb54a4d82e67054d749e729d1762b3996de5e6bae6b4ba8f2c34f5d083700875f8e01a69261982ed4e9cecd4860f00e6d69da3142d6f354e8db37bbd0df58fd4522863712a63e396b0db5de6ba973fa51bb7284afad6915b2e6c760ced7424d0d1e620c393178953fed2d277bcb59127e9a69739812151142f1b4f6400797edb114c9b779f1f1dcb9f91e50cfbe0ea28286613da137bb8373b4cd7c4c94c5a8a14d73eae492e8648dcd1c792fb89a50eda30a3e007a127979634dc347d83705aa53a37db994a5bede2d757e001b18c7abb83476f89b1c45e35a22aef89dade65501925992400313b7af73eaaf758622dd5a79dd240cbc32a48d7ca49665601153a5ba8a6efa04bb392dad1af08db12f0c734afdc2980f61e5d1f568742b2ccd1eb7010faaeb73e79fb2148ee684ba7dd32434f0c200fff529b91ec8a8643f054e75de7d63e87faf6992bc544fc511c6f76b281ec9848682b291ec8a95a24bea2b0380df38413302d5dbd1a27d81ae6e8b95121a672145fc2172d2761395bb811b9232836d881059002a67f7f9dd2560ce063dad32fd70fb6c907548dd0e714f031ec8cbbb36722be565fd67811bc9b34a3cd24fdcc106fc6a6cf91dca82dcecf1ae34eaaced06873696652154b6ee517e4ff1bbff742250055de173b15d3e1144fb47a2d73956782f9585aac30ab088270d720012748153a8e91ec3863895a70d57ce90d6080d957fc3b8eea031d6fade6f0e7cce6bfe9eaecc4318427ce825aa87e856a1b1b1d31a3995906c4b684857447101c05706e1e0e34aaa6c532e5c469e9063eecf683f4cfac5c922b1037615e69648fc1ffd3f8f47070621e91fbe29eb88cfae570d1fdecac0754abf183023e170816987d93cea0251ff1e7d94841ae226c4eb3440e79ad16bda91192b6eba8638510afac954b3407aec28d41a892cfba20549b14b040eb14164d18bc05926c8841b4d0e25e29c6af7cd9a89fad4800189b2ba8a55e045ffd1ab19059f2b766954a4826ff22b175b1f61c717c20720775000bb454e9704ec73053669085a0e7e3306c60a47d16fb0549575709eb8bfa237889ba99f768d7b795478f606911117d9edcfcf936f23fa2e5a78206cf36c9c03979592904adaadf48b8a50a809ae0db3fcbe403c620b797b5b9a8151d77a48bcbd8475146fc4a0357aef10493c34a1e1c43164baa57dbaf946717094daf82ebd06f847e98d01ddb7b4b0a4a8227a4892c8a311d736c8312ceffe3a4d025b491e42b252b3b37bc583bca95cec1a5b9cf9fc7d493f50daaae9270fff32cb350d40dbf71e48a162cc288cdb726eac455edd3e82cac8e8c3e0808d69110349413975e3b89fd0bc23c45b4263ea39d74c7cc5067d3c806e999db24ec9956a9ea19a5aa1e2f7b803c45780dc356e932c634fd8090a9f02d1acedd803a4205be3c1026c825eebf47feed46cf97603104d810423d812007d2333ff820cb6ccaf56ead85f16798179af1df96b1fbbca998687024c2e06ecbf454eedf3ba0b246bec6b86f49b266d43eddb99786fecac7a500f7e4d1e02e4a8dca7caa28d7fdbe6bb6fc309634124a954d7f0e2319c3b0a6ff664d688e2e31d240bd40c97e8300b32e616979980b2df8c156e67c0d3156a829ac3adef10c3a47a58aae96201c94e49ea124a2fb93033b357c199d0e0445c5f2aece24029aa91cf6e013ebd501a1bce213b45bc48e31508a7c4663e14e9cf196bd500cb40a47222234a0e309aeab11ffb71b9f032b1979a8a479a6822636133dae7d55d84a40a0497a5b36d641d76fd10907c075eff27cf5937dd80dff4151ed708f54b513e5d908756b23ba514c70e24019a45e6a47cb4a77d2f40ef4d56075eb633b30626c2c917a56a54e04915f5a8abbb42fd45754fbbe3e4a864a4d865fc28a0424b7ed46c214cf0f31cbfb7421e5c01c9a1d00b26c053c3ee7738a330f20b0db8ba8da792ea0e8a835abbd5ef06b526813c073d2e1ab81bd435493e6ca59cc1e36182bb7b1be55f4de776e1414f4c2ac70b6574beaaeec134aee3c07818bffddbebfea0d2bce9b7cccf82519511354c652715c7db1b09706b606ec7107f83a72ab2885a0101f1f67602c19cb08f92ae62da4d3da03c09e544a701b95df7ca9ee83517527e71816dd24ddeaa7d35648ecb568698e65bda0c05ffb5e53116251cb27517c47506ae6ab4b420d396eafb9bb257f82d0a0c7813303088ba4dbffc224ee6fdc6dac78e9330748ce97928cd60a5df89299e5938a05c4eebd23df99689d633eeeb872b29c0fc354a17a7221bd39f9b1140c251a3929f970e50dfc81a7a189a0401a6462e3fc46df333e56354ad43df0fc8add8cf093080f42eb7ac9c0f33b9b55b1c017613cdd1e4ad349ceca513d18e40fee1a7fcc0cc3de08a4cfff0f24d81e97eaef85ff0a368a13e48ca78634a66d355aaf1d318592e49dc9e6be4f7e1a3ad02efc902b3209446767b04f8948d6881aaee735654840bba2cd9963ba9c37ac2391f621771b06d40e19edfb12f9bd20d19000e70a835aa4882e3db9d0154bbef3ba5c1efbfb38afb95e5e23eeb8fcf02bf9c1d8f6bd2f1f8aad17abbdf9a2fd1d9fcdad15b0c737e89fdca3e02b1bc5a4157ef382160c29166582e049b3e676d7fdbd080668d142f7ff3db607aa840f97b2519341e92ef90f7969e55bd623efc52a7bdd85bccc1b2eabdce557441cc23b9a9a0b178f8b7cce86991e530d1a425b2e8e3f48327c17deb343ece21692f71d8c272cfc3451432b55f8e5c3b79de6a9660a3d2cffe9c3a59d4d8ca1211dae496712cc77aa430510bbd495d12df90734a2a0fc568bf67abbb73543fc715db2c9a37a4682bd3e9f0fddfa5bb06cc326ac463abf6798dea51ab86031724c00fa546d057ad06a9a42aaf7e11bf36b0d9574b3f326dfd885a1dc5c5c1031270f6027e8fddaae6a20b0d9b65d4e4f2e1ae150ce4b668869344b6c554cbd528d7bc8f36aee19493bdb23efbdf43849f4bd12d2c658ed718b91b1fcc8b9b5710971a8e8dc1fd5f810d88c3d2429b554c383cf0975abe3c2f504b6d6bdc8712d0ad1558173f0835fb4713d4a68fb6d46484d7f10928d0f4a429a5e6ee5d71fda6d2e7c3d86f743d134d520cb4c485119ee71ad7bf97122f58a36ad9df97bce7af86a0016be0cf19e5bd2911f37eb74b25bc20cbc2c92509ae3ee9182eaf2263fe2ef448532b4e8627bb42446f38c4a89bbadf0b4ac9e5f9c13cfd25b72fc79a1ae10fb2ee150addb6214f2c342b3295010e4e6e13561c91160194fb14b2f75fc6182af175c2b133acb98c60b31f2c159e8c4567a1918206a69eddbb6ebfd16e035b5cdd557810d80f9f9447809288ddbf7da01778b93bd092f12ae4157c652b2e14cbbdf1c3ca7eac6448681d0790266ddc2bb354ffa8b65468ba0b49ed315432972abb302f6a0de085143abf05daa4ef18d39317b25754df5e2b087cb995a8ce4b1de60df94f340c3eb6f8522a8ba7f0f2ae63281dd0c1322bbba031baa6dc05157fb30098dd56d5700f067960944e872f19cb5af87939e1e40af716f2f0a6665a559d1d3e78f68cb926ffe244dcef654f077f839a529455354aca52553fc90ad3448973b1508224799084d418b1b63d0ed69128f63e699341c9eaf091f5abd1a39541ccc3cad478ea8be0c57f3f4b8ce9601007450663dd5fb23dc22472c8452160309fce0c5796daa044ece3930d7cf2a49cf42c38f592ed3940f588fc01b0843af7f22563f36edbd6a9fc23c16f7e3f445d3b5528fd80535b1c654dd71238c6e4e1616a830592d58abeb62e1ce4b7b7db29fcf4f1f06b06157e6ec86224bcfe6234ef71f88e36a93d6821bddb53e0f56239f141a63520bf33370242310ca445a01da9859b11a1e49e8aa93ba6d80fe9d8b905753d6d4ea103ea965ae84a0e9f6b10dda67a0234c4daa7ebba3da6da5676589b6c73552f27745d968ec156c95445cda1b89756cd2f779c305f01b9a22937da82efc3b51b4502b52021279ae72ef6f4dc88ea4fb0cf1672266e5c0cd449677eb6ba73f1d74b3e58503f9c61939e0cb80c37f435dba3e0f9aac02801c6a759553684e396f9caf02ff93581ab9944a0ebc36f7ae10e4920081cc2a13b45df2784d9c964bd06534c50760537be1ecbb4e854838a7f0e7f2064490fcdfecc278116e7fcad98f4c2d2bba593047fbd8b791e1448d0ac6ebfa7b7e3f12e588b4e73b0e5c98e6e16dc63a7a1149512221cbf3119ec0008c7cd61f11efe8e0ed6be645f16799ffbecdbd3ab1c12b83e4e09c120e9cad9f0cdc61581c7dab239b92cb6f4baf41bb218cded59b85909283123662deb8e3b9e6d2a3d6362ac2175d13aa70672f664c2b5f7a9dadf8e0e40f3fa672bdb0f5579082c38cb7fb17911b900296b2fc687ee3cc2910e5b37015c6d95114d5b3d6cca080372f0bc27982492e8177c2dd5f6a57762941fb4fe76109a7f593d80c5c1413f481e0f85539b8d26c7ef5aadd344953a5ee08e7ce488e3d2b0bdb45bbd9a62484ad5261c97c82c9e5012626a3731bef024d3a642eee32daf0028dde74da8499cc8d93edf8d4b38fd156ce18a050e2df63d3ebfe613da06c6ce91df52cf262b173175fd5f5e865482a87db849678010b20d78e01c778647edd449b72c246a39d2a03b8a7c4186f03e911e3b82ed9221362b3ab5b93450654ee8ce27de9c616a406d19bbd309dc363507523f40c085a1cdd0b7f721d049a324c92c35028f9cf1259531b32eee6973452513862552d2a5247e4423871a74b406c0e4e30cfb575bb54402fe9d9447edd03d7419bb20a8096404586c75df07c5f43a6d0f271c8f2de9da8ac4682cf915a269ed34024e3c417b27f96991bedfe2c3999f4bc61514890ead448dea3495ba769afe55ae701c31b8924da8fd328f310db21a5567b7b58b41a62ec4ffe1900c5a46df6c694ba520ceb1f4d98b8e6d73a4dc02dd0d258cdcdc87a79bad26f6bdedce5747590d8f078c5e0508e20c5448f0c2110c265a9842f85181bc5345197c9631dbabb1b282a5e11248cea2524319b426bad037ec774a43b547020d40f3c4587ca57ea5b26b94156c473c49c0dc58de0d8bbb6dd08015fe50a257528f5fcbb14d0bd7544db7f6e2652045070c3ea12d8a5292d2a7947aa478dbacb8dbeb3879ae8b4c6eed5805fb48c6a2c460fe160c62db881c7a0caf7f8da3092dfe31cdd33babd1181fafa895518d9d2f6df349bdcf47546e41eba5004aa69fe2e62fe72bc811a91a1179a3fdd8c6b6c666d1a59690ecc45d80a063976b5b2be6d42d4c751d4908f471ae1a505434e4236e42c8c17305248ce049a7ae3bccdee5ced1ec989f28e04571c369280eaf16f245665fc96b29abf2430d3369248f4eee5178f31e606fc9f741b430e33bad2c22deb1d9cab5cf70959e763e52060677b81b26f8926d89587f3c4f10c662dfe2092898593c3d781cb1666bbc86aa388dc5c0e43eb0340df30e5a508482deb16b41bb985b0a235cbe3b58a4cac8a9795c68a88250c60beae289af5aa6e65edc67007d40d38057f20f716b25b424c32deb82bee0bb9e1810be0782a54be15c831439ea3326dc004d5284ac20692940bfb600195b28f9b0e155c8aa010f462e891842c5136abbb7ed27e84a569fe2f24eac01d2708c85bebfcf09554fccd7c34ec5e13d85f52842ea306ae6fd126770894b92a3652f5ba4cfb9d1bba94824db6a9dafeba987055be9c93417ad44fb1bd49b1e2860c088c94051bdec7ae7e245622258f4a9017b64029aa122e0376eb8ad599928a4c46be376f28cca5d6169cad1a91c362eb41b2cbb85baf69c2936fe64f71c3a2538b531d7ebcb74eda155c42ba94cc2d52657c2deac189d4bb593d2f7f0ca22d95a1265792b7b2c7459d73109a9f85347c5d98db78d059eadf192adff357f367c27fc5a21eb7f1527a6db386f17785c81e0e7832f629d0f3481bc8913240c79bae4a02e02cfc7586836718ad4acbaeb88ce43532b1b5c770c6001f467c29958f28f0fad32e21e8b96d7fd5838bb0825281dfc2db45a8531e630948a80066e945fa334d491ea2483eb7a8b6c0f3a4d9ac4ec5aa268c747436bc2363df159f0f2ddbf9c117de1278fab957e53ba27b0c507c918861899c105248f77786d31cfb8f3551123420452b8593248d6efd466c2eeeb8cf496a8864f6f050024497e08bcc20a5685a6c92da4fc0c76b93613ae58cfb5ef6614badee03322b73b9339d98c78297cd990ec6f7d3d45ae307c74ed9f70ace3496216892830f4b33f085ca3e0f6b7b5e152192a4f4bf9b8e508770aeabf819ad4bb169b6cb55933648af3024ee9340d401c59da6ff905928fdd10eb9371a2847482d7b56007fbe682ef40f4d8cba667678638f838a1ee61d9598bfdb5fe77f572fcda34b1f50dd6bfc6e115d2e0fef46c597638e97f02da672120436a37d5701d2fbc74d7e1de5b82e974b925137f9b841ed82978fdc6a2080266001bc32b4c8d665abdb61fe483c59ce6e0511b803878ad364876121841d230d17e6435fab270124b3e93813c330ce496f2e88f60595ec167ad3d429e2f66c98cc223e95821725d7e436ed22f28a946a355ad64a3edbca7294f57b90c7fd4216f9058ec9df357fbff2897ae4dfcbee87e6489d926b669828ade3be52a847b55e90aacc72ff6beff84df8d473a9f3836ffa4e62345411af9cf94f606f2ecc771e77e77b2e4d9d82574b69938235bcb531fb8d34faefa0d6221c0fe30236a4bf7ec30a8fed83b8cf5908ff44db379c9a80e98622540be62b75647e093d9fbaa4f601c83be5cabded84c8c2884f30510d258f95912f76b41fa670d040df7c73c0d8bc2b154a5c9dccb3e0b9a7ff6bb9b0da048748615108b2adea9edb163470918b799b071d79c7d6763a667ecb56e8672997c33187859db658d8e9f2e0c2cc498f450d553c93fb9baf55f14e9fb42798a910e22eea91c61752565b84afd935ee4fa53b43f0b623c4fedb6e29f91cddaae6dc5c8b2a77e1034aef9624053720cc73516965adad5ca4f9b292a129620e95ea882f250f917562a248aec1d8a99e84873701df12b40b85fea9159fd7e616c07d55408457f8f7a72de53f31d440282205ba9c5346b88ca50732131ddc451bd636d8ce48cd4eaffca5bc1fec78d3342d56d802ad07fc0b5b87966847544cffce7638b6b596b94eeb40c4315dd8f4f8fb76d92aec4d21245c02ed59b251a5768d7bbf6cf8d015462397cc10fb8fd7e538e74bd714b37648d38de84d79ea1db83e7180dd9b07fe3125a1903ac78e2c2caa70347876b0507d31b5dcf0d9c0db135c0ea84b7454810d2b3caf3e520ecf33ca9531d1e116a7ecd06714220f970d73bac11366443f2c8af1b50ba77c5f2a723983d4d1b5d0ba39b5ed06553c225130ebeff2aed673ca3af6fca6904f940233f9c1ee4799716a89213190096ddf521b6f5da86507c7017a20ebe6c79f1ae02383eb0998d486ce933fd0e00bf619fbbc2586190d6c5722fd62191619e55c1785c9a5cdf8d0e1cb260dc845c3f2903eb63fc871ea837a41a7fb4bbe0c989ed3cb733019f27feea5cedd0cd76b712273fc21dba60cb9a237b200a9531e796d9fd2f863a9f94da2483d4d557e035cb9c24b3f5c6821e372e59617ab14a7070e3a048a6d3b344a4af247fd0505970d83155dff61a5cfcf376d132b18d52f35a8b34ec0ebb3e02546a4ba8b2b764324448e5b260a1266a21876b515df7a1690724eefd90e55da6cd610374e0bff2cf9e524ee73eba0e996259fccd35c7be4b48c40a1f8d5ce4f1f0559ae8015759e527bade0f002015f735d9bf82972e84e3c9345daa3c0c6d6ad00b354dbb29c1605bc6acb27312d38171b8d5f141db8333136781c05a087f4bca2fe74a958093db90ae71e7944d002a91e43f90f8da70f6ee2746897c8f9187d37cb8783e1977283f2f23b2683245d68438a9218ebcd90b599dbb04bf55cf0e442851435020c0b18dffa3dad9a6ef0348ac71c7ee700d5f49f8eecff93c5c65847f6a5d95877d74719b063203d09bf429de347cf19a5047f0ebc918ee5729315bf3c4b3249cc1b5a12bf8fc57a86894e8f42711c533854b264d3d502d4af4c7a85121c89765360592b5db0affd9215c933d18cb593ea67b4538da713b36f56505f999d5bf8dd2c4e909a1a8da754ed61d71274c19a36bd4c1e68f3f3fd606de708ce9b2737108f2174815dad1938270170f061a1e4f00362ace0a62fbd9bc5fa0bb87426dca8f56edf29fd577fd9daea7110c30f53779573508e6fd89b64219792f60d532dccc56acbcc26a143f39410dc1f7aabd8abe3db1bcd318ed59f0d52b0c551a854f7f03ae57cf759a40934dd020f49e7e26a72fda73dbfa8b3444b7e085027af7800fae526df321eb665c48aad20d0d09883ac1029f23cbfc6acf2a1b74c54e2d938d5b259d4a0767cb7c7a21837d3f503013ed1609e4503dc4562f6e7d00ba7b098dfd8203b02c0c0062c356e2fa4d94bb04bf54fb36c6c902e6acefb7f31bd5a75eb7ed91cae8622faceff94fee4101b308059fa5d1a53675fb4e93841b2229560280b9dc138864d72519a45a4c6d1a48125c825c03aa25a1296c6147a03af04249ae93ac2ec27c7f43b09e2ff03f19f8fc5786e2214a532e2e216aba2dc09ba8afeda2e8ef13d4cdc3b74884dc842d3e3e050d39eadd0072be672c42ad8f5db0cff08c76664fb966fa5c204dd393186ff9468d089f5a6d1c56a63dfd86de374c99baacda438ff780c951139514b1c1aa2fc2dd7fdccefc493ea353660a83f6a5504b80c726bd3402cd001cb2cf8c615d91877262e5b4c12fc1c9aa617a4c6fed68fd0f836c00e11a225240c43eff6febfeab5f3b57c1677fdfc9bb8f0dd050afa6110a98d61f3d4f731bd12f766f980b56ad1096c0774a1e9db815fb187f0b2ddb2b7333fd41e0d0ce146f6b900674c32a38e5e89c64a71ad5d22fd12581565b8a2c3636ca585a893b6fc8efc5c0e632c108b99f65467d6f8ecc843b774d56e94f5a0e59c3b5e260eb9fdaf7af4f824fb73a1504ac98cb8df872af0765834af2a7f7f49d2f9921590580e18cead8054173a03e3d99e8453a13fe07a4186884fe04cfe5e0a0f50b1bbbd04a82941a5395d31e1f26556ed690abd33729cf57f5051d1c353a6e7029e885087963eec631d3c16c6b9c2c422bb3246fd7cf62456ffca06cb6115ee39cf28be2846d1526b703575ddb49de56ac778da92164d8c08b500ccf8b9ffa88beef9fcf4b6563f7ed4b3ecb1b669278d2bfa77c3c500dc936f4f98973f151f05f58968b83f05d882733f02f3045ea09275ee54cba833784d2ecbe7ec9bec94c9857c4996c744f8e4f61eabb3113444fa34f0487cd56c8b40ec9d3e3b4dc0a7df98b54c137182b61af0a03f91882c5993c6b02343bf755336746efd9a8b21dd5b6295a945b3ef720bf57549b6b3fe6f48c035b7d1ac615a373d6419c2ac6004adc2f720f97f49ebe5874b2a41515c6c54ac19e495715fb2a005730a1ada3aafcaa776ae6eb05a0b19e69adb7d02a355a8184d5b81ff0956f4380e63deb05b54bc3c4e2ba0ce4102988b8f1e175cf32f94d6167dd69c98368ff52baaf55c01fc18cd5a5c421492b748ea5b0340c016d1b0d098ca836cbd2487b2065c4237422d5126a5776abff9981da8caf64d71f3b21b25d37aed59dbbc6c2c9ddf8796a26fd10d79abab9f54783d151e85579347262bee74ac782ca607b4cc5835453ca4bcbad5fef3e894ba907528aca385f3db0881552ce0168ce62fbf38f4aeba4b3e59e7d9eb105d1394489d81309545eb19a281b768f9883f2dca53e914d9f8160135ff53ab32fe95cf5023a546911170ca81d766a9a491916abe2d979431182edac781501dc77b12b10683072ad96ed2bcb31de0343f45529298cca9cbef209cc6ca7566fdd2a4cc1a4413e2c1a4b8de4937e9b69136f3add6829d79412f51b46ce3cfa65778545b31b5209df3669d90b9a468ab547daaac715669da5be7c2fe443ddf5d9a88d073942497382c4c4f5df22d9a1c72b3bd05f4f1c345e5227cb4ccd7f93f04a60ccd8ac367a161154d5ef688b1edb7af6a7df13572eeac1c3bae8415bc64ba656710b9b6f94e13f9204b7062ea58a42d2f9925fd7801e7a8b828f871785c763e70a3bec8a637d93be76fdfae90d24ff72081eab2edf03277504750cc78871c4e70ea841d4c57aed866248590725</script></div><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
     
@@ -27,7 +101,7 @@
     <link href="/2020/07/25/Fast-R-CNN%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"/>
     <url>/2020/07/25/Fast-R-CNN%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</url>
     
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h1><h2 id="1-1-R-CNN-and-SPPnet"><a href="#1-1-R-CNN-and-SPPnet" class="headerlink" title="1.1 R-CNN and SPPnet"></a>1.1 R-CNN and SPPnet</h2><p>R-CNN有如下几个缺点：</p><ul><li>训练要经过多个步骤。首先需要训练一个CNN用来提取特征，然后根据提取的特征训练多个SVM分类器，最后训练bounding-box回归器来优化bounding-box的位置。</li><li>训练非常消耗空间和时间。为了训练SVM分类器和bounding-box回归器，需要将提取的特征保存到磁盘中，这将占用较大存储资源，同时读取这些数据时，也要消耗一定时间。</li><li>目标检测非常缓慢。测试时，需要在每个候选框中提取特征，即对每个候选框进行卷积运算，这将带来大量的重复运算。</li></ul><p>SPPnet通过共享计算的方式提高速度。SPPnet对整个图片进行计算从而获得feature map，然后从该feature map中提取某个候选区域的特征。</p><h2 id="1-2-Contributions"><a href="#1-2-Contributions" class="headerlink" title="1.2 Contributions"></a>1.2 Contributions</h2><p>为了解决R-CNN和SPPnet中的缺点，论文中提出了<code>Fast R-CNN</code>, Fast R-CNN有如下优点：</p><ul><li>更高的mAP；</li><li>训练是单步骤的；</li><li>训练能更新所有网络层；</li><li>不需要缓存特征。</li></ul><h1 id="2-Fast-R-CNN-architecture"><a href="#2-Fast-R-CNN-architecture" class="headerlink" title="2. Fast R-CNN architecture"></a>2. Fast R-CNN architecture</h1><p>Fast R-CNN的整体结构如下图所示：</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200725114510.png" srcset="/img/loading.gif" alt=""></p><p>网络将整幅图片和一系列候选区域作为输入，首先经过几个卷积层和最大池化层得到feature map，然后对于每个候选区域在整个feature map中都有一个对应的区域，经过<code>RoI pooling layer</code>之后获得一个对应的固定长度的特征向量。然后将每个特征向量输入到全连接层，最后分支成两个输出层：一个softmax用于判断候选区域的类别，一个bbox regressor用于改善边界框的位置。</p><h2 id="2-1-The-RoI-pooling-layer"><a href="#2-1-The-RoI-pooling-layer" class="headerlink" title="2.1 The RoI pooling layer"></a>2.1 The RoI pooling layer</h2><p>RoI(region of interest)：感兴趣区域，也就是原始图像中的候选区域，经过Conv之后，感兴趣区域也要映射到feature map中的对应位置。论文中，RoI是feature map中的一个长方形窗口。</p><p>对于不同的候选区域，它们的大小都不一样，在R-CNN中会使用一些变形操作将其转换到需要的尺寸，但使用变形之后，会造成部分特征损失。Fast R-CNN使用<code>spatial pyramid pooling layer</code>（空间金字塔池化）,对于任意尺寸的RoI，都会产生固定大小为<code>H x W</code>的特征向量(论文中采用7x7的大小)。</p><p>RoI定义为四元组<code>(r, c, h, w)</code>，其中<code>(r, c)</code>表示左上角的位置，<code>(h, w)</code>表示窗口的高度和宽度。在进行RoI max pooling时，先将RoI划分为<code>H x W</code>个大小为<code>h/H x w/W</code>的子窗口，然后对子窗口使用最大池化操作，那么最后输出大小为<code>H x W</code>。</p><h2 id="2-2-Initializing-from-pre-trained-networks"><a href="#2-2-Initializing-from-pre-trained-networks" class="headerlink" title="2.2 Initializing from pre-trained networks"></a>2.2 Initializing from pre-trained networks</h2><p>先使用ImageNet数据集对CNN网络进行预训练（论文中使用的VGG），然后用预训练的网络来初始化Fast R-CNN，初始化前需要进行3项转换。</p><ul><li>最后一个的最大池化层用RoI pooling layer替换；</li><li>输出层使用softmax和bounding-box regressors替换；</li><li>将图片数据和对应的RoI作为输入。</li></ul><h2 id="2-3-Fine-tuning"><a href="#2-3-Fine-tuning" class="headerlink" title="2.3 Fine-tuning"></a>2.3 Fine-tuning</h2><p>微调主要是用来优化softmax分类器和bounding-box回归器。</p><h3 id="1-Multi-task-loss"><a href="#1-Multi-task-loss" class="headerlink" title="1. Multi-task loss"></a>1. Multi-task loss</h3><p>优化过程的损失函数使用多任务损失。</p><script type="math/tex; mode=display">L(p, u, t^u, v) = L_{cls}(p, u) + \lambda[u \ge 1] L_{loc}(t^u, v)</script><p>其中u表示真实类别，v 表示bounding-box的真实位置，那么对于类别u其bounding-box的位置 $v = (v_x, v_y, v_w, v_h)$；p表示预测类别的概率，$t_u$为预测的位置, 并且$t_u=(t^u_x, t^u_y, t^u_w, t^u_h)$。</p><p>$[u \ge 1]$等于0时，即物体的类别为背景，背景没有边界框。</p><script type="math/tex; mode=display">[u \ge 1] = \left \{ \begin{array}{}1, u \ge 1 \\0, otherwise\end{array}\right.</script><p>其中$L_{cls}$是softmax分类器的损失值：</p><script type="math/tex; mode=display">L_{cls}(p, u) = -\log(p_u)</script><p>$L_{loc}$是bounding-box回归器的损失值：</p><script type="math/tex; mode=display">L_{loc}(t^u, v) = \sum_{i \in \{x, y, w, h\}}smooth_{L_1}(t^u_i-v_i)</script><p>其中</p><script type="math/tex; mode=display">smooth_{L_1}(x) = \left \{\begin{array}{}0.5x^2, |x| \lt 1 \\|x| - 0.5, otherwise\end{array}\right.</script><h2 id="3-Fast-R-CNN-detection"><a href="#3-Fast-R-CNN-detection" class="headerlink" title="3. Fast R-CNN detection"></a>3. Fast R-CNN detection</h2><h2 id="3-1-SVD"><a href="#3-1-SVD" class="headerlink" title="3.1 SVD"></a>3.1 SVD</h2><p>网络中的全连接层参数非常多，导致计算缓慢，可以使用奇异值分解（SVD）的方法加速计算。假设权重W的大小为<code>u x v</code>,使用SVD：</p><script type="math/tex; mode=display">W \approx U \Sigma_tV^T</script><p>其中U是<code>u x t</code>的矩阵，$\Sigma_t$大小为<code>t x t</code>， $V^T$大小为<code>t x v</code>。</p><p>然后将一个全连接层转换成两个全连接层，第一个全连接层权重矩阵为$\Sigma_t V^T$，第二个全连接层的权重矩阵为 U。那么参数数量由<code>u x v</code>变成了<code>t(u + v)</code>，只要 t 远小于 u 和 v，参数数量就会大大减少。</p>]]></content>
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h1><h2 id="1-1-R-CNN-and-SPPnet"><a href="#1-1-R-CNN-and-SPPnet" class="headerlink" title="1.1 R-CNN and SPPnet"></a>1.1 R-CNN and SPPnet</h2><p>R-CNN有如下几个缺点：</p><ul><li>训练要经过多个步骤。首先需要训练一个CNN用来提取特征，然后根据提取的特征训练多个SVM分类器，最后训练bounding-box回归器来优化bounding-box的位置。</li><li>训练非常消耗空间和时间。为了训练SVM分类器和bounding-box回归器，需要将提取的特征保存到磁盘中，这将占用较大存储资源，同时读取这些数据时，也要消耗一定时间。</li><li>目标检测非常缓慢。测试时，需要在每个候选框中提取特征，即对每个候选框进行卷积运算，这将带来大量的重复运算。</li></ul><p>SPPnet通过共享计算的方式提高速度。SPPnet对整个图片进行计算从而获得feature map，然后从该feature map中提取某个候选区域的特征。</p><h2 id="1-2-Contributions"><a href="#1-2-Contributions" class="headerlink" title="1.2 Contributions"></a>1.2 Contributions</h2><p>为了解决R-CNN和SPPnet中的缺点，论文中提出了<code>Fast R-CNN</code>, Fast R-CNN有如下优点：</p><ul><li>更高的mAP；</li><li>训练是单步骤的；</li><li>训练能更新所有网络层；</li><li>不需要缓存特征。</li></ul><h1 id="2-Fast-R-CNN-architecture"><a href="#2-Fast-R-CNN-architecture" class="headerlink" title="2. Fast R-CNN architecture"></a>2. Fast R-CNN architecture</h1><p>Fast R-CNN的整体结构如下图所示：</p><p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200725114510.png" srcset="/img/loading.gif" alt=""></p><p>网络将整幅图片和一系列<strong>候选区域</strong>作为输入（所以需要预先获取候选区域），首先经过几个卷积层和最大池化层得到feature map，然后对于每个候选区域在整个feature map中都有一个对应的区域，经过<code>RoI pooling layer</code>之后获得一个对应的固定长度的特征向量。然后将每个特征向量输入到全连接层，最后分支成两个输出层：一个softmax用于判断候选区域的类别，一个bbox regressor用于改善边界框的位置。</p><h2 id="2-1-The-RoI-pooling-layer"><a href="#2-1-The-RoI-pooling-layer" class="headerlink" title="2.1 The RoI pooling layer"></a>2.1 The RoI pooling layer</h2><p>RoI(region of interest)：感兴趣区域，也就是原始图像中的候选区域，经过Conv之后，感兴趣区域也要映射到feature map中的对应位置。论文中，RoI是feature map中的一个长方形窗口。</p><p>对于不同的候选区域，它们的大小都不一样，在R-CNN中会使用一些变形操作将其转换到需要的尺寸，但使用变形之后，会造成部分特征损失。Fast R-CNN使用<code>spatial pyramid pooling layer</code>（空间金字塔池化）,对于任意尺寸的RoI，都会产生固定大小为<code>H x W</code>的特征向量(论文中采用7x7的大小)。</p><p>RoI定义为四元组<code>(r, c, h, w)</code>，其中<code>(r, c)</code>表示左上角的位置，<code>(h, w)</code>表示窗口的高度和宽度。在进行RoI max pooling时，先将RoI划分为<code>H x W</code>个大小为<code>h/H x w/W</code>的子窗口，然后对子窗口使用最大池化操作，那么最后输出大小为<code>H x W</code>。</p><h2 id="2-2-Initializing-from-pre-trained-networks"><a href="#2-2-Initializing-from-pre-trained-networks" class="headerlink" title="2.2 Initializing from pre-trained networks"></a>2.2 Initializing from pre-trained networks</h2><p>先使用ImageNet数据集对CNN网络进行预训练（论文中使用的VGG），然后用预训练的网络来初始化Fast R-CNN，初始化前需要进行3项转换。</p><ul><li>最后一个的最大池化层用RoI pooling layer替换；</li><li>输出层使用softmax和bounding-box regressors替换；</li><li>将图片数据和对应的RoI作为输入。</li></ul><h2 id="2-3-Fine-tuning"><a href="#2-3-Fine-tuning" class="headerlink" title="2.3 Fine-tuning"></a>2.3 Fine-tuning</h2><p>微调主要是用来优化softmax分类器和bounding-box回归器。</p><h3 id="1-Multi-task-loss"><a href="#1-Multi-task-loss" class="headerlink" title="1. Multi-task loss"></a>1. Multi-task loss</h3><p>优化过程的损失函数使用多任务损失。</p><script type="math/tex; mode=display">L(p, u, t^u, v) = L_{cls}(p, u) + \lambda[u \ge 1] L_{loc}(t^u, v)</script><p>其中u表示真实类别，v 表示bounding-box的真实位置，那么对于类别u其bounding-box的位置 $v = (v_x, v_y, v_w, v_h)$；p表示预测类别的概率，$t_u$为预测的位置, 并且$t_u=(t^u_x, t^u_y, t^u_w, t^u_h)$。</p><p>$[u \ge 1]$等于0时，即物体的类别为背景，背景没有边界框。</p><script type="math/tex; mode=display">[u \ge 1] = \left \{ \begin{array}{}1, u \ge 1 \\0, otherwise\end{array}\right.</script><p>其中$L_{cls}$是softmax分类器的损失值：</p><script type="math/tex; mode=display">L_{cls}(p, u) = -\log(p_u)</script><p>$L_{loc}$是bounding-box回归器的损失值：</p><script type="math/tex; mode=display">L_{loc}(t^u, v) = \sum_{i \in \{x, y, w, h\}}smooth_{L_1}(t^u_i-v_i)</script><p>其中</p><script type="math/tex; mode=display">smooth_{L_1}(x) = \left \{\begin{array}{}0.5x^2, |x| \lt 1 \\|x| - 0.5, otherwise\end{array}\right.</script><h2 id="3-Fast-R-CNN-detection"><a href="#3-Fast-R-CNN-detection" class="headerlink" title="3. Fast R-CNN detection"></a>3. Fast R-CNN detection</h2><h2 id="3-1-SVD"><a href="#3-1-SVD" class="headerlink" title="3.1 SVD"></a>3.1 SVD</h2><p>网络中的全连接层参数非常多，导致计算缓慢，可以使用奇异值分解（SVD）的方法加速计算。假设权重W的大小为<code>u x v</code>,使用SVD：</p><script type="math/tex; mode=display">W \approx U \Sigma_tV^T</script><p>其中U是<code>u x t</code>的矩阵，$\Sigma_t$大小为<code>t x t</code>， $V^T$大小为<code>t x v</code>。</p><p>然后将一个全连接层转换成两个全连接层，第一个全连接层权重矩阵为$\Sigma_t V^T$，第二个全连接层的权重矩阵为 U。那么参数数量由<code>u x v</code>变成了<code>t(u + v)</code>，只要 t 远小于 u 和 v，参数数量就会大大减少。</p>]]></content>
     
     
     <categories>
@@ -39,9 +113,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
       
       <tag>目标检测</tag>
       
@@ -68,9 +142,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
       
       <tag>目标检测</tag>
       
@@ -124,9 +198,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
@@ -151,9 +225,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
@@ -178,9 +252,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
@@ -205,9 +279,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
@@ -257,9 +331,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
@@ -542,9 +616,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
@@ -569,9 +643,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
@@ -596,9 +670,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
