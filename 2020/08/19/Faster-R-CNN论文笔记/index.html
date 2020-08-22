@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      0 字
+      920 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      10
        分钟
     </span>
   
@@ -210,12 +210,75 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              
+              <h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h1><p>对于目标检测，获取候选框的位置成为发展的瓶颈，因为一般获取候选框的方法都比较耗时。<code>Selective Search</code>是其中最流行的一个方法，但在CPU上运行时，对于每张图片需要消耗2秒时间，这是不能用于实时处理的。论文中，提出了<code>Region Proposal Network</code>(RPN)网络，用来生成<code>region proposals</code>(候选区域)，RPN是一个全卷积网络。</p>
+<h1 id="2-Faster-R-CNN"><a href="#2-Faster-R-CNN" class="headerlink" title="2. Faster R-CNN"></a>2. Faster R-CNN</h1><p>Faster R-CNN由两个模块组成：第一个模块是一个深层全卷积网络，用来生成候选区域；第二个模块是Faster R-CNN检测器。Faster R-CNN的网络结构如下：</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200820211707.png" srcset="/img/loading.gif" alt=""></p>
+<p>主要由四个部分组成：</p>
+<ul>
+<li>conv layers：卷积层，用来提取特征；</li>
+<li>Region Proposal Network：生成候选区域；</li>
+<li>RoI pooling：输入为RPN生成的各个候选框和卷积层生成的基本特征；</li>
+<li>classifier：</li>
+</ul>
+<h2 id="2-1-Region-Proposal-Networks"><a href="#2-1-Region-Proposal-Networks" class="headerlink" title="2.1 Region Proposal Networks"></a>2.1 Region Proposal Networks</h2><ul>
+<li>RPN接受任意尺寸的输入并输出一系列候选框和<code>objectness score</code>（用来判断候选框是背景还是物体）；</li>
+<li>RPN是一个全卷积神经网络；</li>
+</ul>
+<p>如下图是RPN的结构。首先将feature map输入到中间层，即一个<code>3 x 3</code>的卷积层，生成256维的feature map，该特征输入到<code>cls layer</code>(分类层)和<code>reg layer</code>(回归层)。对于图像上的每一个位置，都有256个特征，该特征在分类层生成<code>2k</code>个分数（2k个分数是因为：使用的是softmax回归，然后又有前景和背景两个分类），在回归层生成<code>4k</code>个偏移量（用于修正候选框），其中k指某一位置处anchors的数量。</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200821164533.png" srcset="/img/loading.gif" alt=""></p>
+<h3 id="2-1-1-Anchors"><a href="#2-1-1-Anchors" class="headerlink" title="2.1.1 Anchors"></a>2.1.1 Anchors</h3><p>在feature map的每个位置上，都设置k个候选框，这些候选框就叫做<code>anchor</code>。论文中默认使用3 scales 和 3 aspect ratios，将产生k=9个anchors。</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200822111443.png" srcset="/img/loading.gif" alt=""></p>
+<p>Anchors就是一些矩形框，可以如下表示，四个坐标为<code>[x1, y1, x2, y2]</code>，代表左上角和右下角两个坐标。<br><div class="hljs"><pre><code class="hljs undefined">[[ <span class="hljs-number">-84.</span>  <span class="hljs-number">-40.</span>   <span class="hljs-number">99.</span>   <span class="hljs-number">55.</span>]
+ [<span class="hljs-number">-176.</span>  <span class="hljs-number">-88.</span>  <span class="hljs-number">191.</span>  <span class="hljs-number">103.</span>]
+ [<span class="hljs-number">-360.</span> <span class="hljs-number">-184.</span>  <span class="hljs-number">375.</span>  <span class="hljs-number">199.</span>]
+ [ <span class="hljs-number">-56.</span>  <span class="hljs-number">-56.</span>   <span class="hljs-number">71.</span>   <span class="hljs-number">71.</span>]
+ [<span class="hljs-number">-120.</span> <span class="hljs-number">-120.</span>  <span class="hljs-number">135.</span>  <span class="hljs-number">135.</span>]
+ [<span class="hljs-number">-248.</span> <span class="hljs-number">-248.</span>  <span class="hljs-number">263.</span>  <span class="hljs-number">263.</span>]
+ [ <span class="hljs-number">-36.</span>  <span class="hljs-number">-80.</span>   <span class="hljs-number">51.</span>   <span class="hljs-number">95.</span>]
+ [ <span class="hljs-number">-80.</span> <span class="hljs-number">-168.</span>   <span class="hljs-number">95.</span>  <span class="hljs-number">183.</span>]
+ [<span class="hljs-number">-168.</span> <span class="hljs-number">-344.</span>  <span class="hljs-number">183.</span>  <span class="hljs-number">359.</span>]]</code></pre></div></p>
+<h3 id="2-1-2-非极大值抑制（Non-Maximum-Suppression）"><a href="#2-1-2-非极大值抑制（Non-Maximum-Suppression）" class="headerlink" title="2.1.2 非极大值抑制（Non-Maximum Suppression）"></a>2.1.2 非极大值抑制（Non-Maximum Suppression）</h3><p>目标检测的过程中在同一目标的位置上会产生大量的候选框，这些候选框相互之间可能会有重叠，此时我们需要利用非极大值抑制找到最佳的目标边界框，消除冗余的边界框。</p>
+<p>非极大值抑制的流程如下：</p>
+<ul>
+<li>根据置信度得分进行排序</li>
+<li>选择置信度最高的边界框添加到最终输出列表中，将其从边界框列表中删除</li>
+<li>计算所有边界框的面积</li>
+<li>计算置信度最高的边界框与其它候选框的IoU。</li>
+<li>删除IoU大于阈值的边界框</li>
+<li>重复上述过程，直至边界框列表为空。</li>
+</ul>
+<h2 id="2-2-RoI-pooling"><a href="#2-2-RoI-pooling" class="headerlink" title="2.2 RoI pooling"></a>2.2 RoI pooling</h2><p>RoI pooling层的输入是RPN网络生成的一系列候选框和conv layer 生成的feature map，然后将每个feature map划分为<code>7 x 7</code>的子窗口，再然后对每个子窗口使用max pool，那么最后的输出大小为<code>7 x 7</code>。使用 RoI pooling能够固定输出的大小，从而能够处理多尺度的候选框。</p>
+<h2 id="2-3-Sharing-Features-for-RPN-and-Fast-R-CNN"><a href="#2-3-Sharing-Features-for-RPN-and-Fast-R-CNN" class="headerlink" title="2.3 Sharing Features for RPN and Fast R-CNN"></a>2.3 Sharing Features for RPN and Fast R-CNN</h2><p>论文中采用<code>4-Step Alternating Training</code>方法来训练RPN和Fast R-CNN，前两步没有共享卷积层。</p>
+<ol>
+<li>训练RPN；</li>
+<li>使用第一步训练的RPN产生的候选框来训练Fast R-CNN；</li>
+<li>固定共享的卷积层，对RPN网络进行微调；</li>
+<li>固定共享的卷积层，对Fast R-CNN进行微调。</li>
+</ol>
+
             </article>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/论文阅读/">论文阅读</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/论文阅读/">论文阅读</a>
+                    
+                      <a class="hover-with-bg" href="/tags/深度学习/">深度学习</a>
+                    
+                      <a class="hover-with-bg" href="/tags/目标检测/">目标检测</a>
+                    
+                  </div>
                 
               </div>
               
