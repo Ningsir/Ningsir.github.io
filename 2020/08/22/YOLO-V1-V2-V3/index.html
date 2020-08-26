@@ -223,12 +223,9 @@
 <li>对小物体的检测效果不好。</li>
 </ul>
 <h2 id="1-2-Unified-Detection"><a href="#1-2-Unified-Detection" class="headerlink" title="1.2 Unified Detection"></a>1.2 Unified Detection</h2><p>YOLO将目标检测的各个部分整合成一个单一的神经网络。</p>
-<ul>
-<li>YOLO将一幅图分成<code>S x S</code>个网格（也就是经过一系列卷积层之后feature map 的大小为<code>S x S</code>），如果某个object的中心落在这个网格中，则这个网格就负责预测这个object。</li>
-<li>每个网格预测B个bounding boxes 和 confidence scores，<code>confidence</code>可以表示为  $Pr(Object)<em>IOU_{pred}^{truth}$，如果网格中不存在目标，则confidence为0。每个bounding box包含5个预测：x, y, w, h, confidence，<em>*其中<code>(x, y)</code>表示b相当于网格单元格边界的偏移，<code>(w, h)</code>是相对于整幅图像的宽度和高度</em></em>。</li>
-<li>每个网格还要预测C个条件类别概率（<strong>不管bounding boxes有多少个</strong>），其实C就是需要检测的类别数量，条件类别概率可以表示为$Pr(Class_i | Object)$。</li>
-</ul>
-<p>最后输出的预测值可以编码成<code>S x S x (5B + C)</code>大小的tensor。YOLO运用在 PASCAL VOC数据集上时，参数设置如下, 即输出为<code>7 x 7 x 30</code>的tensor：</p>
+<p>YOLO将一幅图分成<code>S x S</code>个网格（也就是经过一系列卷积层之后feature map 的大小为<code>S x S</code>），如果某个object的中心落在这个网格中，则这个网格就负责预测这个object。<br>每个网格预测B个bounding boxes 和 confidence scores，<code>confidence</code>可以表示为：</p>
+<script type="math/tex; mode=display">
+Pr(Object)*IOU_{pred}^{truth}</script><p>如果网格中不存在目标，则 confidence 为0。每个bounding box包含5个预测：x, y, w, h, confidence，其中<code>(x, y)</code>表示b<strong>相当于网格单元格边界的偏移</strong>，<code>(w, h)</code>是相对于整幅图像的宽度和高度。<br>每个网格还要预测C个条件类别概率（<strong>不管bounding boxes有多少个</strong>），其实C就是需要检测的类别数量，条件类别概率可以表示为$Pr(Class_i | Object)$。<br>最后输出的预测值可以编码成<code>S x S x (5B + C)</code>大小的tensor。YOLO运用在 PASCAL VOC数据集上时，参数设置如下, 即输出为<code>7 x 7 x 30</code>的tensor：</p>
 <div class="hljs"><pre><code class="hljs undefined"><span class="hljs-attr">S</span> = <span class="hljs-number">7</span>
 <span class="hljs-attr">B</span> = <span class="hljs-number">2</span>
 <span class="hljs-attr">C</span> = <span class="hljs-number">20</span></code></pre></div>
@@ -280,7 +277,7 @@ Pr(object) * IOU(box, object) = \sigma(t_o)</script><p><img src="https://gitee.c
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/v2-6467358da558bcb282b9204cf1e601cf_r.jpg" srcset="/img/loading.gif" alt=""></p>
 <h2 id="3-4-Feature-extractor"><a href="#3-4-Feature-extractor" class="headerlink" title="3.4 Feature extractor"></a>3.4 Feature extractor</h2><p>设计了Darknet-53网络，借鉴Resnet中特征融合的思想，运行效果与ResNet-152差不多，但速度是其两倍。</p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200825225006.png" srcset="/img/loading.gif" alt=""></p>
-<h2 id=""><a href="#" class="headerlink" title=" "></a> </h2>
+
             </article>
             <hr>
             <div>
