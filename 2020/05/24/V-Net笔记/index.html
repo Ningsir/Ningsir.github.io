@@ -269,7 +269,7 @@ A_sum = torch.sum(iflat * iflat)
 B_sum = torch.sum(tflat * tflat)
 
 <span class="hljs-keyword">return</span> (<span class="hljs-number">2.</span> * intersection + smooth) / (A_sum + B_sum + smooth)</code></pre></div>
-<h1 id="4-训练"><a href="#4-训练" class="headerlink" title="4. 训练"></a>4. 训练</h1><p>训练时主要采用下面的数据增强方法：</p>
+<h1 id="4-训练"><a href="#4-训练" class="headerlink" title="4. 训练"></a>4. 训练</h1><p>训练时主要采用下面的数据增广方法：</p>
 <ul>
 <li>使用<code>2 x 2 x 2</code>的网格控制点和<code>B-spline interpolation</code>(B样条插值)来获得稠密的形变场对图像进行非线性形变；</li>
 <li>使用直方图匹配来获得不同的灰度分布的图像。 </li>

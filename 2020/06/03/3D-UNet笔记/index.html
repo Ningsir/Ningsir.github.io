@@ -222,7 +222,7 @@
 <p><code>synthesis path</code> 主要包括以下操作：该部分有3层，每一层首先使用一个strides为2、卷积核为<code>2 x 2 x 2</code>的反卷积操作，然后与<code>analysis path</code>中对应的<code>fature map</code>进行cat操作，再然后是两个<code>3 x 3 x 3</code>的卷积操作，每次卷积之后进行<code>batch normalizetion</code>(BN) 操作和<code>ReLu</code>操作，然后进行strides为2的<code>2 x 2 x 2</code>的最大池化操作。</p>
 <p>在最后一层输出时使用<code>1 x 1 x 1</code>的卷积来减少通道数。</p>
 <p>论文中提到的一个亮点就是，3D U-Net使用了<code>weighted softmax loss function</code>将未标记的像素点设置为0以至于可以让网络可以更多地仅仅学习标注到的像素点，从而达到普适性地特点。</p>
-<h1 id="3-训练"><a href="#3-训练" class="headerlink" title="3. 训练"></a>3. 训练</h1><p>3D U-Net采用了数据增强（data augmentation），主要是rotation、scaling和将图像设置为gray，于此同时在训练数据上和真实标注的数据上运用平滑的密集变形场(smooth dense deformation field)。</p>
+<h1 id="3-训练"><a href="#3-训练" class="headerlink" title="3. 训练"></a>3. 训练</h1><p>3D U-Net采用了数据增广（data augmentation），主要是rotation、scaling和将图像设置为gray，于此同时在训练数据上和真实标注的数据上运用平滑的密集变形场(smooth dense deformation field)。</p>
 
             </article>
             <hr>

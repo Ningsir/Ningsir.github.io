@@ -239,7 +239,7 @@ f(x) = \left\{\begin{array}{1}x, if\ x > 0 \\
 0.1x,otherwise
 \end{array}\right.</script><p>损失函数如下：</p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200824170239.png" srcset="/img/loading.gif" alt=""></p>
-<p>为了避免过拟合，使用了dropout 和数据增强。在第一个全连接使用dropout，设置比率为 0.5。</p>
+<p>为了避免过拟合，使用了dropout 和数据增广。在第一个全连接使用dropout，设置比率为 0.5。</p>
 <h1 id="2-YOLO-V2"><a href="#2-YOLO-V2" class="headerlink" title="2. YOLO V2"></a>2. YOLO V2</h1><h2 id="2-1-Introduction"><a href="#2-1-Introduction" class="headerlink" title="2.1 Introduction"></a>2.1 Introduction</h2><p>YOLO V2在YOLO的基础上进行改进，有着更准，更快，更强的优点。YOLO V2引入了anchor，使用K-Means的方法，去掉了全连接层。</p>
 <h2 id="2-2-Better"><a href="#2-2-Better" class="headerlink" title="2.2 Better"></a>2.2 Better</h2><p>YOLO有许多定位错误，召回率也较低，所以YOLO V2主要集中于提高召回率和定位能力。下面是YOLO V2使用的一些技术：</p>
 <h3 id="Batch-Normalization"><a href="#Batch-Normalization" class="headerlink" title="Batch Normalization"></a>Batch Normalization</h3><p>使用BN提高了收敛速度，并且帮助正则化模型，还可以去除模型的Dropout而不会产生过拟合。</p>
