@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.7k 字
+      2.7k 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      21
+      34
        分钟
     </span>
   
@@ -270,13 +270,98 @@ Pr(object) * IOU(box, object) = \sigma(t_o)</script><p><img src="https://gitee.c
 <h2 id="2-3-Faster"><a href="#2-3-Faster" class="headerlink" title="2.3 Faster"></a>2.3 Faster</h2><p>论文提出了Darknet-19，类似于VGG网络，大量使用<code>3 x 3</code>卷积。</p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200824234207.png" srcset="/img/loading.gif" alt=""></p>
 <p><strong>Training for detection</strong>。需要修改分类网络来适应检测问题：移除最后的卷积层并使用3个<code>3 x 3</code>卷积层进行替换，每个卷积层有1024个<code>3 x 3</code>的卷积核，<code>3 x 3</code>卷积之后接一个<code>1 x 1</code>卷积，卷积核的数量为用于检测需要的输出数量，比如对于VOC需要预测5个boxes的5个坐标值和每个box的20个类别概率，则卷积核的数量为<code>5*5+5*20=125</code>。</p>
-<h2 id="2-4-Stronger"><a href="#2-4-Stronger" class="headerlink" title="2.4 Stronger"></a>2.4 Stronger</h2><h1 id="3-YOLO-V3"><a href="#3-YOLO-V3" class="headerlink" title="3. YOLO V3"></a>3. YOLO V3</h1><h2 id="3-1-Bounding-Box-Prediction"><a href="#3-1-Bounding-Box-Prediction" class="headerlink" title="3.1 Bounding Box Prediction"></a>3.1 Bounding Box Prediction</h2><p>bounding box预测与YOLO v2一样，预测四个坐标。训练时采用<code>sum of squared</code>损失函数。</p>
+<h2 id="2-4-Stronger"><a href="#2-4-Stronger" class="headerlink" title="2.4 Stronger"></a>2.4 Stronger</h2><h1 id="3-YOLO-V3"><a href="#3-YOLO-V3" class="headerlink" title="3. YOLO V3"></a>3. YOLO V3</h1><p>YOVO v3 feature map中的每个方格预测3个预测框，每个预测框包含<code>(4 + 1 + 80)</code>个数据信息，即4个坐标，1个objectness score，80个类别概率，objectness score是用来判断预测框中是否包含目标。</p>
+<h2 id="3-1-Bounding-Box-Prediction"><a href="#3-1-Bounding-Box-Prediction" class="headerlink" title="3.1 Bounding Box Prediction"></a>3.1 Bounding Box Prediction</h2><p>bounding box预测与YOLO v2一样，预测四个坐标。训练时采用<code>sum of squared</code>损失函数。</p>
 <p>YOLOv3为每个bounding box 预测一个 objectness score，使用 logistic regression 进行预测。</p>
 <h2 id="3-2-Class-Prediction"><a href="#3-2-Class-Prediction" class="headerlink" title="3.2 Class Prediction"></a>3.2 Class Prediction</h2><p>因为一个 bounding box 可能包含多个类别，所以没有使用 softmax 对类别进行预测，而是使用 logistic classifiers，即对每一个类别训练一个逻辑回归分类器。</p>
 <h2 id="3-3-Prediction-Across-Scales"><a href="#3-3-Prediction-Across-Scales" class="headerlink" title="3.3 Prediction Across Scales"></a>3.3 Prediction Across Scales</h2><p>YOLOv3从不同尺度提取特征，最后提供3个不同尺度的feature map，分别为<code>13 x 13</code>、<code>26 x 26</code>、<code>52 x 52</code>。比如要得到<code>26 x 26</code>的feature map，需要将<code>13 x 13</code>的 feature map进行两倍上采样，然后与前面的<code>26 x 26</code>的feature map进行<code>concat</code>操作。不同尺度的feature map最后产生的输出大小为<code>N x N x [3*(4+1+80)]</code>，那么3个尺度最后的输出为<code>(10647, 85)</code>。</p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/v2-6467358da558bcb282b9204cf1e601cf_r.jpg" srcset="/img/loading.gif" alt=""></p>
 <h2 id="3-4-Feature-extractor"><a href="#3-4-Feature-extractor" class="headerlink" title="3.4 Feature extractor"></a>3.4 Feature extractor</h2><p>设计了Darknet-53网络，借鉴Resnet中特征融合的思想，运行效果与ResNet-152差不多，但速度是其两倍。</p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200825225006.png" srcset="/img/loading.gif" alt=""></p>
+<h2 id="3-5-标注-anchor-box"><a href="#3-5-标注-anchor-box" class="headerlink" title="3.5 标注 anchor box"></a>3.5 标注 anchor box</h2><p>训练提供的数据集只是包含图片数据和ground truth的坐标数据，需要在原始数据基础上生成anchor box，然后进行相应标注，生成与网络输出格式一样的数据，再直接用到损失函数中。</p>
+<h3 id="1-objectness-score"><a href="#1-objectness-score" class="headerlink" title="1. objectness score"></a>1. objectness score</h3><p>当锚框包含了物体时，objectness=1，表示预测框属于正类；当锚框不包含物体时，设置objectness=0，表示锚框属于负类；</p>
+<h3 id="2-location"><a href="#2-location" class="headerlink" title="2. location"></a>2. location</h3><p>对于objectness为1的anchor box生成位置信息$(t_x^<em>, t_y^</em>, t_w^<em>, t_h^</em>)$，但因为sigmoid的反函数不好求，$(t_x<em>, t_y^</em>)$使用的是$(dx^<em>, dy^</em>)$.</p>
+<p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200831103708.png" srcset="/img/loading.gif" alt=""></p>
+<h3 id="3-class"><a href="#3-class" class="headerlink" title="3. class"></a>3. class</h3><p>类别采用one-hot编码，例如某个anchor box 的类别信息为<code>[0, 0, 0, 1, 0, 0, 0]</code>，1表示anchor box中的物体属于该类别。</p>
+<div class="hljs"><pre><code class="hljs python"><span class="hljs-comment"># 标注预测框的objectness</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_objectness_label</span><span class="hljs-params">(img, gt_boxes, gt_labels, iou_threshold = <span class="hljs-number">0.7</span>,
+                         anchors = [<span class="hljs-number">116</span>, <span class="hljs-number">90</span>, <span class="hljs-number">156</span>, <span class="hljs-number">198</span>, <span class="hljs-number">373</span>, <span class="hljs-number">326</span>],
+                         num_classes=<span class="hljs-number">7</span>, downsample=<span class="hljs-number">32</span>)</span>:</span>
+    <span class="hljs-string">"""
+    img 是输入的图像数据，形状是[N, C, H, W]
+    gt_boxes，真实框，维度是[N, 50, 4]，其中50是真实框数目的上限，当图片中真实框不足50个时，不足部分的坐标全为0
+              真实框坐标格式是xywh，这里使用相对值
+    gt_labels，真实框所属类别，维度是[N, 50]
+    iou_threshold，当预测框与真实框的iou大于iou_threshold时不将其看作是负样本
+    anchors，锚框可选的尺寸
+    anchor_masks，通过与anchors一起确定本层级的特征图应该选用多大尺寸的锚框
+    num_classes，类别数目
+    downsample，特征图相对于输入网络的图片尺寸变化的比例
+    """</span>
+
+    img_shape = img.shape
+    batchsize = img_shape[<span class="hljs-number">0</span>]
+    num_anchors = len(anchors) // <span class="hljs-number">2</span>
+    input_h = img_shape[<span class="hljs-number">2</span>]
+    input_w = img_shape[<span class="hljs-number">3</span>]
+    <span class="hljs-comment"># 将输入图片划分成num_rows x num_cols个小方块区域，每个小方块的边长是 downsample</span>
+    <span class="hljs-comment"># 计算一共有多少行小方块</span>
+    num_rows = input_h // downsample
+    <span class="hljs-comment"># 计算一共有多少列小方块</span>
+    num_cols = input_w // downsample
+
+    label_objectness = np.zeros([batchsize, num_anchors, num_rows, num_cols])
+    label_classification = np.zeros([batchsize, num_anchors, num_classes, num_rows, num_cols])
+    label_location = np.zeros([batchsize, num_anchors, <span class="hljs-number">4</span>, num_rows, num_cols])
+
+    scale_location = np.ones([batchsize, num_anchors, num_rows, num_cols])
+
+    <span class="hljs-comment"># 对batchsize进行循环，依次处理每张图片</span>
+    <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> range(batchsize):
+        <span class="hljs-comment"># 对图片上的真实框进行循环，依次找出跟真实框形状最匹配的锚框</span>
+        <span class="hljs-keyword">for</span> n_gt <span class="hljs-keyword">in</span> range(len(gt_boxes[n])):
+            gt = gt_boxes[n][n_gt]
+            gt_cls = gt_labels[n][n_gt]
+            gt_center_x = gt[<span class="hljs-number">0</span>]
+            gt_center_y = gt[<span class="hljs-number">1</span>]
+            gt_width = gt[<span class="hljs-number">2</span>]
+            gt_height = gt[<span class="hljs-number">3</span>]
+            <span class="hljs-keyword">if</span> (gt_height &lt; <span class="hljs-number">1e-3</span>) <span class="hljs-keyword">or</span> (gt_height &lt; <span class="hljs-number">1e-3</span>):
+                <span class="hljs-keyword">continue</span>
+            i = int(gt_center_y * num_rows)
+            j = int(gt_center_x * num_cols)
+            ious = []
+            <span class="hljs-keyword">for</span> ka <span class="hljs-keyword">in</span> range(num_anchors):
+                bbox1 = [<span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, float(gt_width), float(gt_height)]
+                anchor_w = anchors[ka * <span class="hljs-number">2</span>]
+                anchor_h = anchors[ka * <span class="hljs-number">2</span> + <span class="hljs-number">1</span>]
+                bbox2 = [<span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, anchor_w/float(input_w), anchor_h/float(input_h)]
+                <span class="hljs-comment"># 计算iou</span>
+                iou = box_iou_xywh(bbox1, bbox2)
+                ious.append(iou)
+            ious = np.array(ious)
+            inds = np.argsort(ious)
+            k = inds[<span class="hljs-number">-1</span>]
+            label_objectness[n, k, i, j] = <span class="hljs-number">1</span>
+            c = gt_cls
+            label_classification[n, k, c, i, j] = <span class="hljs-number">1.</span>
+
+            <span class="hljs-comment"># for those prediction bbox with objectness =1, set label of location</span>
+            dx_label = gt_center_x * num_cols - j
+            dy_label = gt_center_y * num_rows - i
+            dw_label = np.log(gt_width * input_w / anchors[k*<span class="hljs-number">2</span>])
+            dh_label = np.log(gt_height * input_h / anchors[k*<span class="hljs-number">2</span> + <span class="hljs-number">1</span>])
+            label_location[n, k, <span class="hljs-number">0</span>, i, j] = dx_label
+            label_location[n, k, <span class="hljs-number">1</span>, i, j] = dy_label
+            label_location[n, k, <span class="hljs-number">2</span>, i, j] = dw_label
+            label_location[n, k, <span class="hljs-number">3</span>, i, j] = dh_label
+            <span class="hljs-comment"># scale_location用来调节不同尺寸的锚框对损失函数的贡献，作为加权系数和位置损失函数相乘</span>
+            scale_location[n, k, i, j] = <span class="hljs-number">2.0</span> - gt_width * gt_height
+
+    <span class="hljs-comment"># 目前根据每张图片上所有出现过的gt box，都标注出了objectness为正的预测框，剩下的预测框则默认objectness为0</span>
+    <span class="hljs-comment"># 对于objectness为1的预测框，标出了他们所包含的物体类别，以及位置回归的目标</span>
+    <span class="hljs-keyword">return</span> label_objectness.astype(<span class="hljs-string">'float32'</span>), label_location.astype(<span class="hljs-string">'float32'</span>), label_classification.astype(<span class="hljs-string">'float32'</span>), \
+             scale_location.astype(<span class="hljs-string">'float32'</span>)</code></pre></div>
 
             </article>
             <hr>
