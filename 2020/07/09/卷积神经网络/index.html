@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      26
+      27
        分钟
     </span>
   
@@ -210,26 +210,31 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>计算机视觉面临一个挑战，就是数据的输入可能非常大。对于传统的全连接神经网络，数据庞大也就意味着需要训练的参数非常多，导致计算成本很大，效率很低。在这种情况下，难以获得足够的数据来防止过拟合，由此，出现了卷积神经网络。</p>
+              <h1 id="1-基础"><a href="#1-基础" class="headerlink" title="1. 基础"></a>1. 基础</h1><p>计算机视觉面临一个挑战，就是数据的输入可能非常大。对于传统的全连接神经网络，数据庞大也就意味着需要训练的参数非常多，导致计算成本很大，效率很低。在这种情况下，难以获得足够的数据来防止过拟合，由此，出现了卷积神经网络。</p>
 <p><em>CNN 有2大特点：</em></p>
 <ul>
 <li>能够有效的将大数据量的图片降维成小数据量；</li>
 <li>能够有效的保留图片特征，符合图片处理的原则。</li>
 </ul>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ul>
+<h2 id="1-1-应用"><a href="#1-1-应用" class="headerlink" title="1.1 应用"></a>1.1 应用</h2><ul>
 <li>图像分类、检索</li>
 <li>目标定位检测</li>
 <li>图像分割</li>
 <li>人脸识别</li>
 </ul>
-<h1 id="CNN的基本原理"><a href="#CNN的基本原理" class="headerlink" title="CNN的基本原理"></a>CNN的基本原理</h1><p>典型的卷积神经网络由3个部分组成：</p>
+<h2 id="1-2-几个常见问题"><a href="#1-2-几个常见问题" class="headerlink" title="1.2 几个常见问题"></a>1.2 几个常见问题</h2><p><strong>CNN模型所需的计算力（FLOPs：浮点运算数）如何计算？</strong></p>
+<blockquote>
+<p>卷积层：<img src="https://www.zhihu.com/equation?tex=%282%5Ctimes+C_%7Bi%7D+%5Ctimes+K%5E%7B2%7D-1%29%5Ctimes+H%5Ctimes+W%5Ctimes+C_%7Bo%7D" srcset="/img/loading.gif" alt="[公式]"></p>
+<p>Ci=input channel, k=kernel size, HW=output feature map size, Co=output channel.</p>
+</blockquote>
+<h1 id="2-CNN的基本原理"><a href="#2-CNN的基本原理" class="headerlink" title="2. CNN的基本原理"></a>2. CNN的基本原理</h1><p>典型的卷积神经网络由3个部分组成：</p>
 <ul>
 <li>卷积层：提取图像中的局部特征，卷积计算后一般会使用激活函数；</li>
 <li>池化层：降维；</li>
 <li>全连接层：类似于传统神经网络，用来输出想要的结果。</li>
 </ul>
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/20200709155732.png" srcset="/img/loading.gif" alt=""> </p>
-<h2 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h2><p>卷积层通过卷积核的过滤提取出图片中局部的特征，卷积层之后一般会使用激活函数进行非线性化。对于离散数据的卷积运算：首先将卷积核旋转$180^{\circ}$，然后将卷积核在图像上平滑，将卷积核与图像中对应元素相乘取和。具体的卷积操作，如下图所示（已经将卷积核旋转了$180^{\circ}$）：</p>
+<h2 id="2-1-卷积"><a href="#2-1-卷积" class="headerlink" title="2.1 卷积"></a>2.1 卷积</h2><p>卷积层通过卷积核的过滤提取出图片中局部的特征，卷积层之后一般会使用激活函数进行非线性化。对于离散数据的卷积运算：首先将卷积核旋转$180^{\circ}$，然后将卷积核在图像上平滑，将卷积核与图像中对应元素相乘取和。具体的卷积操作，如下图所示（已经将卷积核旋转了$180^{\circ}$）：</p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/0_sxpi42l2IIpS2vuJ.gif" srcset="/img/loading.gif" alt=""><br>其中卷积核为：</p>
 <script type="math/tex; mode=display">
 kernel = \begin{bmatrix}1&0&1\\
@@ -255,11 +260,11 @@ kernel = \begin{bmatrix}1&0&1\\
 </ul>
 <h4 id="二维卷积"><a href="#二维卷积" class="headerlink" title="二维卷积"></a>二维卷积</h4><p>例如，输入图像大小为<code>(3, height, weight)</code>，其中channel为3, 卷积核尺寸为<code>(3, k_h, k_w)</code>, channel与输入图像一致. 进行卷积操作时，卷积核只是在<code>(height, weight)</code>这两维上进行滑窗操作。</p>
 <h4 id="三维卷积"><a href="#三维卷积" class="headerlink" title="三维卷积"></a>三维卷积</h4><p>与2D卷积不同之处在于，输入图像多了一个 <code>depth</code> 维度，故输入大小为<code>(3, depth, height, width)</code>，卷积核也多了一个k_d维度，因此卷积核在输入3D图像的空间维度（height和width维）和depth维度上均进行滑窗操作.</p>
-<h2 id="池化"><a href="#池化" class="headerlink" title="池化"></a>池化</h2><p>池化层就是下采用，降低数据的维度，提高计算速度，同时提高提取特征的鲁棒性。池化的运算过程：</p>
+<h2 id="2-2-池化"><a href="#2-2-池化" class="headerlink" title="2.2 池化"></a>2.2 池化</h2><p>池化层就是下采用，降低数据的维度，提高计算速度，同时提高提取特征的鲁棒性。池化的运算过程：</p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/0_JjtDg7FAhjQOrld-.gif" srcset="/img/loading.gif" alt=""></p>
 <h3 id="最大池化"><a href="#最大池化" class="headerlink" title="最大池化"></a>最大池化</h3><p>提取过滤器范围内的最大值。</p>
 <h3 id="平均池化"><a href="#平均池化" class="headerlink" title="平均池化"></a>平均池化</h3><p>过滤器范围内的数据取平均值，平均池化使用较少。</p>
-<h1 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h1><h2 id="卷积层的反向传播"><a href="#卷积层的反向传播" class="headerlink" title="卷积层的反向传播"></a>卷积层的反向传播</h2><p>卷积层的反向传播比全连接神经网络的反向传播要复杂许多，现举例说明。假设第 $l$ 层的输入数据为X：</p>
+<h1 id="3-反向传播"><a href="#3-反向传播" class="headerlink" title="3. 反向传播"></a>3. 反向传播</h1><h2 id="3-1-卷积层的反向传播"><a href="#3-1-卷积层的反向传播" class="headerlink" title="3.1 卷积层的反向传播"></a>3.1 卷积层的反向传播</h2><p>卷积层的反向传播比全连接神经网络的反向传播要复杂许多，现举例说明。假设第 $l$ 层的输入数据为X：</p>
 <script type="math/tex; mode=display">
 X = \begin{bmatrix}
 x_{11}&x_{12}&x_{13} \\
@@ -299,7 +304,7 @@ a_{21}&a_{22}
 = \frac{\partial J}{\partial A_{11}} \times x_{22} + \frac{\partial J}{\partial A_{12}} \times  x_{23} + \frac{\partial J}{\partial A_{21}} \times x_{32} + \frac{\partial J}{\partial A_{22}} \times  x_{33}
 \end{array} \tag{4}</script><p>不难发现，对F求梯度，实际上就是X与$\frac{\partial J}{\partial A}$进行卷积运算：</p>
 <script type="math/tex; mode=display">
-\frac{\partial J}{\partial F} = X \ast \frac{\partial J}{\partial A}</script><h2 id="池化层的反向传播"><a href="#池化层的反向传播" class="headerlink" title="池化层的反向传播"></a>池化层的反向传播</h2><h3 id="最大池化-1"><a href="#最大池化-1" class="headerlink" title="最大池化"></a>最大池化</h3><p>假设池化层的输入X:</p>
+\frac{\partial J}{\partial F} = X \ast \frac{\partial J}{\partial A}</script><h2 id="3-2-池化层的反向传播"><a href="#3-2-池化层的反向传播" class="headerlink" title="3.2 池化层的反向传播"></a>3.2 池化层的反向传播</h2><h3 id="最大池化-1"><a href="#最大池化-1" class="headerlink" title="最大池化"></a>最大池化</h3><p>假设池化层的输入X:</p>
 <script type="math/tex; mode=display">
 X = \begin{bmatrix}
 4&3&0&1\\

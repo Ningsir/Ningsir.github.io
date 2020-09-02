@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.9k 字
+      3.2k 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      32
+      36
        分钟
     </span>
   
@@ -327,6 +327,10 @@ J(y, a) = - \frac{1}{m} \sum_{i=1}^{m}y^{(i)}\log(a^{(i)})</script><p>手写数�
 J(\omega, b) = \frac{1}{m} \sum_{i=1}^{m}L(y,a) + \frac {\lambda} {m} \sum \omega</script><p>$L_2$正则化：正则化项是参数向量的$L_2$范数的平方。</p>
 <script type="math/tex; mode=display">
 J(\omega, b) = \frac{1}{m} \sum_{i=1}^{m}L(y,a) + \frac {\lambda} {2m} \sum \omega ^2</script><p>注意：可以不正则化参数$b$，$\frac{\lambda}{2m}$只是一个常数项，除以2是为了后面求导方便。</p>
+<p><strong>为什么L2正则化可以防止过拟合？</strong></p>
+<blockquote>
+<p>L2正则化可以直观理解为它对于大数值的权重向量进行严厉惩罚，倾向于更加分散的权重向量。由于输入和权重之间的乘法操作，这样就有了一个优良的特性：<strong>使网络更倾向于使用所有输入特征，而不是严重依赖输入特征中某些小部分特征。</strong> <strong>L2惩罚倾向于更小更分散的权重向量，这就会鼓励分类器最终将所有维度上的特征都用起来，而不是强烈依赖其中少数几个维度。</strong>。这样做可以提高模型的泛化能力，降低过拟合的风险。</p>
+</blockquote>
 <h3 id="5-2-2-Dropout（随机失活）"><a href="#5-2-2-Dropout（随机失活）" class="headerlink" title="5.2.2 Dropout（随机失活）"></a>5.2.2 Dropout（随机失活）</h3><p>dropout会遍历网络中的每一层，并设置消除神经元节点的概率，消除的本质就是让该节点的值变为0. 这种方式可以减少特征检测器间的相互作用，明显减少过拟合现象。Dropout被大量用于全连接网络，但在卷积神经网络中使用较少。</p>
 <p>如下GIF所示，网络的第二层随机删除节点，设置keep_prob = 0.5，其中keep_prob表示保留某个隐藏神经元的概率.</p>
 <p><img src="https://gitee.com/huster_ning/image/raw/master//image/20180408162931222.gif" srcset="/img/loading.gif" alt=""></p>
@@ -336,6 +340,10 @@ A1 = A1 * D1        <span class="hljs-comment"># 步骤3：舍弃A1的一些节�
 A1 = A1 / keep_prob	<span class="hljs-comment"># 进行缩放，使A1的期望值没有太大变化</span></code></pre></div>
 <p>反向传播时：</p>
 <div class="hljs"><pre><code class="hljs python">dA1 = dA1 * D1 / keep_prob</code></pre></div>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p><strong>1. 为什么能防止过拟合？</strong></p>
+<p>每个参数都有可能被随机的Drop掉，所以参数不会过分的依赖某一个特征的数据，而且不同参数之间的相互关联性也大大减弱，这些操作都可以增加泛化能力。</p>
+<p><strong>2. 训练和测试有什么不同？</strong></p>
+<p>测试时，所有神经元都要保留下来，乘上系数<code>keep_prob</code>。</p>
 <h2 id="5-3-如何防止欠拟合"><a href="#5-3-如何防止欠拟合" class="headerlink" title="5.3 如何防止欠拟合"></a>5.3 如何防止欠拟合</h2><ul>
 <li>添加新特征</li>
 <li>添加多项式特征</li>

@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      981 字
+      998 字
     </span>
   
 
@@ -233,6 +233,7 @@
 <li>改变了训练图像中RGB通道的强度。在整个imagenet训练集中对RGB像素值集执行PCA（主成分分析）操作。</li>
 </ol>
 <h2 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h2><p>采用<code>keep_prob = 0.5</code>的Dropout正则化，主要是在全连接层前两层使用Dropout。这种技术减少神经元之间的相互适应，因为神经元不能依赖其他神经元的存在。实验发现Dropout使迭代次数加倍。</p>
+<p>训练时使用全部神经元，但是乘上系数<code>keep_prob</code>。</p>
 <h1 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h1><p>使用小批量梯度下降法进行参数更新，其中<code>momentum = 0.9</code>, <code>weight_decay = 0.0005</code>.参数更新公式如下：</p>
 <script type="math/tex; mode=display">
 v_{i+1} = 0.9v_i - 0.0005·\epsilon·\omega_i - \epsilon·d\omega</script><script type="math/tex; mode=display">
