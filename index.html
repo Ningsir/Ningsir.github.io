@@ -232,59 +232,6 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2020/08/26/Mask-R-CNN论文笔记/" target="_self">
-          <img src="https://gitee.com/huster_ning/image/raw/master//image/20200826170930.png" srcset="/img/loading.gif" alt="Mask R-CNN论文笔记">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2020/08/26/Mask-R-CNN论文笔记/">Mask R-CNN论文笔记</a>
-
-      <a href="/2020/08/26/Mask-R-CNN论文笔记/" class="index-excerpt">
-        
-        
-          
-        
-        <div>未完。。。。。
-1. IntroductionMask R-CNN是一个实例分割模型，实例分割不仅要实现目标检测，还需要对目标进行精确的分割，即实例分割可以看成目标检测和语义分割的结合。
-Mask R-CNN是Faster R-CNN的扩展，在Faster R-CNN的基础上添加一个用于预测object mask的并行分支，该分支是一个小型的FCN。
-Mask R-CNN引入了RoIAlign用来</div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-08-26
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/论文阅读/">论文阅读</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/深度学习/">深度学习</a>
-            
-              <a href="/tags/论文阅读/">论文阅读</a>
-            
-              <a href="/tags/目标检测/">目标检测</a>
-            
-          </div>
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/08/22/YOLO-V1-V2-V3/" target="_self">
           <img src="https://gitee.com/huster_ning/image/raw/master//image/20200823203247.png" srcset="/img/loading.gif" alt="YOLO V1,V2,V3">
         </a>
@@ -328,9 +275,9 @@ YOLO在准确度上落后当前目标检测系统；
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/深度学习/">深度学习</a>
-            
               <a href="/tags/论文阅读/">论文阅读</a>
+            
+              <a href="/tags/深度学习/">深度学习</a>
             
               <a href="/tags/目标检测/">目标检测</a>
             
@@ -379,9 +326,9 @@ YOLO在准确度上落后当前目标检测系统；
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/深度学习/">深度学习</a>
-            
               <a href="/tags/论文阅读/">论文阅读</a>
+            
+              <a href="/tags/深度学习/">深度学习</a>
             
               <a href="/tags/目标检测/">目标检测</a>
             
@@ -430,9 +377,9 @@ FCN使用全卷积神经网络用于语义分割，网络能够接受任意大�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/深度学习/">深度学习</a>
-            
               <a href="/tags/论文阅读/">论文阅读</a>
+            
+              <a href="/tags/深度学习/">深度学习</a>
             
               <a href="/tags/语义分割/">语义分割</a>
             
@@ -483,9 +430,9 @@ FCN使用全卷积神经网络用于语义分割，网络能够接受任意大�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/深度学习/">深度学习</a>
-            
               <a href="/tags/论文阅读/">论文阅读</a>
+            
+              <a href="/tags/深度学习/">深度学习</a>
             
               <a href="/tags/目标检测/">目标检测</a>
             
@@ -535,9 +482,62 @@ R-CNN用于目标检测时需要经过多个步骤：首先输入图像，然后
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
+              <a href="/tags/论文阅读/">论文阅读</a>
+            
               <a href="/tags/深度学习/">深度学习</a>
             
-              <a href="/tags/论文阅读/">论文阅读</a>
+              <a href="/tags/目标检测/">目标检测</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/22/mAP-mean-average-precision/" target="_self">
+          <img src="https://gitee.com/huster_ning/image/raw/master//image/20200722225059.png" srcset="/img/loading.gif" alt="mAP(mean average precision)">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2020/07/22/mAP-mean-average-precision/">mAP(mean average precision)</a>
+
+      <a href="/2020/07/22/mAP-mean-average-precision/" class="index-excerpt">
+        
+        
+          
+        
+        <div>1. 定义mAP是用于目标检测的一项比较流行的评价指标。下面介绍一些比较重要的定义。
+IoU(Intersection over Union)IoU：交并比，用于评估两个边界之间的重叠比例。记ground truth边界框为$B_{gt}$, 预测的边界框为$B_p$, 则IoU计算的是ground truth边界框与预测边界框相交的面积占两者相并的面积的比例，
+
+那么IoU的计算公式为：
+
+Io</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-07-22
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/计算机视觉/">计算机视觉</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/深度学习/">深度学习</a>
             
               <a href="/tags/目标检测/">目标检测</a>
             
