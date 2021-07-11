@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.9k 字
+      3k 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      33
+      34
        分钟
     </span>
   
@@ -354,12 +354,15 @@ x += -learning_rate * dx / (np.sqrt(cache) + eps)</code></pre></div>
 v = beta2*v + (<span class="hljs-number">1</span>‐beta2)*(dx**<span class="hljs-number">2</span>)
 x += ‐ learning_rate * m / (np.sqrt(v) + eps)</code></pre></div>
 <p>推荐参数值：eps=1e-8, beta1=0.9, beta2=0.999。</p>
-<h2 id="3-3-学习率退火"><a href="#3-3-学习率退火" class="headerlink" title="3.3 学习率退火"></a>3.3 学习率退火</h2><p>学习率可能过大，逐步衰减学习率。</p>
+<h2 id="3-3-学习率衰减"><a href="#3-3-学习率衰减" class="headerlink" title="3.3 学习率衰减"></a>3.3 学习率衰减</h2><p>学习率可能过大，逐步衰减学习率。</p>
 <ul>
 <li>随步数衰减：每进行几个周期就降低学习率。典型的值是每过5个周期就将学习率减少一半，或者每20个周期减少到之前的0.1；</li>
 <li>指数衰减：$\alpha = \alpha_0 e^{-kt}$, 其中t 为迭代次数，k是超参数；</li>
 <li>1/t 衰减: $ \alpha = \frac{\alpha_0}{1+ kt}$.</li>
 </ul>
+<h2 id="3-4-权重衰减"><a href="#3-4-权重衰减" class="headerlink" title="3.4 权重衰减"></a>3.4 权重衰减</h2><p>L2正则化的目的就是让权重衰减到更小值，在一定程度上减少过拟合的问题，所以权重衰减也叫L2正则化。L2正则化就是在代价函数后面加一个正则化项：</p>
+<script type="math/tex; mode=display">
+C = C_0 + \frac{\lambda}{2n}\sum\omega^2</script><p>其中 $\lambda$ 就是权重衰减系数(weight_decay)。</p>
 
             </article>
             <hr>
